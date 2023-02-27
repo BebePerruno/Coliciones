@@ -1,0 +1,5 @@
+<<<<<<< HEAD
+1/1/2023 EndFieldS 2/1/2023 EndFieldS 17.0 EndFieldS Lunes EndField 1/1/2023 EndField 7:00 EndField PM EndField 6:00 EndField PM EndField 11.0 EndField  EndRs Martes EndField 2/1/2023 EndField 6:00 EndField AM EndField 12:00 EndField PM EndField 6.0 EndField  EndRs  EndFieldS  Ends 
+=======
+3242 EndFieldS 3242 EndFieldS 8.216666666666667 EndFieldS Lunes EndField 3242 EndField 8:01 EndField AM EndField 4:12 EndField PM EndField 8.216666666666667 EndField  EndRs  EndFieldS  Ends 
+>>>>>>> UsandoComboBox

@@ -1,0 +1,10 @@
+Datos.ModificarRsException
+Datos.BorrarRsException
+Datos.getAbstractListModelException
+Datos.BuscarRsException
+Datos.getDefaultComboBoxModelException
+Datos.getVectorException
+Datos.getMatrizException
+Datos.getCuadriculaException
+Datos.GetRsException
+Datos.RsEstructura

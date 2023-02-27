@@ -1,0 +1,20 @@
+Autor Rafael Angel Montero Fernández.
+Correo rafaelangelmfx@gmail.com
+Secundario rafaelangelmfx@outlook.com
+
+Viernes 18 de febrero del 2022.
+
+Este proyecto contiene una serie de investigaciones.
+Items investigados:
+Graficasion, graficasion con imagenes fijas, graficasion con imagenes en movimeinto.
+Investigacion de la creacion de un juego rts realtime estrategy basico.
+Graphics2D, Graphics, Sprites, BufferedImage, Image, IconImage, Coliciones.
+
+En proceso de investigacion:
+Algoritmos de inteligencia artificial como:
+Algoritmo de hormigas artificiales, conocido pero no implementado en el proyecto por el momento.
+Algoritmo evolutivo, conocido pero no implementado en el proyecto.
+Algoritmo de redes neuronales, conocido, pero no implementado en el proyecto.
+
+Estos algoritmos se implementaran a futuro, ya que se realizará una investigacion de fortalecimiento
+por cada uno.
