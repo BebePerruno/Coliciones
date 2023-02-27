@@ -30,8 +30,8 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
         this.setEntrada("");
         this.setSalida("");
         this.setSubtotalDeHoras("");
-        this.jCmbAmPmEntrada.setSelectedIndex(0);
-        this.jCmbAmPmSalida.setSelectedIndex(1);
+        this.jCmbEntradaAMPM.setSelectedIndex(0);
+        this.jCmbSalidaAMPM.setSelectedIndex(1);
     }
     
     private boolean enableFecha=true;
@@ -59,7 +59,6 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     @Override
     public void setDia(String nuevo_dia) {
         dia = nuevo_dia;
-<<<<<<< HEAD
         if(nuevo_dia.equalsIgnoreCase("Lunes")==true){
             jCmbDiasDeLaSemana.setSelectedIndex(0);
         }
@@ -82,7 +81,7 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
             jCmbDiasDeLaSemana.setSelectedIndex(6);
         }
 //        jCmbDiasDeLaSemana.selectWithKeyChar(dia.toCharArray()[0]);//No sirve puesto que martes y miercoles empiezan con 'm'.
-=======
+
         switch(nuevo_dia){
             case "Lunes":
                 jCmbDiasDeLaSemana.setSelectedIndex(0);
@@ -107,7 +106,6 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
                 return;    
         }
 //        jCmbDiasDeLaSemana.selectWithKeyChar(dia.toCharArray()[0]);
->>>>>>> UsandoComboBox
     }
 
     @Override
@@ -154,7 +152,7 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
         int horasObtenidos = 0;
         if (mEntradaHoras.length >= 2) {
             try {
-                formatearHora(mEntradaHoras, jCmbAmPmEntrada);
+                formatearHora(mEntradaHoras, this.jCmbEntradaAMPM);
                 horasObtenidos = Integer.parseInt(mEntradaHoras[0]);
             } catch (Exception e) {
             }
@@ -191,7 +189,7 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     public int getSalidaHoras() {
         mSalidaHoras = getSalida().split(":");
         int horasObtenidos = 0;
-        formatearHora(mSalidaHoras, jCmbAmPmSalida);
+        formatearHora(mSalidaHoras, this.jCmbSalidaAMPM);
         if (mSalidaHoras.length >= 2) {
             System.out.println(mSalidaHoras[0]);
             try {
@@ -230,9 +228,9 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     public void setEntradaAmPm(String nuevo_am_pm) {
         entradaAmPm = nuevo_am_pm;
         if (entradaAmPm.equalsIgnoreCase("AM") == true) {
-            jCmbAmPmEntrada.setSelectedIndex(0);
+            this.jCmbEntradaAMPM.setSelectedIndex(0);
         } else if (entradaAmPm.equalsIgnoreCase("PM") == true) {
-            jCmbAmPmEntrada.setSelectedIndex(1);
+            jCmbEntradaAMPM.setSelectedIndex(1);
         }
     }
     
@@ -240,7 +238,7 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
 
     @Override
     public String getEntradaAmPm() {
-        entradaAmPm = jCmbAmPmEntrada.getSelectedItem() + "";
+        entradaAmPm = jCmbEntradaAMPM.getSelectedItem() + "";
         System.out.println("entradaAmPm="+entradaAmPm);
         return entradaAmPm;
     }
@@ -254,15 +252,15 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     public void setSalidaAmPm(String nuevo_am_pm) {
         entradaAmPm = nuevo_am_pm;
         if (salidaAmPm.equalsIgnoreCase("AM") == true) {
-            jCmbAmPmSalida.setSelectedIndex(0);
+            this.jCmbSalidaAMPM.setSelectedIndex(0);
         } else if (salidaAmPm.equalsIgnoreCase("PM") == true) {
-            jCmbAmPmSalida.setSelectedIndex(1);
+            jCmbSalidaAMPM.setSelectedIndex(1);
         }
     }
 
     @Override
     public String getSalidaAmPm() {
-        salidaAmPm = jCmbAmPmSalida.getSelectedItem() + "";
+        salidaAmPm = jCmbSalidaAMPM.getSelectedItem() + "";
         System.out.println("salidaAmPm="+salidaAmPm);
         return salidaAmPm;
     }
@@ -351,10 +349,8 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
         jTxtSubtotalDeHoras = new javax.swing.JTextField();
         jBtnGenerarSubtotalDeHoras = new javax.swing.JButton();
         jCmbDiasDeLaSemana = new javax.swing.JComboBox<>();
-        jRbtnSalidaAM = new javax.swing.JRadioButton();
-        jRbtnSalidaPM = new javax.swing.JRadioButton();
-        jRBtnEntradaAM = new javax.swing.JRadioButton();
-        jRbtnEntradaPM = new javax.swing.JRadioButton();
+        jCmbEntradaAMPM = new javax.swing.JComboBox<>();
+        jCmbSalidaAMPM = new javax.swing.JComboBox<>();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -397,22 +393,11 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
         jCmbDiasDeLaSemana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
         add(jCmbDiasDeLaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, -1));
 
-        jBtngSalida.add(jRbtnSalidaAM);
-        jRbtnSalidaAM.setText("AM");
-        jRbtnSalidaAM.setToolTipText("");
-        add(jRbtnSalidaAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, -1, -1));
+        jCmbEntradaAMPM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
+        add(jCmbEntradaAMPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
 
-        jBtngSalida.add(jRbtnSalidaPM);
-        jRbtnSalidaPM.setText("PM");
-        add(jRbtnSalidaPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, -1, -1));
-
-        jBtngEntrada.add(jRBtnEntradaAM);
-        jRBtnEntradaAM.setText("AM");
-        add(jRBtnEntradaAM, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, -1, -1));
-
-        jBtngEntrada.add(jRbtnEntradaPM);
-        jRbtnEntradaPM.setText("PM");
-        add(jRbtnEntradaPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+        jCmbSalidaAMPM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
+        add(jCmbSalidaAMPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnGenerarSubtotalDeHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGenerarSubtotalDeHorasActionPerformed
@@ -425,15 +410,13 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     private javax.swing.ButtonGroup jBtngEntrada;
     private javax.swing.ButtonGroup jBtngSalida;
     private javax.swing.JComboBox<String> jCmbDiasDeLaSemana;
+    private javax.swing.JComboBox<String> jCmbEntradaAMPM;
+    private javax.swing.JComboBox<String> jCmbSalidaAMPM;
     private javax.swing.JLabel jLbDia;
     private javax.swing.JLabel jLbEntrada;
     private javax.swing.JLabel jLbFecha;
     private javax.swing.JLabel jLbSalida;
     private javax.swing.JLabel jLbSubtotalDeHoras;
-    private javax.swing.JRadioButton jRBtnEntradaAM;
-    private javax.swing.JRadioButton jRbtnEntradaPM;
-    private javax.swing.JRadioButton jRbtnSalidaAM;
-    private javax.swing.JRadioButton jRbtnSalidaPM;
     private javax.swing.JTextField jTxtEntrada;
     private javax.swing.JTextField jTxtFecha;
     private javax.swing.JTextField jTxtSalida;

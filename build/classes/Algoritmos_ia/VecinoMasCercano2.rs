@@ -1,6 +1,0 @@
-Algoritmos_ia.Ciudad
-Algoritmos_ia.VecinoMasCercano2
-Algoritmos_ia.Rs
-Algoritmos_ia.Problema
-Algoritmos_ia.ListaDeCiudades
-Algoritmos_ia.Ruta

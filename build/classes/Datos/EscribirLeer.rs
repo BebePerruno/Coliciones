@@ -1,2 +1,0 @@
-Datos.EscribirLeer
-Datos.Uno

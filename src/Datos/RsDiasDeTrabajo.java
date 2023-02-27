@@ -91,10 +91,14 @@ public class RsDiasDeTrabajo implements RsEstructura<DiaDeTrabajo>, Iterable<Dia
 
     @Override
     public DiaDeTrabajo get(DiaDeTrabajo registro_a_obtener) {
-        for (int i=0; i<DiasDeTrabajo.size(); i++){
-            if(registro_a_obtener.getFecha().equalsIgnoreCase(DiasDeTrabajo.get(i).getFecha())==true){
-                return DiasDeTrabajo.get(i);
+        try{
+            for (int i=0; i<DiasDeTrabajo.size(); i++){
+                if(registro_a_obtener.getFecha().equalsIgnoreCase(DiasDeTrabajo.get(i).getFecha())==true){
+                    return DiasDeTrabajo.get(i);
+                }
             }
+        }catch(Exception e){
+            System.out.println(e);
         }
         return null;
     }

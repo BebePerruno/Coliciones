@@ -16,13 +16,13 @@ public class FrmCosturas extends javax.swing.JFrame {
     /**
      * Se usa en las busquedas y para proporcionar la informacion encontrada a los formularios.
      */
-    private DiaDeTrabajo punteroDeRegistros=new DiaDeTrabajo("2");
+    private DiaDeTrabajo punteroDeRegistros=null;//new DiaDeTrabajo("0");
     
     
     private class frmModificarDiaDeTrabajo extends FrmModificarCosturas{
         
-        public frmModificarDiaDeTrabajo(){
-            super(dias.get(punteroDeRegistros));
+        public frmModificarDiaDeTrabajo(DiaDeTrabajo un_dia_de_trabajo){
+            super(dias.get(un_dia_de_trabajo));
         }
 
         @Override
@@ -212,8 +212,20 @@ public class FrmCosturas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
+    private void cargarDiaDeTrabajo(){
+        punteroDeRegistros=new DiaDeTrabajo("0");
+        punteroDeRegistros.setDia(jpDiaDeTrabajo1.getDia());
+        punteroDeRegistros.setFecha(jpDiaDeTrabajo1.getFecha());
+        punteroDeRegistros.setEntrada(jpDiaDeTrabajo1.getEntrada());
+        punteroDeRegistros.setEntradaAmPm(jpDiaDeTrabajo1.getEntradaAmPm());
+        punteroDeRegistros.setSalida(jpDiaDeTrabajo1.getSalida());
+        punteroDeRegistros.setSalidaAmPm(jpDiaDeTrabajo1.getSalidaAmPm());
+        punteroDeRegistros.setSubtotalDeHoras(jpDiaDeTrabajo1.getSubtotalDeHoras());
+    }
+    
     private void jBtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnModificarActionPerformed
-        frmModificarDiaDeTrabajo frmModificar=new frmModificarDiaDeTrabajo();
+        cargarDiaDeTrabajo();
+        frmModificarDiaDeTrabajo frmModificar=new frmModificarDiaDeTrabajo(punteroDeRegistros);
         frmModificar.setVisible(true);
 //        jBtnModificar.setEnabled(false);
     }//GEN-LAST:event_jBtnModificarActionPerformed

@@ -1,4 +1,0 @@
-Experimentos.Sprite4Dibujador
-Experimentos.UnidadAbstract
-Experimentos.UnidadBasica2
-Experimentos.UnidadBasica
