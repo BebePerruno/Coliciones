@@ -310,15 +310,40 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
     
     
     public void SubtotalDeHorasGenerarlo(){
-        double totalDeHorasEnUnDia=0;
-        double minutosSumatoria=(this.getEntradaMinutos()+this.getSalidaMinutos());
-        minutosSumatoria/=60;
-        //Si es pm entonces aplicar hora militar.
-//        System.out.println("getSalidaHoras()="+getSalidaHoras());
-        double horasSumatoria=this.getSalidaHoras()-this.getEntradaHoras();
+        int totalDeHorasEnUnDia=0;
+        int horasSumatoria=0;
+        int minutosSumatoria=0;
+        int entradaLocal=getEntradaHoras();
+        if(getEntradaMinutos()>=1){
+            entradaLocal+=1;
+            minutosSumatoria=getSalidaMinutos()+(60-getEntradaMinutos());
+        }
+        else if(getEntradaMinutos()==0){
+            minutosSumatoria=getSalidaMinutos();
+        }
+        
+        System.out.println("minutosSumatoria="+minutosSumatoria);
+        if(minutosSumatoria>=61){
+            minutosSumatoria-=60;
+            //Si es pm entonces aplicar hora militar.
+            horasSumatoria=this.getSalidaHoras()-1-entradaLocal;
+        }
+        else if(minutosSumatoria==60){
+            minutosSumatoria=0;
+            horasSumatoria=this.getSalidaHoras()-entradaLocal+1;
+        }
+        else if(minutosSumatoria<=59 && minutosSumatoria>=1){
+            horasSumatoria=this.getSalidaHoras()-entradaLocal;
+        }
+        else if(minutosSumatoria<=0){
+            horasSumatoria=this.getSalidaHoras()-entradaLocal;
+        }
+        System.out.println("getSalidaHoras() "+getSalidaHoras());
+        System.out.println("entradaLocal="+entradaLocal);
+        System.out.println("horas="+horasSumatoria);
 //        System.out.println("minutosSumatoria="+minutosSumatoria );
-        totalDeHorasEnUnDia=horasSumatoria+minutosSumatoria;
-        this.setSubtotalDeHoras(totalDeHorasEnUnDia+"");
+        totalDeHorasEnUnDia=horasSumatoria;
+        this.setSubtotalDeHoras(totalDeHorasEnUnDia+":"+minutosSumatoria);
     }
     /**
      * Creates new form jpDiaDeTrabajo
