@@ -34,6 +34,8 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLbTotalDeHoras = new javax.swing.JLabel();
+        jTxtTotalDeHoras = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMnuArchivo = new javax.swing.JMenu();
         jMnuiGuardarSemana = new javax.swing.JMenuItem();
@@ -46,6 +48,7 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -59,7 +62,14 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 770, 370));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 770, 310));
+
+        jLbTotalDeHoras.setText("Total de horas trabajadas");
+        getContentPane().add(jLbTotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, -1, -1));
+
+        jTxtTotalDeHoras.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTxtTotalDeHoras.setText("0");
+        getContentPane().add(jTxtTotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 280, -1));
 
         jMnuArchivo.setText("Archivo");
 
@@ -120,6 +130,10 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
         semanas=nueva_semana;
     }
     
+    public void setTotalDeHoras(String nuevo_total){
+        jTxtTotalDeHoras.setText(nuevo_total);
+    }
+    
     private SemanaDeTrabajo punteroDeSemana=null;
     private RsSemanasDeTrabajo semanas=null;
     public abstract void eveClickSemana(RsDiasDeTrabajo nuevos_dias_de_trabajo);
@@ -146,6 +160,7 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLbTotalDeHoras;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMnuArchivo;
     private javax.swing.JMenuItem jMnuiGuardarSemana;
@@ -155,5 +170,6 @@ public abstract class FrmCuadricula extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTxtTotalDeHoras;
     // End of variables declaration//GEN-END:variables
 }

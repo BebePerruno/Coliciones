@@ -109,6 +109,11 @@ public class FrmCosturas extends javax.swing.JFrame {
         jBtnBuscar = new javax.swing.JButton();
         jBtnSeleccionarOtraSemana = new javax.swing.JButton();
         jBtnNuevaSemana = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMnuArchivo = new javax.swing.JMenu();
+        jMnuiSalir = new javax.swing.JMenuItem();
+        jMnuInsertar = new javax.swing.JMenu();
+        jMnuiFecha = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Costuras");
@@ -158,7 +163,7 @@ public class FrmCosturas extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 60, -1));
-        getContentPane().add(jpDiaDeTrabajo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 710, -1));
+        getContentPane().add(jpDiaDeTrabajo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 710, -1));
 
         jBtnBuscar.setText("Buscar");
         jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +188,32 @@ public class FrmCosturas extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jBtnNuevaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 340, 210, -1));
+
+        jMnuArchivo.setText("Archivo");
+
+        jMnuiSalir.setText("Salir");
+        jMnuiSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnuiSalirActionPerformed(evt);
+            }
+        });
+        jMnuArchivo.add(jMnuiSalir);
+
+        jMenuBar1.add(jMnuArchivo);
+
+        jMnuInsertar.setText("Insertar");
+
+        jMnuiFecha.setText("Fecha");
+        jMnuiFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMnuiFechaActionPerformed(evt);
+            }
+        });
+        jMnuInsertar.add(jMnuiFecha);
+
+        jMenuBar1.add(jMnuInsertar);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -305,6 +336,7 @@ public class FrmCosturas extends javax.swing.JFrame {
         frmTabla.setVisible(true);
         try {
             frmTabla.setTableModel(this.dias.getCuadricula());
+            frmTabla.setTotalDeHoras(dias.getTotalDeHoras());
         } catch (getCuadriculaException ex) {
             System.out.println(ex.getMessage());
         }
@@ -348,6 +380,25 @@ public class FrmCosturas extends javax.swing.JFrame {
     private void jBtnNuevaSemanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNuevaSemanaActionPerformed
         dias=new RsDiasDeTrabajo();
     }//GEN-LAST:event_jBtnNuevaSemanaActionPerformed
+
+    
+    private class FrmFecha extends FrmInsertarFecha{
+
+        @Override
+        public void eveFechaGenerada(String nueva_fecha) {
+            jpDiaDeTrabajo1.setFecha(nueva_fecha);
+        }
+        
+    }
+    
+    private void jMnuiFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuiFechaActionPerformed
+        FrmFecha f=new FrmFecha();
+        f.setVisible(true);
+    }//GEN-LAST:event_jMnuiFechaActionPerformed
+
+    private void jMnuiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuiSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMnuiSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,6 +445,11 @@ public class FrmCosturas extends javax.swing.JFrame {
     private javax.swing.JButton jBtnSalir;
     private javax.swing.JButton jBtnSeleccionarOtraSemana;
     private javax.swing.JButton jBtnVerCuadricula;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMnuArchivo;
+    private javax.swing.JMenu jMnuInsertar;
+    private javax.swing.JMenuItem jMnuiFecha;
+    private javax.swing.JMenuItem jMnuiSalir;
     private TrabajosEnCosturas.jpDiaDeTrabajo jpDiaDeTrabajo1;
     // End of variables declaration//GEN-END:variables
 }

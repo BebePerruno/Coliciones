@@ -360,26 +360,30 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
         jLbFecha.setText("Fecha");
         add(jLbFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 80, -1));
 
+        jTxtFecha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTxtFecha.setText("00/00/0000");
         add(jTxtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 460, -1));
 
         jLbEntrada.setText("Entrada");
         add(jLbEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 150, -1));
 
+        jTxtEntrada.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTxtEntrada.setText("00:00");
         add(jTxtEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 150, -1));
 
         jLbSalida.setText("Salida");
         add(jLbSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 150, -1));
 
+        jTxtSalida.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTxtSalida.setText("00:00");
         add(jTxtSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, 150, -1));
 
         jLbSubtotalDeHoras.setText("Subtotal");
         add(jLbSubtotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 140, 30));
 
+        jTxtSubtotalDeHoras.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTxtSubtotalDeHoras.setText("0");
-        add(jTxtSubtotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 140, -1));
+        add(jTxtSubtotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 450, -1));
 
         jBtnGenerarSubtotalDeHoras.setText("Generar subtotal de horas");
         jBtnGenerarSubtotalDeHoras.setToolTipText("Generar subtotal de horas");
@@ -388,14 +392,17 @@ public class jpDiaDeTrabajo extends javax.swing.JPanel implements iDiaDeTrabajo 
                 jBtnGenerarSubtotalDeHorasActionPerformed(evt);
             }
         });
-        add(jBtnGenerarSubtotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 180, -1));
+        add(jBtnGenerarSubtotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 180, -1));
 
+        jCmbDiasDeLaSemana.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jCmbDiasDeLaSemana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
         add(jCmbDiasDeLaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, -1));
 
+        jCmbEntradaAMPM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jCmbEntradaAMPM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
         add(jCmbEntradaAMPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
 
+        jCmbSalidaAMPM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jCmbSalidaAMPM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "PM" }));
         add(jCmbSalidaAMPM, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents

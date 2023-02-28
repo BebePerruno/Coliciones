@@ -65,6 +65,7 @@ public abstract class FrmBuscarSemanas extends javax.swing.JFrame implements Tot
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jList1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -97,7 +98,7 @@ public abstract class FrmBuscarSemanas extends javax.swing.JFrame implements Tot
         getContentPane().add(jLbTotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, -1, -1));
 
         jTxtTotalDeHoras.setText("0");
-        getContentPane().add(jTxtTotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 90, -1));
+        getContentPane().add(jTxtTotalDeHoras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 280, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

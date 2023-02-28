@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Jugador
- * @param <Plantilla>
+ * @param <Plantilla> Cualquier class que sirva como contenedor de datos.
  */
 public interface RsEstructura <Plantilla>{
     public void add(Plantilla nuevo_registro);
@@ -28,50 +28,4 @@ public interface RsEstructura <Plantilla>{
     public AbstractListModel<String> getAbstractListModel()throws getAbstractListModelException;
     public int Size();
     public String []getVector()throws getVectorException;
-}
-
-class getVectorException extends Exception{
-    public getVectorException(){
-        super("No existen datos para poder llenar el vector.");
-    }
-}
-
-class getAbstractListModelException extends Exception{
-    public getAbstractListModelException(){
-        super("No existen datos para poder llenar el jListBox.");
-    }
-}
-
-class getDefaultComboBoxModelException extends Exception{
-    public getDefaultComboBoxModelException(){
-        super("No existen datos para poder llenar el JComboBox.");
-    }
-}
-
-class getMatrizException extends Exception{
-    public getMatrizException(){
-        super("No existen datos para poder llenar la matriz.");
-    }
-}
-
-class getCuadriculaException extends Exception{
-    public getCuadriculaException(){
-        super("No existen datos para poder llenar la cuadricula.");
-    }
-}
-
-class BuscarRsException extends Exception{
-    public BuscarRsException(){
-        super("El registro no existe y por eso se retornó un null");
-    }
-}
-
-//class GetRsException extends BuscarRsException{
-//    
-//}
-
-class ModificarRsException extends Exception{
-    public ModificarRsException(){
-        super("El registro no se pudo modificar con exito y por eso se retornó un null");
-    }
 }

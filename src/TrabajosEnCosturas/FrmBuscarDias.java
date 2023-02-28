@@ -48,6 +48,7 @@ public abstract class FrmBuscarDias extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jList1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -80,6 +81,8 @@ public abstract class FrmBuscarDias extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 380, 60, -1));
+
+        jTxtBuscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         getContentPane().add(jTxtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 360, -1));
 
         jBtnBuscar.setText("Buscar");
