@@ -30,9 +30,13 @@ public class RsDiasDeTrabajo implements RsEstructura<DiaDeTrabajo>, Iterable<Dia
     public String getTotalDeHoras(){
         double horas=0;
 //        String []m={};
-        for(DiaDeTrabajo dia: DiasDeTrabajo){
-//            m=dia.getSubtotalDeHoras().split(":");
-            horas+=Double.parseDouble(dia.getSubtotalDeHoras());//+(Double.parseDouble(m[1] )/60);
+        try{
+            for(DiaDeTrabajo dia: DiasDeTrabajo){
+    //            m=dia.getSubtotalDeHoras().split(":");
+                horas+=Double.parseDouble(dia.getSubtotalDeHoras());//+(Double.parseDouble(m[1] )/60);
+            }
+        }catch(Exception e){
+            System.out.println("Error en getTotalDeHoras\n" + e.getMessage());
         }
 //        System.out.println("h.charAt(0)+\"\"+h.charAt(1)="+h.charAt(0)+""+h.charAt(1));
         return horas+"";

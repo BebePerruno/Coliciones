@@ -363,10 +363,12 @@ public class FrmCosturas extends javax.swing.JFrame {
                 punteroDeSemana=rsSemanas.buscar(new SemanaDeTrabajo(datos));
                 System.out.println("punteroDeSemana.getTotalDeHoras()= "+punteroDeSemana.getTotalDeHoras());
                 this.setTotalDeHoras(punteroDeSemana.getTotalDeHoras()+"");
+                dias=punteroDeSemana.getDiasSemanales();
             } catch (BuscarRsException ex) {
                 Logger.getLogger(FrmCosturas.class.getName()).log(Level.SEVERE, null, ex);
             }
-            dias=punteroDeSemana.getDiasSemanales();
+//            dias=punteroDeSemana.getDiasSemanales();
+            punteroDeRegistros=dias.get(0);
             mostrarDatos();
         }
         

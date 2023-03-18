@@ -9,12 +9,13 @@ package Hilos;
  * @author Rafael
  */
 public class HiloConsumidor extends Thread{
-    private Contenedor contenedor=null;
+    
     
     public HiloConsumidor(Contenedor nuevo_contenedor){
         contenedor=nuevo_contenedor;
     }
     
+    private Contenedor contenedor=null;
     @Override
     public void run(){
         int consumiendo=contenedor.getProducto();
