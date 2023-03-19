@@ -32,7 +32,7 @@ public class Coordenadas {
     private String Xtxt="", Ytxt="";
 
     public int getX(int id){
-        if(sizeX()>=0){
+        if(sizeX()>=0 && id<sizeX()){
 //            if(id<0){
 //                id=0;
 //            }
@@ -45,7 +45,7 @@ public class Coordenadas {
     }
 
     public int getY(int id){
-        if(sizeY()>=0){
+        if(sizeY()>=0 && id<sizeY()){
 //            if(id<0){
 //                id=0;
 //            }

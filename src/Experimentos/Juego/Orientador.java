@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author Rafael
  */
-public abstract class Orientador extends Graficador {
+public abstract class Orientador extends Graficador implements Movimientos {
     
     public Orientador(int nuevoX, int nuevoY, int nuevoWidth, int nuevoHeight){
         super(nuevoX,nuevoY,nuevoWidth,nuevoHeight);
@@ -50,14 +50,17 @@ public abstract class Orientador extends Graficador {
         return resultado;
     }
 
+    @Override
     public void setVelocidad(int nuevaVelocidad) {
         velocidad = nuevaVelocidad;
     }
 
+    @Override
     public int getVelocidad() {
         return this.velocidad;
     }
 
+    @Override
     public void moverArriba() {
         y -= velocidad;
         if (y <= LimiteSuperior) {
@@ -66,6 +69,7 @@ public abstract class Orientador extends Graficador {
         moverme();
     }
 
+    @Override
     public void moverAbajo() {
         y += 10;
         if (y >= LimiteInferior) {
@@ -74,6 +78,7 @@ public abstract class Orientador extends Graficador {
         moverme();
     }
 
+    @Override
     public void moverDrecha() {
         x += velocidad;
         if (x >= LimiteDerecho) {
@@ -82,6 +87,7 @@ public abstract class Orientador extends Graficador {
         moverme();
     }
 
+    @Override
     public void moverIzquierda() {
         x -= velocidad;
         if (x <= LimiteIzquierdo) {
