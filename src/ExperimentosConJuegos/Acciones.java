@@ -8,9 +8,10 @@ package ExperimentosConJuegos;
  *
  * @author Jugador
  */
-public interface Acciones {
+public interface Acciones <Plantilla>{
     public void crearUnidad();
     public void crearEdificio();
     public void moverse();//(plantilla nuevo);
     public void diferentesAcciones();
+    public boolean validarColision(Plantilla nuevo);
 }

@@ -123,7 +123,18 @@ public class PersonajeLabel extends JLabel{
         DibujarImagen(imagen_elegida);
     }
     
+//    private boolean coliciono=false;
+//    
+//    public boolean getColiciono(){
+//        return coliciono;
+//    }
+//    
     public boolean colision(JLabel unidad_contra_la_cual_colisiona){
+        if(unidad_contra_la_cual_colisiona==null){
+//            coliciono=false;
+            return false;
+        }
+//        coliciono=this.getBounds().intersects(unidad_contra_la_cual_colisiona.getBounds());
         return this.getBounds().intersects(unidad_contra_la_cual_colisiona.getBounds());
     }
     

@@ -8,7 +8,7 @@ import Experimentos.Juego.Coordenadas;
 import Experimentos.Juego.Movimientos;
 
 /**
- *
+ * Investigar como detectar instancias de un class en Java.
  * @author Jugador
  */
 public class Personaje  implements Movimientos {
@@ -88,8 +88,9 @@ public class Personaje  implements Movimientos {
     public void ponerLabel(int x,int y,TipoDeImagen imagen_para_el_personaje){
         quitarLabel();
         DibujoDelPersonaje=new PersonajeLabel(x,y,imagen_para_el_personaje);
+        DibujoDelPersonaje.setVisible(true);
         soloTexto();
-        System.out.println(imagen_para_el_personaje);
+        System.out.println("Undad colocada con ponerLabel() ="+imagen_para_el_personaje);
     }
     
     public void quitarLabel(){
@@ -101,18 +102,23 @@ public class Personaje  implements Movimientos {
         }
     }
     
-   public Personaje(int x,int y,TipoDeImagen imagen_para_el_personaje){
+   public Personaje(int nuevo_x,int nuevo_y,TipoDeImagen imagen_para_el_personaje){
 //       DibujoDelPersonaje=new PersonajeLabel(x,y,imagen_para_el_personaje);
 //       imagenDelPersonaje=imagen_para_el_personaje;
 //       soloTexto();
-        this.ponerLabel(x, y, imagen_para_el_personaje);
+        this.ponerLabel(nuevo_x, nuevo_y, imagen_para_el_personaje);
+        this.setX_UltimaPosicion(nuevo_x);
+        this.setY_UltimaPosicion(nuevo_y);
+        soloTexto();
    }
     
-   public Personaje(int x, int y, int ancho, int altura, TipoDeImagen imagen_para_el_personaje){
-       DibujoDelPersonaje=new PersonajeLabel(x,y,ancho, altura, imagen_para_el_personaje);
+   public Personaje(int nuevo_x, int nuevo_y, int ancho, int altura, TipoDeImagen imagen_para_el_personaje){
+       DibujoDelPersonaje=new PersonajeLabel(nuevo_x,nuevo_y,ancho, altura, imagen_para_el_personaje);
        imagenDelPersonaje=imagen_para_el_personaje;
        System.out.println(imagen_para_el_personaje);
        soloTexto();
+       this.setX_UltimaPosicion(nuevo_x);
+       this.setY_UltimaPosicion(nuevo_y);
    }
    
    @Override
@@ -125,6 +131,9 @@ public class Personaje  implements Movimientos {
     public static int LimiteIzquierdo=0;
     public static int LimiteDerecho=200;
     
+    public void setX_UltimaPosicion(int nueva_ultima_posicion){
+        x=nueva_ultima_posicion;
+    }
     /**
      * Antes de moverse permite saber donde esta la imagen.
      * @return 
@@ -133,6 +142,9 @@ public class Personaje  implements Movimientos {
         return x;
     }
     
+    public void setY_UltimaPosicion(int nueva_ultima_posicion){
+        y=nueva_ultima_posicion;
+    }
     /**
      * Antes de moverse permite saber donde esta la imagen.
      * @return 
@@ -150,6 +162,7 @@ public class Personaje  implements Movimientos {
         if (y >= LimiteInferior) {
             y = LimiteInferior;
         }
+        DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
     }
 
     @Override
@@ -158,6 +171,7 @@ public class Personaje  implements Movimientos {
         if (y <= LimiteSuperior) {
             y = LimiteSuperior;
         }
+        DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
     }
 
     @Override
@@ -166,15 +180,20 @@ public class Personaje  implements Movimientos {
         if (x >= LimiteDerecho) {
             x = LimiteDerecho;
         }
+        DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
     }
 
     
     @Override
     public void moverIzquierda() {
-        x -= velocidad;
-        if (x <= LimiteIzquierdo) {
-            x = LimiteIzquierdo;
-        }
+//        if(DibujoDelPersonaje.getColiciono()==false){
+//            System.out.println(DibujoDelPersonaje.getColiciono());
+            x -= velocidad;
+            if (x <= LimiteIzquierdo) {
+                x = LimiteIzquierdo;
+            }
+            DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+//        }
     }
 
     private int velocidad=5;
