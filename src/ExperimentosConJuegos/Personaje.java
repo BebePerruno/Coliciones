@@ -13,6 +13,16 @@ import Experimentos.Juego.Movimientos;
  */
 public class Personaje  implements Movimientos {
     
+    private double mejorSitio=0;
+    
+    public void setMejorSitio(double nuevo_mejor_sitio){
+        mejorSitio=nuevo_mejor_sitio;
+    }
+    
+    public double getMejorSitio(){
+        return mejorSitio;
+    }
+    
     private Faccion faccion=null;
     
     public void setFaccion(Faccion nueva_faccion){
@@ -115,6 +125,22 @@ public class Personaje  implements Movimientos {
     public static int LimiteIzquierdo=0;
     public static int LimiteDerecho=200;
     
+    /**
+     * Antes de moverse permite saber donde esta la imagen.
+     * @return 
+     */
+    public int getX_UltimaPosicion(){
+        return x;
+    }
+    
+    /**
+     * Antes de moverse permite saber donde esta la imagen.
+     * @return 
+     */
+    public int getY_UltimaPosicion(){
+        return y;
+    }
+    
     private int x=0;
     private int y=0;
     
@@ -151,12 +177,10 @@ public class Personaje  implements Movimientos {
         }
     }
 
-    private int velocidad=10;
+    private int velocidad=5;
     
     @Override
     public void setVelocidad(int nuevaVelocidad) {
         velocidad=nuevaVelocidad;
     }
-    
-    
 }

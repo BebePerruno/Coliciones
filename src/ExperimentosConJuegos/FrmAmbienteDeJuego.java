@@ -15,6 +15,7 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
      */
     public FrmAmbienteDeJuego() {
         initComponents();
+        this.setBounds(100, 100, 1100, 500);
     }
 
     /**
@@ -31,7 +32,7 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
         getContentPane().add(jPJuego2);
-        jPJuego2.setBounds(20, 20, 800, 450);
+        jPJuego2.setBounds(10, 10, 1070, 520);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

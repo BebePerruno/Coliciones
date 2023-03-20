@@ -17,10 +17,120 @@ import javax.swing.JLabel;
  */
 public class jPJuego extends javax.swing.JPanel {
 
+    public int numeroAleatorio(int Min, int Max){
+        return (int)(Math.random()*(Max-Min+1)+Min);
+    }
+    
     private ArrayList<Personaje> soldadosAliados=new ArrayList();
     private ArrayList<Personaje> soldadosEnemigos=new ArrayList();
     private EdificiosAliados edificiosAliados=new EdificiosAliados();
     private EdificiosEnemigos edificiosEnemigos=new EdificiosEnemigos();
+    
+    public class AccionesEnemigas implements Acciones{
+        
+        public AccionesEnemigas(){
+            crearUnidad();
+//            crearUnidad();
+        }
+        
+        @Override
+        public void crearUnidad() {
+            Personaje unSoldado=new Personaje(edificiosEnemigos.getPosicionDeLaBase().getX()+100, edificiosEnemigos.getPosicionDeLaBase().getY()+100, TipoDeImagen.Robot);
+            soldadosEnemigos.add(unSoldado);
+            add(soldadosEnemigos.get(soldadosEnemigos.size()-1).getLabel());
+        }
+
+        @Override
+        public void crearEdificio() {
+            int id=numeroAleatorio(1,soldadosEnemigos.size());
+            if(id>=soldadosEnemigos.size() || id<=-1){id=0;}
+            Personaje unSoldado=soldadosEnemigos.get(id);
+            int a=numeroAleatorio(1,5);
+            switch(a){
+                case 1:
+                    add(edificiosEnemigos.getBase(unSoldado.getX(), unSoldado.getY()).getLabel());
+                    break;
+                case 2:
+                    add(edificiosEnemigos.getFabrica(unSoldado.getX(), unSoldado.getY()).getLabel());
+                    break;
+                case 3:
+                    add(edificiosEnemigos.getGenerador(unSoldado.getX(), unSoldado.getY()).getLabel());
+                    break;
+                case 4:
+                    add(edificiosEnemigos.getBodega(unSoldado.getX(), unSoldado.getY()).getLabel());
+                    break;
+                case 5:
+                    add(edificiosEnemigos.getTorre(unSoldado.getX(), unSoldado.getY()).getLabel());
+                    break;
+                default:
+                    System.out.print("No se puede crear el edificion con el id="+a);
+                    break;
+            }
+        }
+
+        @Override
+        public void moverse() {
+            Personaje nuevo=soldadosEnemigos.get(soldadosEnemigos.size()-1);
+            nuevo.quitarLabel();
+                    nuevo.moverDrecha();
+                    nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Tanque);
+                    add(nuevo.getLabel());
+//            int id=numeroAleatorio(1,soldadosEnemigos.size());
+//            if(id==soldadosEnemigos.size()){id=0;}
+//            Personaje nuevo=soldadosEnemigos.get(id);
+//            int a=1;
+//            switch(a){
+//                case 1:
+//                    nuevo.quitarLabel();
+//                    nuevo.moverDrecha();
+//                    nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Tanque);
+//                    add(nuevo.getLabel());
+//                    break;
+//                case 2:
+//                    nuevo.quitarLabel();
+//                    nuevo.moverArriba();
+//                    nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Tanque);
+//                    add(nuevo.getLabel());
+//                    break;
+//                case 3:
+//                    nuevo.quitarLabel();
+//                    nuevo.moverIzquierda();
+//                    nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Tanque);
+//                    add(nuevo.getLabel());
+//                    break;
+//                case 4:
+//                    nuevo.quitarLabel();
+//                    nuevo.moverAbajo();
+//                    nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Tanque);
+//                    add(nuevo.getLabel());
+//                    break;
+//            }
+        }
+
+        @Override
+        public void diferentesAcciones() {
+            int a=numeroAleatorio(2,3);
+            
+            switch(a){
+                case 1:
+                    try{
+                        System.out.println("Creando un edificio. " + a);
+                        this.crearEdificio();
+                    }catch(Exception e){}
+                    break;
+                case 2:
+                    System.out.println("Creando una unidad. " + a);
+                    this.crearUnidad();
+                    break;
+                case 3:
+                    System.out.println("Moviendose " + a);
+                    this.moverse();
+                    break;
+            }
+        }
+    }
+    
+    
     
     public interface iEdificios{
         /**
@@ -108,11 +218,22 @@ public class jPJuego extends javax.swing.JPanel {
     
     public class EdificiosEnemigos implements iEdificios{
         
+        public PosicionesXY getPosicionDeLaBase(){
+            PosicionesXY xy=new PosicionesXY();
+            if(unaBase!=null){
+                xy.setX(unaBase.getX());
+                xy.setY(unaBase.getY());
+            }
+            return xy;
+        }
+        
+        private Personaje unaBase=null;
+        
         @Override
         public Personaje getBase(int x, int y){
-            Personaje edificion=new Personaje(x,y,TipoDeImagen.Base);
-            edificion.setFaccion(Faccion.Enemigos);
-            return edificion;
+            unaBase=new Personaje(x,y,TipoDeImagen.Base);
+            unaBase.setFaccion(Faccion.Enemigos);
+            return unaBase;
         }
         
         @Override
@@ -152,13 +273,12 @@ public class jPJuego extends javax.swing.JPanel {
     
     
     class Hilo extends Thread{
+        private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
         
         public Hilo(){
         }
         
-        public int numeroAleatorio(int Min, int Max){
-            return (int)(Math.random()*(Max-Min+1)+Min);
-        }
+        
         
         private boolean parar=false;
         
@@ -168,6 +288,7 @@ public class jPJuego extends javax.swing.JPanel {
                 
                 try {
                     sleep(100);
+                    accionesEnemigas.moverse();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(jPJuego.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -200,8 +321,13 @@ public class jPJuego extends javax.swing.JPanel {
      */
     public jPJuego() {
         initComponents();
-        this.add(edificiosAliados.getBase(0, 50).getLabel());
+        Personaje.LimiteDerecho=1000;
+        this.add(edificiosAliados.getBase(0, numeroAleatorio(1,350)).getLabel());
+        this.add(edificiosEnemigos.getBase(870, numeroAleatorio(1,350)).getLabel());
+        
         this.setBounds(new Rectangle(1000,450));
+        Hilo h=new Hilo();
+        h.start();
     }
 
     /**
@@ -237,7 +363,6 @@ public class jPJuego extends javax.swing.JPanel {
         add(jLbCualquierEdificiao2);
         jLbCualquierEdificiao2.setBounds(50, 330, 50, 60);
 
-        jLbCualquierEdificiao3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/TanqueRojo.png"))); // NOI18N
         jLbCualquierEdificiao3.setText("Cualquier edificio");
         jLbCualquierEdificiao3.setToolTipText("");
         jLbCualquierEdificiao3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
