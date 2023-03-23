@@ -12,7 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
+ * Crear un class que pueda guarar las coordenadas XY, ademas el numero de decision de la direccion tomada por la unidad controlada por la computadora.
+ * De esta manera la unidad logrará crear una ruta completa o mejor dicho una ruta circular que es lo más probable.
+ * Si se llega a tal punto entonces, crear un algoritmo para agregar nuevos caminos iniciando los pasos anteriores pero sin perder los datos de las rutas ya conocidas.
  * @author Jugador
  */
 public class jPJuego extends javax.swing.JPanel {
@@ -66,9 +68,21 @@ public class jPJuego extends javax.swing.JPanel {
                     break;
             }
         }
-
         
-        private int postcolision=0;
+        private int desiciones(int todos_los_numeros_menos_este ){
+            int desicionAleatoria=numeroAleatorio(1,4);
+            if(desicionAleatoria==todos_los_numeros_menos_este){
+                desicionAleatoria=(desiciones(todos_los_numeros_menos_este));
+            }else{
+                return desicionAleatoria;
+            }
+            return todos_los_numeros_menos_este;
+        }
+
+        /**
+         * No se usa pero lo conservo por si acaso.
+         */
+//        private int postcolision=0;
         private int desicion=0, valorDeDesicion=1;
         @Override
         public void moverse() {
@@ -80,35 +94,39 @@ public class jPJuego extends javax.swing.JPanel {
                 if(nuevo.getX()>Personaje.LimiteIzquierdo){
                     desicion=1;
                 }else if(nuevo.getX()==Personaje.LimiteIzquierdo  && valorDeDesicion==1){
-                    valorDeDesicion=2;
-                    postcolision=0;
+                    valorDeDesicion=desiciones(1);
+//                    postcolision=0;
+                    System.out.println("Decidiendo al 2");
                 }
             }
             
             if(valorDeDesicion==2){
                 if(nuevo.getX()<Personaje.LimiteDerecho){
                     desicion=2;
-                    postcolision=0;
+//                    postcolision=0;
                 }else if(nuevo.getX()==Personaje.LimiteDerecho && valorDeDesicion==2){
-                    valorDeDesicion=3;
+                    valorDeDesicion=desiciones(2);
+                    System.out.println("Decidiendo al 3");
                 }
             }
             
             if(valorDeDesicion==3){
-                postcolision=0;
+//                postcolision=0;
                 if(nuevo.getY()>Personaje.LimiteSuperior){
                     desicion=3;
                 }else if(nuevo.getY()==Personaje.LimiteSuperior  && valorDeDesicion==3){
-                    valorDeDesicion=4;
+                    valorDeDesicion=desiciones(3);
+                    System.out.println("Decidiendo al 4");
                 }
             }
             
             if(valorDeDesicion==4){
-                postcolision=0;
+//                postcolision=0;
                 if(nuevo.getY()<Personaje.LimiteInferior){
                     desicion=4;
                 }else if(nuevo.getY()==Personaje.LimiteInferior  && valorDeDesicion==4){
-                    valorDeDesicion=1;
+                    valorDeDesicion=desiciones(4);
+                    System.out.println("Decidiendo al 1");
                 }
             }
             
@@ -117,21 +135,16 @@ public class jPJuego extends javax.swing.JPanel {
                     if(validarColision(nuevo)==false){
                         nuevo.moverIzquierda();
                     }else if(validarColision(nuevo)==true){
-                        postcolision++;
-                         if(postcolision<2){
-                             nuevo.moverDrecha();
-                         }else if(postcolision>2){
-                             nuevo.moverIzquierda();nuevo.moverIzquierda();
-                            valorDeDesicion=2; System.out.println("valorDeDesicion="+valorDeDesicion); 
-                        }
+                        valorDeDesicion=desiciones(1); System.out.println("valorDeDesicion="+valorDeDesicion); 
+                        nuevo.moverDrecha();nuevo.moverDrecha();
                     }
                     break;
                 case 2:
                     if(validarColision(nuevo)==false){
-                        nuevo.moverIzquierda();
+                        nuevo.moverDrecha();
                     }else if(validarColision(nuevo)==true){
-                        nuevo.moverDrecha();nuevo.moverDrecha();
-                        valorDeDesicion=3; System.out.println("valorDeDesicion="+valorDeDesicion); 
+                        nuevo.moverIzquierda();nuevo.moverIzquierda();
+                        valorDeDesicion=desiciones(2); System.out.println("valorDeDesicion="+valorDeDesicion); 
                     }
                     break;
                 case 3:
@@ -139,7 +152,7 @@ public class jPJuego extends javax.swing.JPanel {
                         nuevo.moverArriba();
                     }else if(validarColision(nuevo)==true){
                         nuevo.moverAbajo();nuevo.moverAbajo();
-                        valorDeDesicion=4;  System.out.println("valorDeDesicion="+valorDeDesicion);
+                        valorDeDesicion=desiciones(3);  System.out.println("valorDeDesicion="+valorDeDesicion);
                     }
                     break;
                 case 4:
@@ -147,10 +160,11 @@ public class jPJuego extends javax.swing.JPanel {
                         nuevo.moverAbajo();
                     }else if(validarColision(nuevo)==true){
                         nuevo.moverArriba();nuevo.moverArriba();
-                        valorDeDesicion=1;  System.out.println("valorDeDesicion="+valorDeDesicion);
+                        valorDeDesicion=desiciones(4);  System.out.println("valorDeDesicion="+valorDeDesicion);
                     }
                     break;
             }
+            System.out.println("Decidiendome por "+valorDeDesicion);
             
         }
 
@@ -179,21 +193,8 @@ public class jPJuego extends javax.swing.JPanel {
         @Override
         public boolean validarColision(Personaje nuevo) {
 //            Edificios
-            if(nuevo.getLabel().colision(jLbCualquierEdificiao3)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao6)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao10)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao8)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao4)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao5)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao4)==true || nuevo.getLabel().colision(jLbCualquierEdificiao2)==true||nuevo.getLabel().colision(jLbCualquierEdificiao11)==true||nuevo.getLabel().colision(jLbCualquierEdificiao9)==true){
+            if(nuevo.getLabel().colision(jLbCualquierEdificiao15)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao7)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao14)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao12)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao3)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao6)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao10)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao8)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao4)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao5)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao13)==true || nuevo.getLabel().colision(jLbCualquierEdificiao2)==true||nuevo.getLabel().colision(jLbCualquierEdificiao11)==true||nuevo.getLabel().colision(jLbCualquierEdificiao9)==true){
                 System.out.println("Colision con objeto.");
-//                nuevo.quitarLabel();
-//                nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Explosion);
-////                    add(nuevo.getLabel());
-//                for(int a=0; a<soldadosAliados.size(); a++){
-//                    soldadosAliados.get(a).quitarLabel();
-//                    soldadosAliados.get(a).ponerLabel(soldadosAliados.get(a).getX_UltimaPosicion(), soldadosAliados.get(a).getY_UltimaPosicion(), TipoDeImagen.Tanque);
-//                    add(soldadosAliados.get(a).getLabel());
-//                }
-//                for(int a=0; a<soldadosEnemigos.size(); a++){
-//                    soldadosEnemigos.get(a).quitarLabel();
-//                    soldadosEnemigos.get(a).ponerLabel(soldadosEnemigos.get(a).getX_UltimaPosicion(), soldadosEnemigos.get(a).getY_UltimaPosicion(), TipoDeImagen.Explosion);
-//                    add(soldadosEnemigos.get(a).getLabel());
-//                }
                 return true;
             }
             
@@ -492,73 +493,73 @@ public class jPJuego extends javax.swing.JPanel {
         jLbCualquierEdificiao2.setText("Cualquier edificio");
         jLbCualquierEdificiao2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao2);
-        jLbCualquierEdificiao2.setBounds(70, 280, 40, 40);
+        jLbCualquierEdificiao2.setBounds(150, 280, 40, 40);
 
         jLbCualquierEdificiao3.setText("Cualquier edificio");
         jLbCualquierEdificiao3.setToolTipText("");
         jLbCualquierEdificiao3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao3);
-        jLbCualquierEdificiao3.setBounds(90, 100, 50, 40);
+        jLbCualquierEdificiao3.setBounds(10, 160, 40, 30);
 
         jLbCualquierEdificiao5.setText("Cualquier edificio");
         jLbCualquierEdificiao5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao5);
-        jLbCualquierEdificiao5.setBounds(300, 310, 40, 40);
+        jLbCualquierEdificiao5.setBounds(310, 360, 40, 40);
 
         jLbCualquierEdificiao4.setText("Cualquier edificio");
         jLbCualquierEdificiao4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao4);
-        jLbCualquierEdificiao4.setBounds(400, 220, 40, 30);
+        jLbCualquierEdificiao4.setBounds(400, 260, 30, 30);
 
         jLbCualquierEdificiao6.setText("Cualquier edificio");
         jLbCualquierEdificiao6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao6);
-        jLbCualquierEdificiao6.setBounds(240, 70, 40, 40);
+        jLbCualquierEdificiao6.setBounds(240, 10, 30, 40);
 
         jLbCualquierEdificiao7.setText("Cualquier edificio");
         jLbCualquierEdificiao7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao7);
-        jLbCualquierEdificiao7.setBounds(260, 180, 50, 50);
+        jLbCualquierEdificiao7.setBounds(260, 190, 30, 30);
 
         jLbCualquierEdificiao8.setText("Cualquier edificio");
         jLbCualquierEdificiao8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao8);
-        jLbCualquierEdificiao8.setBounds(520, 300, 40, 40);
+        jLbCualquierEdificiao8.setBounds(550, 310, 40, 40);
 
         jLbCualquierEdificiao9.setText("Cualquier edificio");
         jLbCualquierEdificiao9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao9);
-        jLbCualquierEdificiao9.setBounds(380, 70, 40, 40);
+        jLbCualquierEdificiao9.setBounds(390, 90, 30, 40);
 
         jLbCualquierEdificiao10.setText("Cualquier edificio");
         jLbCualquierEdificiao10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao10);
-        jLbCualquierEdificiao10.setBounds(540, 180, 40, 40);
+        jLbCualquierEdificiao10.setBounds(540, 170, 30, 30);
 
         jLbCualquierEdificiao11.setText("Cualquier edificio");
         jLbCualquierEdificiao11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao11);
-        jLbCualquierEdificiao11.setBounds(820, 190, 40, 30);
+        jLbCualquierEdificiao11.setBounds(950, 200, 40, 30);
 
         jLbCualquierEdificiao12.setText("Cualquier edificio");
         jLbCualquierEdificiao12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao12);
-        jLbCualquierEdificiao12.setBounds(810, 60, 50, 50);
+        jLbCualquierEdificiao12.setBounds(780, 130, 30, 30);
 
         jLbCualquierEdificiao13.setText("Cualquier edificio");
         jLbCualquierEdificiao13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao13);
-        jLbCualquierEdificiao13.setBounds(660, 70, 50, 50);
+        jLbCualquierEdificiao13.setBounds(620, 60, 40, 40);
 
         jLbCualquierEdificiao14.setText("Cualquier edificio");
         jLbCualquierEdificiao14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao14);
-        jLbCualquierEdificiao14.setBounds(800, 320, 40, 40);
+        jLbCualquierEdificiao14.setBounds(770, 380, 40, 30);
 
         jLbCualquierEdificiao15.setText("Cualquier edificio");
         jLbCualquierEdificiao15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao15);
-        jLbCualquierEdificiao15.setBounds(690, 210, 40, 30);
+        jLbCualquierEdificiao15.setBounds(690, 220, 40, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 

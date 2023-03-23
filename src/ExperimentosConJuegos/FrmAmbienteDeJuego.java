@@ -30,6 +30,7 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
         jPJuego2 = new ExperimentosConJuegos.jPJuego();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(550, 1100));
         getContentPane().setLayout(null);
         getContentPane().add(jPJuego2);
         jPJuego2.setBounds(10, 10, 1070, 520);

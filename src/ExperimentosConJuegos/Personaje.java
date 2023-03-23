@@ -123,7 +123,7 @@ public class Personaje  implements Movimientos {
    
    @Override
     public int getVelocidad() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.velocidad;
     }
     
     public static int LimiteInferior=200;
