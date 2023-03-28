@@ -7,7 +7,10 @@ package Experimentos.Juego;
 import java.util.ArrayList;
 
 /**
- *
+ * Es bueno pero se le debe hacer una actualizacion.
+ * No quiero destruir este coigo por razones historicas.
+ * Tambien porque sigue sieno util.
+ * 
  * @author Rafael Angel Montero Fernpandez
  */
 public class Coordenadas {

@@ -12,6 +12,13 @@ import Experimentos.Juego.Movimientos;
  * @author Jugador
  */
 public class Personaje  implements Movimientos {
+  /**
+   * Para guardar puntos claves xy.
+   */  
+    public MemoriaRuta memoriaRuta=new MemoriaRuta();
+    public MemoriaDelCamino memoriaDelCamino=new MemoriaDelCamino();
+    
+    
     
     private double mejorSitio=0;
     

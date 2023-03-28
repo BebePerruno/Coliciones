@@ -5,7 +5,7 @@
 package ExperimentosConJuegos;
 
 /**
- *
+ *Permite guardar la posicion xy inicial o final con respecto a cada movimeinto.
  * @author Jugador
  */
 public class PosicionesXY {

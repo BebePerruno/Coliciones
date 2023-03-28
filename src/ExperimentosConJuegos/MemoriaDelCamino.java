@@ -11,14 +11,31 @@ package ExperimentosConJuegos;
  * @author Jugador
  */
 public class MemoriaDelCamino {
-    public PosicionesXY XY=new PosicionesXY();
+    /**
+     * El punto donde esta la unidad antes de recivir la orden de moverse.
+     */
+    public PosicionesXY XY_inicial=new PosicionesXY();
+    /**
+     * El punto donde esta la unidad al finalizar la orden de moverse.
+     */
+    public PosicionesXY XY_final=new PosicionesXY();
     
     private int decision=0;
     
+   /**
+    * Permite guardar la decision de movimeinto.
+    * Y asi no es necesario guardar una gigantesca cantidad de coordenadas xy.
+    * Una buena solucion para el antiguo class gestor de coordenadas.
+    * @param nueva_decision Un numero entre 1 y 4, los cuales son movimientos basicos.
+    */ 
     public void setDecision(int nueva_decision){
         decision=nueva_decision;
     }
     
+    /**
+     * 
+     * @return Retorna el numero entre 1 y 4 que corresponde a una decision de movimiento.
+     */ 
     public int getDecision(){
         return decision;
     }
