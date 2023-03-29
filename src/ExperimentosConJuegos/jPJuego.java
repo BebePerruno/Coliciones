@@ -69,6 +69,11 @@ public class jPJuego extends javax.swing.JPanel {
             }
         }
         
+        /**
+         * 
+         * @param todos_los_numeros_menos_este Un numero que no se desea que se retorne.
+         * @return Retorna cualquier numero menos el que se pasó por parametro.
+         */
         private int desiciones(int todos_los_numeros_menos_este ){
             int desicionAleatoria=numeroAleatorio(1,4);
             if(desicionAleatoria==todos_los_numeros_menos_este){
@@ -78,94 +83,133 @@ public class jPJuego extends javax.swing.JPanel {
             }
             return todos_los_numeros_menos_este;
         }
+        
+        /**
+         * 
+         * @param todos_los_numeros_menos_este Un enum que no se desea que se retorne.
+         * @return Retorna cualquier enum menos el que se pasó por parametro.
+         */
+        private DecisionesDeMovimientos desiciones(DecisionesDeMovimientos todos_los_numeros_menos_este ){
+            int desicionAleatoria=0;
+            switch(todos_los_numeros_menos_este){
+                case izquierda:
+                    desicionAleatoria=desiciones(1);
+                    break;
+                case derecha:
+                    desicionAleatoria=desiciones(2);
+                    break;
+                case arriba:
+                    desicionAleatoria=desiciones(3);
+                    break;
+                case abajo:
+                    desicionAleatoria=desiciones(4);
+                    break;
+                default:
+                    System.out.println("Existe una nueva definicion en desiciones la cual es " + todos_los_numeros_menos_este);
+            }
+            
+            return todos_los_numeros_menos_este.desicionTomada(desicionAleatoria);
+        }
 
         /**
          * No se usa pero lo conservo por si acaso.
          */
 //        private int postcolision=0;
-        private int desicion=0, valorDeDesicion=1;
+        private DecisionesDeMovimientos desicion=DecisionesDeMovimientos.derecha, valorDeDesicion=DecisionesDeMovimientos.derecha;
         @Override
         public void moverse() {
             int id=numeroAleatorio(1,soldadosEnemigos.size());
             if(id==soldadosEnemigos.size()){id=0;}
             Personaje nuevo=soldadosEnemigos.get(id);
-            if(valorDeDesicion==1){
+            
+            /////Descidiendo.
+            if(valorDeDesicion==DecisionesDeMovimientos.izquierda){
                 
                 if(nuevo.getX()>Personaje.LimiteIzquierdo){
-                    desicion=1;
-                }else if(nuevo.getX()==Personaje.LimiteIzquierdo  && valorDeDesicion==1){
-                    valorDeDesicion=desiciones(1);
-//                    postcolision=0;
-                    System.out.println("Decidiendo al 2");
+                    desicion=DecisionesDeMovimientos.izquierda;
+                    nuevo.memoriaDelCamino.setDecision(desicion);
+                }else if(nuevo.getX()==Personaje.LimiteIzquierdo  && valorDeDesicion==DecisionesDeMovimientos.izquierda){
+                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                    valorDeDesicion=desiciones(DecisionesDeMovimientos.izquierda);
                 }
             }
             
-            if(valorDeDesicion==2){
+            if(valorDeDesicion==DecisionesDeMovimientos.derecha){
                 if(nuevo.getX()<Personaje.LimiteDerecho){
-                    desicion=2;
-//                    postcolision=0;
-                }else if(nuevo.getX()==Personaje.LimiteDerecho && valorDeDesicion==2){
-                    valorDeDesicion=desiciones(2);
-                    System.out.println("Decidiendo al 3");
+                    desicion=DecisionesDeMovimientos.derecha;
+                    nuevo.memoriaDelCamino.setDecision(desicion);
+                }else if(nuevo.getX()==Personaje.LimiteDerecho && valorDeDesicion==DecisionesDeMovimientos.derecha){
+                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                    valorDeDesicion=desiciones(DecisionesDeMovimientos.derecha);
                 }
             }
             
-            if(valorDeDesicion==3){
+            if(valorDeDesicion==DecisionesDeMovimientos.arriba){
 //                postcolision=0;
                 if(nuevo.getY()>Personaje.LimiteSuperior){
-                    desicion=3;
-                }else if(nuevo.getY()==Personaje.LimiteSuperior  && valorDeDesicion==3){
-                    valorDeDesicion=desiciones(3);
-                    System.out.println("Decidiendo al 4");
+                    desicion=DecisionesDeMovimientos.arriba;
+                    nuevo.memoriaDelCamino.setDecision(desicion);
+                }else if(nuevo.getY()==Personaje.LimiteSuperior  && valorDeDesicion==DecisionesDeMovimientos.arriba){
+                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                    valorDeDesicion=desiciones(DecisionesDeMovimientos.arriba);
                 }
             }
             
-            if(valorDeDesicion==4){
+            if(valorDeDesicion==DecisionesDeMovimientos.abajo){
 //                postcolision=0;
                 if(nuevo.getY()<Personaje.LimiteInferior){
-                    desicion=4;
-                }else if(nuevo.getY()==Personaje.LimiteInferior  && valorDeDesicion==4){
-                    valorDeDesicion=desiciones(4);
-                    System.out.println("Decidiendo al 1");
+                    desicion=DecisionesDeMovimientos.abajo;
+                    nuevo.memoriaDelCamino.setDecision(desicion);
+                }else if(nuevo.getY()==Personaje.LimiteInferior  && valorDeDesicion==DecisionesDeMovimientos.abajo){
+//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                    valorDeDesicion=desiciones(DecisionesDeMovimientos.abajo);
                 }
             }
-            
+//            System.out.println(desicion +"=En los bordes decidiendo a " + valorDeDesicion);
+            //////Ejecutando las decisiones.
             switch(desicion){
-                case 1:
+                case izquierda:
                     if(validarColision(nuevo)==false){
                         nuevo.moverIzquierda();
                     }else if(validarColision(nuevo)==true){
-                        valorDeDesicion=desiciones(1); System.out.println("valorDeDesicion="+valorDeDesicion); 
+//                        nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                        valorDeDesicion=desiciones(DecisionesDeMovimientos.izquierda); 
+                        nuevo.memoriaDelCamino.setDecision(desicion);
                         nuevo.moverDrecha();nuevo.moverDrecha();
                     }
                     break;
-                case 2:
+                case derecha:
                     if(validarColision(nuevo)==false){
                         nuevo.moverDrecha();
                     }else if(validarColision(nuevo)==true){
+//                        nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                         nuevo.moverIzquierda();nuevo.moverIzquierda();
-                        valorDeDesicion=desiciones(2); System.out.println("valorDeDesicion="+valorDeDesicion); 
+                        valorDeDesicion=desiciones(DecisionesDeMovimientos.derecha);
+                        nuevo.memoriaDelCamino.setDecision(desicion);
                     }
                     break;
-                case 3:
+                case arriba:
                     if(validarColision(nuevo)==false){
                         nuevo.moverArriba();
                     }else if(validarColision(nuevo)==true){
+//                        nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                         nuevo.moverAbajo();nuevo.moverAbajo();
-                        valorDeDesicion=desiciones(3);  System.out.println("valorDeDesicion="+valorDeDesicion);
+                        valorDeDesicion=desiciones(DecisionesDeMovimientos.arriba); 
+                        nuevo.memoriaDelCamino.setDecision(desicion);
                     }
                     break;
-                case 4:
+                case abajo:
                     if(validarColision(nuevo)==false){
                         nuevo.moverAbajo();
                     }else if(validarColision(nuevo)==true){
+//                        nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                         nuevo.moverArriba();nuevo.moverArriba();
-                        valorDeDesicion=desiciones(4);  System.out.println("valorDeDesicion="+valorDeDesicion);
+                        valorDeDesicion=desiciones(DecisionesDeMovimientos.abajo); 
+                        nuevo.memoriaDelCamino.setDecision(desicion);
                     }
                     break;
             }
-            System.out.println("Decidiendome por "+valorDeDesicion);
-            
+//            System.out.println(desicion +"=Contra objetos decidiendo a " + valorDeDesicion);
         }
 
         @Override
@@ -194,7 +238,18 @@ public class jPJuego extends javax.swing.JPanel {
         public boolean validarColision(Personaje nuevo) {
 //            Edificios
             if(nuevo.getLabel().colision(jLbCualquierEdificiao15)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao7)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao14)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao12)==true ||nuevo.getLabel().colision(jLbCualquierEdificiao3)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao6)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao10)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao8)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao4)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao5)==true ||  nuevo.getLabel().colision(jLbCualquierEdificiao13)==true || nuevo.getLabel().colision(jLbCualquierEdificiao2)==true||nuevo.getLabel().colision(jLbCualquierEdificiao11)==true||nuevo.getLabel().colision(jLbCualquierEdificiao9)==true){
-                System.out.println("Colision con objeto.");
+                System.out.println("Colision con objeto en: " + nuevo.memoriaDelCamino.toString());
+                if(nuevo.memoriaDelCamino.XY_final.x_es_mayor_a_cero()==true){
+                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()-nuevo.getVelocidad());
+                }else{
+//                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()+2);
+                }
+                if(nuevo.memoriaDelCamino.XY_final.y_es_mayor_a_cero()==true){
+                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getY()-nuevo.getVelocidad());
+                }else{
+//                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getY()+2);
+                }
+                nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                 return true;
             }
             
@@ -410,7 +465,7 @@ public class jPJuego extends javax.swing.JPanel {
         }
         
         
-        
+        private int contador=100;
         private boolean parar=false;
         
         @Override
@@ -419,7 +474,17 @@ public class jPJuego extends javax.swing.JPanel {
                 
                 try {
                     sleep(10);
-                    accionesEnemigas.moverse();
+                    if(contador>0){
+                        accionesEnemigas.moverse();
+                    }else{
+                        contador=0;
+                        int id=numeroAleatorio(1,soldadosEnemigos.size());
+                        if(id==soldadosEnemigos.size()){id=0;}
+                        Personaje nuevo=soldadosEnemigos.get(id);
+                        //Aqui va el algoritmo.
+                        //Recargando caminos guardados y ejecutandolos.
+                    }
+                    contador--;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(jPJuego.class.getName()).log(Level.SEVERE, null, ex);
                 }

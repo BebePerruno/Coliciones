@@ -27,6 +27,7 @@ public class MemoriaRuta {
     
     
     public void agregarAlFinal(MemoriaDelCamino nueva_memoria_del_camino){
+        System.out.println("Se ha agregado: "+ nueva_memoria_del_camino.toString());
         rsMemoriaDelCamino.add(nueva_memoria_del_camino);
     }
     

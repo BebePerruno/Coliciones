@@ -66,10 +66,6 @@ public class PersonajeLabel extends JLabel{
     public int getPuntosDeVida(){
         return puntosDeVida;
     }
-
-    
-    
-    
     
     public static final int ancho=100;
     public static final int altura=100;

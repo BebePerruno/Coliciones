@@ -19,6 +19,25 @@ public class Personaje  implements Movimientos {
     public MemoriaDelCamino memoriaDelCamino=new MemoriaDelCamino();
     
     
+    public void ejecutarRutasGuardadas(){
+        for(int i=0; i<memoriaRuta.size(); i++){
+            int xInterna=0;
+            int yInterna=0;
+            yInterna=memoriaRuta.getMemoria(i).XY_final.getY();
+            xInterna=memoriaRuta.getMemoria(i).XY_final.getX();
+            //Se necesita saber la posicion inicial o se debe realizar en forma exterior.
+            //Mejor realizo esto en el exterior de este class.
+        }
+    }
+    
+    /**
+     * Permite ir monitoreando los movimientos.
+     */
+    private void documentarMovimientos(){
+        memoriaDelCamino.XY_final.setX(x);
+        memoriaDelCamino.XY_final.setX(y);
+    }
+    
     
     private double mejorSitio=0;
     
@@ -165,11 +184,13 @@ public class Personaje  implements Movimientos {
     
     @Override
     public void moverAbajo() {
-        y += 10;
+        y += velocidad;
         if (y >= LimiteInferior) {
             y = LimiteInferior;
         }
+        documentarMovimientos();
         DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+        documentarMovimientos();
     }
 
     @Override
@@ -179,6 +200,7 @@ public class Personaje  implements Movimientos {
             y = LimiteSuperior;
         }
         DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+        documentarMovimientos();
     }
 
     @Override
@@ -188,6 +210,7 @@ public class Personaje  implements Movimientos {
             x = LimiteDerecho;
         }
         DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+        documentarMovimientos();
     }
 
     

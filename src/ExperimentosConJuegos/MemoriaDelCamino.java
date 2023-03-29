@@ -20,7 +20,7 @@ public class MemoriaDelCamino {
      */
     public PosicionesXY XY_final=new PosicionesXY();
     
-    private int decision=0;
+    private DecisionesDeMovimientos decision=DecisionesDeMovimientos.izquierda;
     
    /**
     * Permite guardar la decision de movimeinto.
@@ -28,7 +28,7 @@ public class MemoriaDelCamino {
     * Una buena solucion para el antiguo class gestor de coordenadas.
     * @param nueva_decision Un numero entre 1 y 4, los cuales son movimientos basicos.
     */ 
-    public void setDecision(int nueva_decision){
+    public void setDecision(DecisionesDeMovimientos nueva_decision){
         decision=nueva_decision;
     }
     
@@ -36,7 +36,13 @@ public class MemoriaDelCamino {
      * 
      * @return Retorna el numero entre 1 y 4 que corresponde a una decision de movimiento.
      */ 
-    public int getDecision(){
+    public DecisionesDeMovimientos getDecision(){
         return decision;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return "Desicion " + this.getDecision() + ", XY_final= " + XY_final.toString() + "; XY_inicial= "+XY_inicial.toString();
     }
 }

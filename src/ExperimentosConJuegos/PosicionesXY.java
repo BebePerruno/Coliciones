@@ -28,4 +28,25 @@ public class PosicionesXY {
         return y;
     }
     
+    public boolean x_es_mayor_a_y(){
+        return x>y;
+    }
+    
+    public boolean y_es_mayor_a_x(){
+        return y>x;
+    }
+    
+    public boolean x_es_mayor_a_cero(){
+        return x>0;
+    }
+    
+    public boolean y_es_mayor_a_cero(){
+        return y>0;
+    }
+    
+    @Override
+    public String toString(){
+        return "x=" + x+", y="+y;
+    }
+    
 }
