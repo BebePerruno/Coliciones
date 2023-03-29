@@ -9,6 +9,16 @@ package ExperimentosConJuegos;
  * @author Jugador
  */
 public class PosicionesXY {
+    
+    public PosicionesXY(){
+        
+    }
+    
+    public PosicionesXY(int nueva_posicion_x, int nueva_posicion_y){
+        x=nueva_posicion_x;
+        y=nueva_posicion_y;
+    }
+    
     private int x=0;
     
     public void setX(int nueva_posicion_x){

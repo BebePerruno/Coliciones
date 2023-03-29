@@ -457,11 +457,56 @@ public class jPJuego extends javax.swing.JPanel {
         }
     }
     
-    
-    class Hilo extends Thread{
+    private class H_ConsumidorProductor extends HiloProductorConsumidor{
+
+        public H_ConsumidorProductor(){
+            super();
+            this.setNivelDeConsumo(1);
+        }
+        
         private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
         
-        public Hilo(){
+        private boolean parar=false;
+        
+        Personaje personaje=new Personaje(0,0,50,50,TipoDeImagen.Tanque);
+        
+        private int contador=100;
+        
+        @Override
+        public void produciendo() {
+            System.out.println("Produciendo");
+            if(contador>0){
+                accionesEnemigas.moverse();
+                contador--;
+            }else{
+                try{
+                    int id=numeroAleatorio(1,soldadosEnemigos.size());
+                    if(id==soldadosEnemigos.size()){id=0;}
+                    personaje=soldadosEnemigos.get(id);
+                    contador=100;
+                    this.setCantidad( new PosicionesXY(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion()));
+                }catch(Exception e){
+
+                }
+                setCantidad(new PosicionesXY(100, 100));
+                
+            }
+        }
+
+        @Override
+        public void consumiendo(PosicionesXY cantidad_restante) {
+            System.out.println("Consumiendo");
+            personaje.setX_UltimaPosicion(cantidad_restante.getX());
+            
+        }
+        
+    }
+    
+    
+    class Hilo1 extends Thread{
+        private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
+        
+        public Hilo1(){
         }
         
         
@@ -490,7 +535,6 @@ public class jPJuego extends javax.swing.JPanel {
                 }
             }
         }
-        
     }
     
     private void anularLabel(JLabel unLabel){
@@ -523,8 +567,10 @@ public class jPJuego extends javax.swing.JPanel {
         this.add(edificiosEnemigos.getBase(870, numeroAleatorio(1,350)).getLabel());
         
         this.setBounds(new Rectangle(1000,450));
-        Hilo h=new Hilo();
-        h.start();
+//        Hilo h=new Hilo();
+//        h.start();
+          H_ConsumidorProductor h=new H_ConsumidorProductor();
+          
     }
 
     /**

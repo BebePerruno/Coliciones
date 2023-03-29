@@ -42,6 +42,19 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+////        HiloProductorConsumidor h=new HiloProductorConsumidor(5,100) {
+////            @Override
+////            public void produciendo() {
+////                this.setCantidad(100);
+////            }
+////
+////            @Override
+////            public void consumiendo(int cantidad_restante) {
+////                System.out.println("Cantidad restante "  + cantidad_restante);
+////            }
+////        };
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
