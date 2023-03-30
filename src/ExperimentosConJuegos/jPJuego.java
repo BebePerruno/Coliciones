@@ -457,11 +457,15 @@ public class jPJuego extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * No sirve para gestionar las acciones del personaje.
+     * Pero podria servir para gestionar las acciones de unidades diferentes.
+     */
     private class H_ConsumidorProductor extends HiloProductorConsumidor{
 
         public H_ConsumidorProductor(){
             super();
-            this.setNivelDeConsumo(1);
+            this.setRecipienteLleno(true);
         }
         
         private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
@@ -480,24 +484,36 @@ public class jPJuego extends javax.swing.JPanel {
                 contador--;
             }else{
                 try{
-                    int id=numeroAleatorio(1,soldadosEnemigos.size());
-                    if(id==soldadosEnemigos.size()){id=0;}
+                    int id=numeroAleatorio(-1,soldadosEnemigos.size());
+                    if(id==soldadosEnemigos.size() || id>0){id=0;}
+                    personaje=null;
                     personaje=soldadosEnemigos.get(id);
                     contador=100;
-                    this.setCantidad( new PosicionesXY(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion()));
+                    this.setRecipienteLleno(true);
+                    this.setRecipiente();//Esta lleno.
                 }catch(Exception e){
-
+                   this.setRecipienteLleno(true);
+                   setRecipiente();
+                   System.out.println("Error produciendo");
                 }
-                setCantidad(new PosicionesXY(100, 100));
-                
             }
         }
 
         @Override
-        public void consumiendo(PosicionesXY cantidad_restante) {
-            System.out.println("Consumiendo");
-            personaje.setX_UltimaPosicion(cantidad_restante.getX());
-            
+        public void gastado(boolean llenar_recipiente) {
+            System.out.println("Consumiendo un recipiente lleno");
+            System.out.println("Recorriendo");
+            if(personaje!=null){
+//                personaje.quitarLabel();
+//                personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
+                for(int i=0; i<personaje.memoriaRuta.size(); i++){
+                    if(personaje.memoriaRuta.getMemoria(contador)!=null){
+                        personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
+                    }
+                }
+                System.out.println("Recorrido finalizado");
+                setRecipienteLleno(false);
+            }
         }
         
     }

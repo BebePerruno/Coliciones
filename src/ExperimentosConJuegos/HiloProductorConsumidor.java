@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public abstract class HiloProductorConsumidor {
     public abstract void produciendo();
-    public abstract void consumiendo(PosicionesXY cantidad_restante);
+    public abstract void gastado(boolean llenar_recipiente);
     
     private HiloProductor hProductor=new HiloProductor();
     private HiloConsumidor hConsumidor=new HiloConsumidor();
@@ -24,15 +24,15 @@ public abstract class HiloProductorConsumidor {
        hConsumidor.start();
    }
    
-   public HiloProductorConsumidor(int nuevo_nivel_de_consumo){
-       nivelDeConsumo=nuevo_nivel_de_consumo;
+   public HiloProductorConsumidor(boolean llenar_recipiente){
+       recipienteLleno=llenar_recipiente;
        hProductor.start();
        hConsumidor.start();
    }
    
-   public HiloProductorConsumidor(int nuevo_nivel_de_consumo, PosicionesXY nueva_cantidad){
-       nivelDeConsumo=nuevo_nivel_de_consumo;
-       cantidad=nueva_cantidad;
+   public HiloProductorConsumidor(boolean llenar_recipiente, boolean estado_del_recipiente){
+       recipienteLleno=llenar_recipiente;
+       recipiente=estado_del_recipiente;
        hProductor.start();
        hConsumidor.start();
    }
@@ -41,42 +41,47 @@ public abstract class HiloProductorConsumidor {
     * Cantidad que se le va restando al recorrido.
     * Ya sea un ArrayList o una cantidad numerica.
     */
-    private int nivelDeConsumo=1;
+    private boolean recipienteLleno=true;
     
-    public void setNivelDeConsumo(int nuevo_nivel_de_consumo){
-        nivelDeConsumo=nuevo_nivel_de_consumo;
+    public void setRecipienteLleno(boolean llenar_recipiente){
+        recipienteLleno=llenar_recipiente;
     }
-    public int getNivelDeConsumo(){
-        return nivelDeConsumo;
+    public boolean getRecipienteLleno(){
+        return recipienteLleno;
     }
-se debe usar una propiedad booleana.
-    private boolean esta_lleno=false;
+//    private boolean esta_lleno=false;
 
-    private PosicionesXY cantidad;
+    private boolean recipiente;
 
-    public synchronized PosicionesXY getCantidad(){
-
-        while(esta_lleno==false){
+    /**
+     * La variable recipienteLleno se basea en el exterior por medio del set get.
+     * @return Retorna un false.
+     */
+    public synchronized boolean getRecipiente(){
+        while(recipienteLleno==true){
             try {
                 wait();
             } catch (InterruptedException ex) { }
         }
-        esta_lleno=false;
+        recipiente=false;
         notifyAll();
-        return cantidad;
+        return recipiente;
     }
 
-    public synchronized void setCantidad(PosicionesXY nueva_cantidad){
-        while(esta_lleno==true){
+    /**
+     * La variable recipienteLleno se llena en el exterior por medio del set get.
+     */
+    public synchronized void setRecipiente(){//(boolean nueva_cantidad){
+        while(recipienteLleno==false){
             try {
                 wait();
             } catch (InterruptedException ex) { }
         }
-        cantidad=nueva_cantidad;
-        esta_lleno=true;
+        recipiente=true;
+//        recipienteLleno=true; Se realiza en el exterior.
         notifyAll();
     }
-    
+     
    /**
     * Permite recorrer aleatoriamente los caminos he irlos guardando.
     */
@@ -109,7 +114,7 @@ se debe usar una propiedad booleana.
              */
         @Override
         public void run(){
-            PosicionesXY consumiendo=getCantidad();
+//            boolean comiendo=getLlenarlo();
             while(true){
                 try {
                     //            System.out.println("Consumiendo " + consumiendo + " productos");
@@ -117,11 +122,12 @@ se debe usar una propiedad booleana.
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HiloProductorConsumidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                consumiendo.setX(consumiendo.getX()-nivelDeConsumo);
-                consumiendo(consumiendo);
-                if(consumiendo.getX()>=getCantidad().getX()){
+//                comiendo=recipienteLleno;
+                gastado(recipienteLleno);
+                //if(comiendo!=getLlenarlo()){
+                if(recipienteLleno==false){
     //                System.out.println("Ya se consumió todo. Esperando la produccion.");
-                    consumiendo=getCantidad();
+                    recipienteLleno=getRecipiente();
                 }
             }
         }

@@ -18,16 +18,22 @@ public class Personaje  implements Movimientos {
     public MemoriaRuta memoriaRuta=new MemoriaRuta();
     public MemoriaDelCamino memoriaDelCamino=new MemoriaDelCamino();
     
-    
+    public boolean recorridoFinalizado=false;
     public void ejecutarRutasGuardadas(){
+        recorridoFinalizado=false;
+//        int w=DibujoDelPersonaje.getWidth(), h=DibujoDelPersonaje.getHeight();
+//        this.quitarLabel();
+//        this.ponerLabel(memoriaRuta.getMemoria(0).XY_final.getX(), memoriaRuta.getMemoria(0).XY_final.getY(), imagentTemp);
         for(int i=0; i<memoriaRuta.size(); i++){
             int xInterna=0;
             int yInterna=0;
             yInterna=memoriaRuta.getMemoria(i).XY_final.getY();
             xInterna=memoriaRuta.getMemoria(i).XY_final.getX();
+            DibujoDelPersonaje.setBounds(xInterna, yInterna, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
             //Se necesita saber la posicion inicial o se debe realizar en forma exterior.
             //Mejor realizo esto en el exterior de este class.
         }
+        recorridoFinalizado=true;
     }
     
     /**
@@ -128,10 +134,13 @@ public class Personaje  implements Movimientos {
         }
     }
     
+    private TipoDeImagen imagentTemp;
+    
    public Personaje(int nuevo_x,int nuevo_y,TipoDeImagen imagen_para_el_personaje){
 //       DibujoDelPersonaje=new PersonajeLabel(x,y,imagen_para_el_personaje);
 //       imagenDelPersonaje=imagen_para_el_personaje;
 //       soloTexto();
+        imagentTemp=imagen_para_el_personaje;
         this.ponerLabel(nuevo_x, nuevo_y, imagen_para_el_personaje);
         this.setX_UltimaPosicion(nuevo_x);
         this.setY_UltimaPosicion(nuevo_y);
