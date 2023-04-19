@@ -12,6 +12,17 @@ import Experimentos.Juego.Movimientos;
  * @author Jugador
  */
 public class Personaje  implements Movimientos {
+    
+    private int puntosDeVida=1;
+    
+    
+    public void setPuntosDeVida(int nuevos_puntos_de_vida){
+        puntosDeVida=nuevos_puntos_de_vida;
+    }
+    
+    public int getPuntosDeVida(){
+        return puntosDeVida;
+    }
   /**
    * Para guardar puntos claves xy.
    */  
@@ -225,8 +236,6 @@ public class Personaje  implements Movimientos {
     
     @Override
     public void moverIzquierda() {
-//        if(DibujoDelPersonaje.getColiciono()==false){
-//            System.out.println(DibujoDelPersonaje.getColiciono());
             x -= velocidad;
             if (x <= LimiteIzquierdo) {
                 x = LimiteIzquierdo;

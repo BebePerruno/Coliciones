@@ -129,7 +129,7 @@ public class jPJuego extends javax.swing.JPanel {
                     desicion=DecisionesDeMovimientos.izquierda;
                     nuevo.memoriaDelCamino.setDecision(desicion);
                 }else if(nuevo.getX()==Personaje.LimiteIzquierdo  && valorDeDesicion==DecisionesDeMovimientos.izquierda){
-                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                     valorDeDesicion=desiciones(DecisionesDeMovimientos.izquierda);
                 }
             }
@@ -139,7 +139,7 @@ public class jPJuego extends javax.swing.JPanel {
                     desicion=DecisionesDeMovimientos.derecha;
                     nuevo.memoriaDelCamino.setDecision(desicion);
                 }else if(nuevo.getX()==Personaje.LimiteDerecho && valorDeDesicion==DecisionesDeMovimientos.derecha){
-                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                     valorDeDesicion=desiciones(DecisionesDeMovimientos.derecha);
                 }
             }
@@ -150,7 +150,7 @@ public class jPJuego extends javax.swing.JPanel {
                     desicion=DecisionesDeMovimientos.arriba;
                     nuevo.memoriaDelCamino.setDecision(desicion);
                 }else if(nuevo.getY()==Personaje.LimiteSuperior  && valorDeDesicion==DecisionesDeMovimientos.arriba){
-                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                     valorDeDesicion=desiciones(DecisionesDeMovimientos.arriba);
                 }
             }
@@ -165,6 +165,9 @@ public class jPJuego extends javax.swing.JPanel {
                     valorDeDesicion=desiciones(DecisionesDeMovimientos.abajo);
                 }
             }
+//            try{
+//            System.out.println("X Y guardados: "+nuevo.memoriaRuta.getMemoria(nuevo.memoriaRuta.size()-1).XY_final);
+//            }catch(Exception e){}
 //            System.out.println(desicion +"=En los bordes decidiendo a " + valorDeDesicion);
             //////Ejecutando las decisiones.
             switch(desicion){
@@ -209,6 +212,7 @@ public class jPJuego extends javax.swing.JPanel {
                     }
                     break;
             }
+//            nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
 //            System.out.println(desicion +"=Contra objetos decidiendo a " + valorDeDesicion);
         }
 
@@ -249,7 +253,7 @@ public class jPJuego extends javax.swing.JPanel {
                 }else{
 //                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getY()+2);
                 }
-                nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+//                nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                 return true;
             }
             
@@ -472,7 +476,7 @@ public class jPJuego extends javax.swing.JPanel {
         
         private boolean parar=false;
         
-        Personaje personaje=new Personaje(0,0,50,50,TipoDeImagen.Tanque);
+        Personaje personaje=null;
         
         private int contador=100;
         
@@ -485,10 +489,24 @@ public class jPJuego extends javax.swing.JPanel {
             }else{
                 try{
                     int id=numeroAleatorio(-1,soldadosEnemigos.size());
-                    if(id==soldadosEnemigos.size() || id>0){id=0;}
+                    if(id==soldadosEnemigos.size() || id<0){id=0;}
                     personaje=null;
                     personaje=soldadosEnemigos.get(id);
-                    contador=100;
+
+                   
+                    if(personaje!=null){
+//                         soldadosEnemigos.get(id).memoriaRuta.VerResultados();
+//                        personaje.quitarLabel();
+//                        personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
+//                        for(int i=0; i<personaje.memoriaRuta.size(); i++){
+//                            if(personaje.memoriaRuta.getMemoria(contador)!=null){
+//                                try{
+//                                personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
+//                                System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
+//                                }catch(Exception e){}
+//                            }
+//                        }
+                    }
                     this.setRecipienteLleno(true);
                     this.setRecipiente();//Esta lleno.
                 }catch(Exception e){
@@ -502,16 +520,22 @@ public class jPJuego extends javax.swing.JPanel {
         @Override
         public void gastado(boolean llenar_recipiente) {
             System.out.println("Consumiendo un recipiente lleno");
-            System.out.println("Recorriendo");
-            if(personaje!=null){
+            int id=numeroAleatorio(1,100);
+            System.out.println("Unidad seleccionada numero " + id);
+//            if(id==soldadosEnemigos.size() || id<0){id=0;}
+//            personaje=null;
+//            personaje=soldadosEnemigos.get(id);
+            if(id!=45){
 //                personaje.quitarLabel();
 //                personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
-                for(int i=0; i<personaje.memoriaRuta.size(); i++){
-                    if(personaje.memoriaRuta.getMemoria(contador)!=null){
-                        personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
-                    }
-                }
-                System.out.println("Recorrido finalizado");
+//                for(int i=0; i<personaje.memoriaRuta.size(); i++){
+//                    if(personaje.memoriaRuta.getMemoria(contador)!=null){
+//                        personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
+//                        System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
+//                    }
+//                }
+                System.out.println("Recipiente bacio");
+                contador=100;
                 setRecipienteLleno(false);
             }
         }

@@ -4,7 +4,9 @@
  */
 package ExperimentosConJuegos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *Memorias de todos los caminos es el mapa que la unidad va dibujandose a si misma mientras explora el ambiente.
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  * Pero ambas implican guardar en otro class ciertos objetos.
  * @author Jugador
  */
-public class MemoriaRuta {
+public class MemoriaRuta implements Serializable{
     private ArrayList<MemoriaDelCamino> rsMemoriaDelCamino=new ArrayList();
     
     
@@ -29,6 +31,8 @@ public class MemoriaRuta {
     public void agregarAlFinal(MemoriaDelCamino nueva_memoria_del_camino){
         System.out.println("Se ha agregado: "+ nueva_memoria_del_camino.toString());
         rsMemoriaDelCamino.add(nueva_memoria_del_camino);
+        System.out.println("Tamaño del registro " + this.size() );
+//        this.VerResultados();
     }
     
     /**
@@ -102,5 +106,45 @@ public class MemoriaRuta {
         }
         return null;
     }
+    
+    private int parar=0;
+    public void VerResultados(){
+        if(parar<10){
+        FrmTabla f=new FrmTabla();
+        try{
+        f.setTabla(getCuadricula());}catch(Exception e){}
+        f.setVisible(true);
+        
+        }
+        parar++;
+        
+    }
+    
+    public DefaultTableModel getCuadricula()  {
+        String [][]m={};
+        try {
+            m=getMatriz();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new DefaultTableModel(m,getEtiquetas());
+    }
+    
+    public String[][] getMatriz()  {
+        String [][]m=new String[rsMemoriaDelCamino.size()][rsMemoriaDelCamino.size()];
+        for (int f=0; f<rsMemoriaDelCamino.size(); f++){
+                m[f][0]=rsMemoriaDelCamino.get(f).XY_final.getX()+"";
+                m[f][1]=rsMemoriaDelCamino.get(f).XY_final.getY()+"";
+                m[f][2]=rsMemoriaDelCamino.get(f).getDecision()+"";
+        }
+            return m;
+    }
+    
+    public String[] getEtiquetas() {
+        String []m={"X", "Y", "Desicion" };
+        return m;
+    }
+    
+    
     
 }

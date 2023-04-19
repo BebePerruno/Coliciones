@@ -11,3 +11,6 @@ package ExperimentosConJuegos;
 public enum TipoDeImagen{
     Base, Fabrica, Generador, Bodega, Torre, Robot, Tanque, Explosion, sinImagen
 }
+
+
+

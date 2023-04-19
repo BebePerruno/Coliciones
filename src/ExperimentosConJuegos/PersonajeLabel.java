@@ -9,8 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
- *
- * @author Jugador
+ *Correo BebePerrunoCanino@gmail.com
+ * @author Rafael Angel Montero Fernández.
+ * 
  */
 public class PersonajeLabel extends JLabel{
     private final ImagenesParaJuegos imagenes=new ImagenesParaJuegos();
@@ -56,16 +57,7 @@ public class PersonajeLabel extends JLabel{
     }
     
     
-    private int puntosDeVida=1;
     
-    
-    public void setPuntosDeVida(int nuevos_puntos_de_vida){
-        puntosDeVida=nuevos_puntos_de_vida;
-    }
-    
-    public int getPuntosDeVida(){
-        return puntosDeVida;
-    }
     
     public static final int ancho=100;
     public static final int altura=100;
@@ -119,18 +111,10 @@ public class PersonajeLabel extends JLabel{
         DibujarImagen(imagen_elegida);
     }
     
-//    private boolean coliciono=false;
-//    
-//    public boolean getColiciono(){
-//        return coliciono;
-//    }
-//    
     public boolean colision(JLabel unidad_contra_la_cual_colisiona){
         if(unidad_contra_la_cual_colisiona==null){
-//            coliciono=false;
             return false;
         }
-//        coliciono=this.getBounds().intersects(unidad_contra_la_cual_colisiona.getBounds());
         return this.getBounds().intersects(unidad_contra_la_cual_colisiona.getBounds());
     }
     
@@ -147,5 +131,27 @@ public class PersonajeLabel extends JLabel{
          return false;
      }
      
+     /**
+      * Permite detectar objetos cercanos.
+      * Es lo mismo que la colision simplemente se crea un label invisible que funciona como rango de vision.
+      * Importante esta funcion no es colision es un sensor para indicarle a la unidad que se acerca a un objeto.
+      * @param mObjetos_cercanos Un matriz de controles JLabels.
+      * @return Retorna true si detecta un objeto.
+      */
+     public boolean VerObjetos(JLabel []mObjetos_cercanos){
+         try{
+             final int rangoDeVision=50;
+             JLabel ojos=new JLabel();
+             ojos.setBounds(this.getX(), this.getY(), this.getWidth()+rangoDeVision, this.getHeight()+rangoDeVision);
+             for(int i=0; i<mObjetos_cercanos.length; i++){
+                 if(ojos.getBounds().intersects(mObjetos_cercanos[i].getBounds())==true){
+                     return true;
+                 }
+             }
+         }catch(Exception e){
+             
+         }
+         return false;
+     }
     
 }

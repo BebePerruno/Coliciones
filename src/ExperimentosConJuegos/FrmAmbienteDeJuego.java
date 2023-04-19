@@ -15,7 +15,7 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
      */
     public FrmAmbienteDeJuego() {
         initComponents();
-        this.setBounds(100, 100, 1100, 500);
+//        this.setBounds(100, 0, 500, 400);
     }
 
     /**
@@ -30,10 +30,26 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
         jPJuego2 = new ExperimentosConJuegos.jPJuego();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(550, 1100));
-        getContentPane().setLayout(null);
-        getContentPane().add(jPJuego2);
-        jPJuego2.setBounds(10, 10, 1070, 520);
+        setMinimumSize(null);
+        setPreferredSize(null);
+        setSize(new java.awt.Dimension(500, 1100));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPJuego2, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPJuego2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
