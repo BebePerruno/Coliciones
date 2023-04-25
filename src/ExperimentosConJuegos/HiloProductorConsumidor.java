@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 public abstract class HiloProductorConsumidor {
     public abstract void produciendo();
     public abstract void gastado(boolean llenar_recipiente);
+    public abstract void evento();
+    
     
     private HiloProductor hProductor=new HiloProductor();
     private HiloConsumidor hConsumidor=new HiloConsumidor();
@@ -93,13 +95,15 @@ public abstract class HiloProductorConsumidor {
         @Override
         public void run(){
             while(true){
+                evento();
 //              setProducto(1);
 //                System.out.println("\n\nProduciendo " + cantidad + " productos.\n\n");
                 produciendo();
-                try {
-    //                System.out.println((numeroAleatorio(1, 50)));
-                    sleep(10 ); //
-                } catch (InterruptedException ex) { }
+                
+//                try {
+//    //                System.out.println((numeroAleatorio(1, 50)));
+//                    sleep(10 ); //
+//                } catch (InterruptedException ex) { }
             }
         } 
     }
@@ -116,12 +120,12 @@ public abstract class HiloProductorConsumidor {
         public void run(){
 //            boolean comiendo=getLlenarlo();
             while(true){
-                try {
-                    //            System.out.println("Consumiendo " + consumiendo + " productos");
-                    sleep(10);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(HiloProductorConsumidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    //            System.out.println("Consumiendo " + consumiendo + " productos");
+//                    sleep(10);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(HiloProductorConsumidor.class.getName()).log(Level.SEVERE, null, ex);
+//                }
 //                comiendo=recipienteLleno;
                 gastado(recipienteLleno);
                 //if(comiendo!=getLlenarlo()){

@@ -539,6 +539,11 @@ public class jPJuego extends javax.swing.JPanel {
                 setRecipienteLleno(false);
             }
         }
+
+        @Override
+        public void evento() {
+//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
         
     }
     

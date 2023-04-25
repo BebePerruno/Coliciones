@@ -20,7 +20,7 @@ public abstract class AbstractDoubleClick extends MouseAdapter implements Action
    public abstract void eveDobleClick(int x, int y, Point puntoXY);
     private int mouseClick=1;
     
-    public abstract void mouseMoviendose();
+    public abstract void mouseMoviendose(int nuevoX, int nuevoY);
     public abstract void mouseArrastrastrado();
    @Override
     public void mouseDragged(MouseEvent e){
@@ -30,7 +30,7 @@ public abstract class AbstractDoubleClick extends MouseAdapter implements Action
     
    @Override
     public void mouseMoved(MouseEvent e){
-        mouseMoviendose();
+        mouseMoviendose(e.getXOnScreen(),e.getYOnScreen());
     }
     
    @Override
