@@ -10,12 +10,32 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jugador
  */
 public abstract class AbstractTerritorio extends javax.swing.JPanel {
+    
+    private boolean estaSeleccionado=false;
+    
+    /**
+     * Permite indicar si algun descendiente de este class ha sido seleccionado.
+     * @param seleccionado 
+     */
+    public void setEstaSeleccionado(boolean seleccionado){
+        estaSeleccionado=seleccionado;
+    }
+    
+    /**
+     * Permite indicar si algun descendiente de este class ha sido seleccionado.
+     * Se debe usar en conjunto con el numero de instancia.
+     * @return 
+     */
+    public boolean getEstaSeleccionado(){
+        return estaSeleccionado;
+    }
 
     public static int poblacion=0;
     public static final ImagenesExagonales imagenes=new ImagenesExagonales();
@@ -46,47 +66,19 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         this.jLbImagen.setIcon(imagen);//(new javax.swing.ImageIcon(getClass().getResource("/E_S/medieval_archery.png"))); 
     }
     
-    {
-//    class EveInterno extends AbstractDoubleClick{
-//        @Override
-//        public void eveClick(int x, int y, Point puntoXY) {
-//            
-//        }
-//
-//        @Override
-//        public void eveDobleClick(int x, int y, Point puntoXY) {
-//            //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//        }
-//
-//        @Override
-//        public void mousePressed() {
-//            System.out.println("Numero de instancia " + instanciaNumero + "; cantiad de instancias " + cantidadDeInstancias);
-//        }
-//
-//        @Override
-//        public void mouseMoviendose() {
-//            if(estaSeleccionado()==true){
-//                System.out.println("El puntero esta en " + instanciaNumero );
-//            }
-//        }
-//
-//        @Override
-//        public void mouseArrastrastrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//        }
-//        
-//    }
-    }
     private static AbstractDoubleClick eventos;
     
     public static void setEventosParaTodasLasInstancias(AbstractDoubleClick nuevosEventos){
-        System.out.println("Reciviendo eventos static setEventosParaTodasLasInstancias=" + (nuevosEventos==null));
+//        System.out.println("Reciviendo eventos static setEventosParaTodasLasInstancias=" + (nuevosEventos==null));
         eventos=nuevosEventos;
     }
     
+    public boolean colicion(AbstractTerritorio nuevo_objeto){
+        return(getBounds().intersects(nuevo_objeto.getBounds())==true);
+    }
+    
     public void setEventos(AbstractDoubleClick nuevoMouseListener){
-        System.out.println("Reciviendo eventos en setEventos " + (nuevoMouseListener==null));
-        this.jLbImagen.addMouseListener(nuevoMouseListener);
+//        this.jLbImagen.addMouseListener(nuevoMouseListener);
         this.jLabel6.addMouseListener(nuevoMouseListener);
         this.jLabel7.addMouseListener(nuevoMouseListener);
         this.jLabel8.addMouseListener(nuevoMouseListener);
@@ -95,10 +87,7 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         this.jLabel12.addMouseListener(nuevoMouseListener);
         this.jLabel13.addMouseListener(nuevoMouseListener);
         this.jLabel14.addMouseListener(nuevoMouseListener);
-        this.jLbEventos.addMouseListener(nuevoMouseListener);
-//        this.addMouseListener(nuevoMouseListener);
         
-        this.jLbImagen.addMouseMotionListener(nuevoMouseListener);
         this.jLabel6.addMouseMotionListener(nuevoMouseListener);
         this.jLabel7.addMouseMotionListener(nuevoMouseListener);
         this.jLabel8.addMouseMotionListener(nuevoMouseListener);
@@ -107,8 +96,6 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         this.jLabel12.addMouseMotionListener(nuevoMouseListener);
         this.jLabel13.addMouseMotionListener(nuevoMouseListener);
         this.jLabel14.addMouseMotionListener(nuevoMouseListener);
-        jLbEventos.addMouseMotionListener(nuevoMouseListener);
-//        this.addMouseMotionListener(nuevoMouseListener);
     }
     
     public static ArrayList<AbstractTerritorio> rsTerritorios=new ArrayList<AbstractTerritorio>();
@@ -116,7 +103,7 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
     private static void add(AbstractTerritorio nuevo){
         for(int i=0; i<rsTerritorios.size(); i++){
             if(rsTerritorios.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
-                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
+//                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
                 rsTerritorios.remove(i);
                 rsTerritorios.add(nuevo);
                 
@@ -137,7 +124,7 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         numeroDeInstancia=cantidadDeInstancias;
         this.setEventos(eventos);
         add(this);
-        System.out.println("Es null eventos=" + eventos);
+//        System.out.println("Es null eventos=" + eventos);
         
         
     }
@@ -166,9 +153,9 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         setLayout(null);
 
         jLabel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel6MouseMoved(evt);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
             }
         });
         add(jLabel6);
@@ -180,65 +167,74 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
                 jLabel7MouseMoved(evt);
             }
         });
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
         add(jLabel7);
         jLabel7.setBounds(30, 30, 10, 90);
 
-        jLabel8.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel8MouseMoved(evt);
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
             }
         });
         add(jLabel8);
         jLabel8.setBounds(40, 20, 10, 110);
 
         jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel10.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel10MouseMoved(evt);
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
             }
         });
         add(jLabel10);
         jLabel10.setBounds(50, 10, 10, 130);
 
         jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel11.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel11MouseMoved(evt);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
             }
         });
         add(jLabel11);
         jLabel11.setBounds(60, 10, 10, 130);
 
         jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel12.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel12MouseMoved(evt);
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
             }
         });
         add(jLabel12);
         jLabel12.setBounds(70, 20, 10, 110);
 
         jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel13.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel13MouseMoved(evt);
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
             }
         });
         add(jLabel13);
         jLabel13.setBounds(80, 30, 10, 90);
 
         jLabel14.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLabel14.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLabel14MouseMoved(evt);
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
             }
         });
         add(jLabel14);
         jLabel14.setBounds(90, 30, 10, 90);
 
-        jLbEventos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLbEventosMouseMoved(evt);
+        jLbEventos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLbEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbEventosMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLbEventosMouseExited(evt);
             }
         });
         add(jLbEventos);
@@ -246,55 +242,76 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
 
         jLbImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/dirt_02.png"))); // NOI18N
         jLbImagen.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jLbImagen.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jLbImagenMouseMoved(evt);
+        jLbImagen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbImagenMouseClicked(evt);
             }
         });
         add(jLbImagen);
         jLbImagen.setBounds(0, 0, 120, 140);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLbImagenMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbImagenMouseMoved
-//       rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLbImagenMouseMoved
-
-    private void jLabel6MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel6MouseMoved
-
     private void jLabel7MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseMoved
 //        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
     }//GEN-LAST:event_jLabel7MouseMoved
 
-    private void jLabel8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel8MouseMoved
+    private void jLbImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbImagenMouseClicked
+//        JOptionPane.showMessageDialog(null, getNumeroDeInstancia());
+//        jLbImagen.setIcon(null);
+    }//GEN-LAST:event_jLbImagenMouseClicked
 
-    private void jLabel10MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel10MouseMoved
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel6MouseClicked
 
-    private void jLabel11MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel11MouseMoved
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void jLabel12MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel12MouseMoved
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel8MouseClicked
 
-    private void jLabel13MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel13MouseMoved
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel10MouseClicked
 
-    private void jLabel14MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseMoved
-//        rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLabel14MouseMoved
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void jLbEventosMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbEventosMouseMoved
-//       rectanguloPuntero.setLocation(evt.getX(), evt.getY());
-    }//GEN-LAST:event_jLbEventosMouseMoved
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel12MouseClicked
 
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        dblClick();
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+       dblClick();
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLbEventosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbEventosMouseExited
+//        setEstaSeleccionado(false);
+//        System.out.println("Saliendo de " +   this.getNombre() +"=" +this.getEstaSeleccionado());
+    }//GEN-LAST:event_jLbEventosMouseExited
+
+    private void jLbEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbEventosMouseClicked
+//        dblClick();
+    }//GEN-LAST:event_jLbEventosMouseClicked
+
+    private int dosClicks=1;
+    
+    private void dblClick(){
+        if(dosClicks==2){
+            this.setEstaSeleccionado(true);
+//            System.out.println("Entrando en " +   this.getNumeroDeInstancia() +"=" +this.getEstaSeleccionado());
+        }
+        dosClicks++;
+        if(dosClicks>=3){dosClicks=1;}
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;

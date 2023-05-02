@@ -4,20 +4,43 @@
  */
 package Exagonal;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jugador
  */
 public class Mina extends Edificio {
 
+    public static int maxDelProgressBar=100;
     public static int recursosGeneradosPorTodasLasMinas=0;
+    
+    public static ArrayList<Mina> rsMinas=new ArrayList<Mina>();
+    
+    private static void addMina(Mina nuevo){
+        for(int i=0; i<rsMinas.size(); i++){
+            if(rsMinas.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
+//                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
+                rsMinas.remove(i);
+                rsMinas.add(nuevo);
+                
+                return;//Salta de una sola vez.
+            }
+        }
+        rsMinas.add(nuevo);
+//        System.out.println("Nueva casa agregada "+rsCasas.size());
+    }
+    
     /**
      * Creates new form Mina
      */
     public Mina() {
+        super();
         initComponents();
         this.setNombre("Mina" + this.getNumeroDeInstancia());
         setImagen(AbstractTerritorio.imagenes.getMina());
+        this.setMax(maxDelProgressBar);
+        addMina(this);
     }
 
     /**
@@ -45,6 +68,7 @@ public class Mina extends Edificio {
     public void generandoRecursos() {
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
         recursosGeneradosPorTodasLasMinas=getRecursosEnGenerados();
+        addMina(this);
     }
 
 

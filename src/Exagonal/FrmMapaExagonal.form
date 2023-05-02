@@ -21,124 +21,17 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-80,0,0,4,13"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-60,0,0,4,41"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
     <Property name="useNullLayout" type="boolean" value="true"/>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
+    <Component class="Exagonal.PunteroDelMouse" name="punteroDelMouse1">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="690" y="60" width="-1" height="-1"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Mina" name="mina1">
-      <Properties>
-        <Property name="cantidadDeRecursosHaGenerar" type="int" value="5"/>
-        <Property name="max" type="int" value="7"/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="450" y="180" width="120" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio1">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="270" y="280" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio2">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="50" y="80" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio3">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="160" y="80" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio4">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="170" y="280" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio5">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="220" y="180" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio6">
-      <Properties>
-        <Property name="imagen" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Exagonal/dirt_06.png"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="270" y="80" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio7">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="330" y="180" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio8">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="110" y="180" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Territorio" name="territorio9">
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="180" width="130" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Farm" name="farm1">
-      <Properties>
-        <Property name="cantidadDeRecursosHaGenerar" type="int" value="4"/>
-        <Property name="max" type="int" value="5"/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="510" y="280" width="120" height="140"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="Exagonal.Farm" name="farm2">
-      <Properties>
-        <Property name="cantidadDeRecursosHaGenerar" type="int" value="4"/>
-        <Property name="max" type="int" value="5"/>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="570" y="180" width="120" height="140"/>
+          <AbsoluteConstraints x="900" y="200" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -198,14 +91,97 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="Exagonal.Casa" name="casa1">
+    <Component class="Exagonal.Territorio" name="territorio1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="650" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio2">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="100" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio3">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="40" y="70" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio4">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="150" y="70" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio5">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="210" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio6">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="260" y="70" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio7">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="150" y="270" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio8">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="320" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio9">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="430" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio10">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="490" y="70" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio11">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="490" y="270" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="Exagonal.Territorio" name="territorio12">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="540" y="170" width="120" height="140"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="cantidadDeRecursosHaGenerar" type="int" value="2"/>
-        <Property name="max" type="int" value="9"/>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="820" y="250" width="120" height="140"/>
+          <AbsoluteConstraints x="840" y="300" width="70" height="70"/>
         </Constraint>
       </Constraints>
     </Component>

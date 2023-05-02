@@ -12,7 +12,14 @@ import javax.swing.ImageIcon;
  * @author Jugador
  */
 public class ImagenesExagonales {
-    public  Icon getPunero(){
+    
+    public  Icon getBola(){
+         Icon imagen=new ImageIcon();
+         imagen=new ImageIcon(getClass().getResource("/Exagonal/Bola.png"));
+         return imagen;
+    }
+    
+    public  Icon getTierraBarro(){
          Icon imagen=new ImageIcon();
          imagen=new ImageIcon(getClass().getResource("/Exagonal/dirt_02.png"));
          return imagen;

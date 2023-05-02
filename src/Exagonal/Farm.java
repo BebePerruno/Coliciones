@@ -11,16 +11,19 @@ import java.util.ArrayList;
  * @author Jugador
  */
 public class Farm extends Edificio {
+    
+    
 
     public static ArrayList<Farm> rsFarms=new ArrayList<Farm>();
+    public static int maxDelProgressBar=100;
     
-    private static void add(Farm nuevo){
+    private static void addFarm(Farm nuevo){
         for(int i=0; i<rsFarms.size(); i++){
             if(rsFarms.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
-                System.out.println(rsFarms.get(i).getNombre()+" modificado por " + nuevo.getNombre());
+//                System.out.println(rsFarms.get(i).getNombre()+" modificado por " + nuevo.getNombre());
                 rsFarms.remove(i);
                 rsFarms.add(nuevo);
-                System.out.println("Recursos "+rsFarms.get(i).getRecursosEnGenerados() + "; size="+rsFarms.size());
+//                System.out.println("Recursos "+rsFarms.get(i).getRecursosEnGenerados() + "; size="+rsFarms.size());
                 return;//Salta de una sola vez.
             }
         }
@@ -34,17 +37,19 @@ public class Farm extends Edificio {
         
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
         recursosGeneradosPorTodasLasGranjas=getRecursosEnGenerados();
-        add(this);
+        addFarm(this);
         
     }
     /**
      * Creates new form Granja
      */
     public Farm() {
+        super();
         initComponents();
         setNombre("Granja" + this.getNumeroDeInstancia());
         setImagen(AbstractTerritorio.imagenes.getGranja());
-        add(this);
+        this.setMax(maxDelProgressBar);
+        addFarm(this);
     }
 
     /**

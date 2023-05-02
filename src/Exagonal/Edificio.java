@@ -25,8 +25,7 @@ public abstract class Edificio extends AbstractTerritorio {
     public int getMax(){
         return jProgressBar1.getMaximum();
     }
-
-
+    
     private int valor=0;
 
     public void setProgress(int nuevo_progreso){
@@ -102,7 +101,7 @@ public abstract class Edificio extends AbstractTerritorio {
 
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
-            JOptionPane.showMessageDialog(null, "Recursos generados en " + getNombre() + "=" + getRecursosEnGenerados());
+//            JOptionPane.showMessageDialog(null, "Recursos generados en " + getNombre() + "=" + getRecursosEnGenerados());
 //            recursosGenerados++;
         }
 
@@ -118,6 +117,16 @@ public abstract class Edificio extends AbstractTerritorio {
 
         @Override
         public void mousePressed() {
+//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public void eveMouseHaSalido() {
+            
+        }
+
+        @Override
+        public void eveMouseHaEntrado() {
 //            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
         

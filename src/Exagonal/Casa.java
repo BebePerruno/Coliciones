@@ -4,6 +4,7 @@
  */
 package Exagonal;
 
+import java.util.ArrayList;
 import java.util.EventListener;
 
 /**
@@ -11,13 +12,23 @@ import java.util.EventListener;
  * @author Jugador
  */
 public class Casa extends Edificio {
-    public AXXX ev;
+  
+    public static ArrayList<Casa> rsCasas=new ArrayList<Casa>();
     
+    public static int maxDelProgressBar=100;
     
-    private class AXXX implements EventListener{
-        public void Evento(){
-            System.out.println("Evento");
+    private static void addCasa(Casa nuevo){
+        for(int i=0; i<rsCasas.size(); i++){
+            if(rsCasas.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
+//                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
+                rsCasas.remove(i);
+                rsCasas.add(nuevo);
+                
+                return;//Salta de una sola vez.
+            }
         }
+        rsCasas.add(nuevo);
+//        System.out.println("Nueva casa agregada "+rsCasas.size());
     }
     
     public static int ConsumoDeComida(){
@@ -28,6 +39,7 @@ public class Casa extends Edificio {
     public void generandoRecursos() {
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
         recursosGeneradosPorTodasLasCasas=getRecursosEnGenerados();
+        addCasa(this);//Actualiza las modificasiones en el ArrayList.
     }
 
     public static int recursosGeneradosPorTodasLasCasas=0;
@@ -35,10 +47,13 @@ public class Casa extends Edificio {
      * Creates new form Casa
      */
     public Casa() {
+        super();
         initComponents();
         setNombre("Casa" + this.getNumeroDeInstancia());
         this.setImagen(AbstractTerritorio.imagenes.getCasa());
         AbstractTerritorio.poblacion+=4;//Cada vez que se crea una casa la poblacion aumenta a 4.
+        this.setMax(maxDelProgressBar);
+        addCasa(this);
     }
 
     /**

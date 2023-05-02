@@ -64,6 +64,16 @@ public class FrmExagono extends javax.swing.JFrame {
             public void mouseArrastrastrado() {
 //                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
+
+            @Override
+            public void eveMouseHaSalido() {
+                //
+            }
+
+            @Override
+            public void eveMouseHaEntrado() {
+//                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
         }
         
         

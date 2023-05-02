@@ -9,13 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.EventListener;
 
 /**
  * Permite generar los eventos Click y DobleClick.
  * Solo para controles que usen MouseEvent y ActionListener
  * @author Jugador
  */
-public abstract class AbstractDoubleClick extends MouseAdapter implements ActionListener, MouseMotionListener{
+public abstract class AbstractDoubleClick extends MouseAdapter implements ActionListener, MouseMotionListener, EventListener{
    public abstract void eveClick(int x, int y, Point puntoXY);
    public abstract void eveDobleClick(int x, int y, Point puntoXY);
     private int mouseClick=1;
@@ -66,6 +67,19 @@ public abstract class AbstractDoubleClick extends MouseAdapter implements Action
         if(mouseClick>=3){
             mouseClick=1;
         }
+    }
+    
+    public abstract void eveMouseHaSalido();
+    
+   @Override
+    public void mouseExited(MouseEvent evt){
+        eveMouseHaSalido();
+    }
+    
+    public abstract void eveMouseHaEntrado();
+   @Override
+    public void mouseEntered(MouseEvent evt){
+        eveMouseHaEntrado();
     }
     
 }

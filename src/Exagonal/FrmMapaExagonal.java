@@ -11,12 +11,15 @@ import java.awt.Rectangle;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jugador
  */
 public class FrmMapaExagonal extends javax.swing.JFrame {
+    
+   
     
     private class Motor extends HiloProductorConsumidor{
         private int tiempoDeConstruccion=0;
@@ -26,32 +29,37 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         
         @Override
         public void produciendo() {
-            System.out.println("casa1.getMax() " + casa1.getMax()+"; mina1.getMax() " + mina1.getMax());
-            if(casaTiempoDeConstruccion>=casa1.getMax()){
-                casaTiempoDeConstruccion=0;
-                casa1.generandoRecursos();
+//            System.out.println("casa1.getMax() " + casa1.getMax()+"; mina1.getMax() " + mina1.getMax());
+            for(int i=0; i<Casa.rsCasas.size(); i++){
+                if(casaTiempoDeConstruccion>=Casa.rsCasas.get(i).getMax()){
+                    casaTiempoDeConstruccion=0;
+                    Casa.rsCasas.get(i).generandoRecursos();
+//                    System.out.println("casa numero " + i);
+                }
+                Casa.rsCasas.get(i).setProgress(casaTiempoDeConstruccion);
             }
             
-            if(minaTiempoDeConstruccion>=mina1.getMax()){
-                minaTiempoDeConstruccion=0;
-                mina1.generandoRecursos();
+            for(int i=0; i<Mina.rsMinas.size(); i++){
+                if(minaTiempoDeConstruccion>=Mina.rsMinas.get(i).getMax()){
+                    minaTiempoDeConstruccion=0;
+                    Mina.rsMinas.get(i).generandoRecursos();
+                }
+                Mina.rsMinas.get(i).setProgress(minaTiempoDeConstruccion);
             }
             
-            if(granjaTiempoDeConstruccion>=farm1.getMax()){
-                granjaTiempoDeConstruccion=0;
-                farm1.generandoRecursos();
-                farm2.generandoRecursos();
+            for(int i=0; i<Farm.rsFarms.size(); i++){
+                if(granjaTiempoDeConstruccion>=Farm.rsFarms.get(i).getMax()){
+                    granjaTiempoDeConstruccion=0;
+                    Farm.rsFarms.get(i).generandoRecursos();
+                }
+                Farm.rsFarms.get(i).setProgress(granjaTiempoDeConstruccion);
             }
             
-            casa1.setProgress(casaTiempoDeConstruccion);
-            mina1.setProgress(minaTiempoDeConstruccion);
-            farm1.setProgress(granjaTiempoDeConstruccion);
-            farm2.setProgress(granjaTiempoDeConstruccion);
-            jLPoblacion.setMax(AbstractTerritorio.rsTerritorios.size());
-            jLPoblacion.setProgress(AbstractTerritorio.poblacion);
-            jLPiedra.setProgress(minaTiempoDeConstruccion);
-            jLOro.setProgress(casaTiempoDeConstruccion);
-            jLAlimentos.setProgress(granjaTiempoDeConstruccion);
+//            jLPoblacion.setMax(AbstractTerritorio.rsTerritorios.size());
+//            jLPoblacion.setProgress(AbstractTerritorio.poblacion);
+//            jLPiedra.setProgress(minaTiempoDeConstruccion);
+//            jLOro.setProgress(casaTiempoDeConstruccion);
+//            jLAlimentos.setProgress(granjaTiempoDeConstruccion);
             granjaTiempoDeConstruccion++;
             minaTiempoDeConstruccion++;
             casaTiempoDeConstruccion++;
@@ -82,25 +90,36 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         
         @Override
         public void evento() {
-            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
-            jLPoblacion.setTexto("Poblacion " + Casa.poblacion);
-            jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
-            jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
-            jLAlimentos.setTexto("Alimentos " + farm1.recursosGeneradosPorTodasLasGranjas);
+//            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
+//            jLPoblacion.setTexto("Poblacion " + Casa.poblacion);
+//            jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
+//            jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
+//            jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
         }
-
-        
     }
 
     public static Rectangle rectanguloPuntero=new Rectangle(60,60);
     
+    
+    private int id=0;
      /**
      * 
      * Entonces debe programarse en el contenedor form.
      * @return 
      */
     public boolean estaSeleccionado(AbstractTerritorio un_territorio){
-        return un_territorio.getBounds().intersects(territorio7.getBounds());
+        boolean seleccionado=false;
+        for(int i=0; i<Territorio.rsTerritorios.size(); i++){
+            seleccionado=un_territorio.getBounds().intersects(Territorio.rsTerritorios.get(i).getBounds());
+            if(punteroDelMouse1.getNumeroDeInstancia()!=Territorio.rsTerritorios.get(i).getNumeroDeInstancia()){
+               id=i;
+                if(seleccionado==true){
+                    
+                    return seleccionado;
+                }
+            }
+        }
+        return false;
     }
     
     private Eventos vEventos=new Eventos();
@@ -109,21 +128,34 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
      */
     public FrmMapaExagonal() {
         initComponents();
+        
+        Casa casa=new Casa();
+//        casa.setLocation(this.jLabel1.getLocation());
+        
+//        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+        getContentPane().add(casa);
+        casa.setBounds(840, 80, 70, 70);
+        casa.setVisible(true);
+        JOptionPane.showMessageDialog(null, casa);
+        
         AbstractTerritorio.setEventosParaTodasLasInstancias(vEventos);
-        this.territorio1.setEventos(vEventos);
+        Casa.maxDelProgressBar=12;
+        Mina.maxDelProgressBar=10;
+        Farm.maxDelProgressBar=8;
+        territorio1.setEventos(vEventos);
         territorio2.setEventos(vEventos);
-        territorio3.setEventos(vEventos);
-        territorio4.setEventos(vEventos);
-        territorio5.setEventos(vEventos);
-        territorio6.setEventos(vEventos);
-        territorio7.setImagen(new ImagenesExagonales().getPunero());
-        
-//        jProgressBar1.setMaximum(20);
-//        jProgressBar1.setMinimum(0);
-        
-//        territorio7.setEventos(vEventos);
-Motor h=new Motor();
-        
+        this.territorio3.setEventos(vEventos);
+        this.territorio4.setEventos(vEventos);
+        this.territorio5.setEventos(vEventos);
+        this.territorio6.setEventos(vEventos);
+        this.territorio7.setEventos(vEventos);
+        territorio8.setEventos(vEventos);
+        territorio9.setEventos(vEventos);
+        territorio10.setEventos(vEventos);
+        territorio11.setEventos(vEventos);
+        territorio12.setEventos(vEventos);
+        Motor h=new Motor();
+//        JOptionPane.showMessageDialog(null, Casa.rsCasas.size());
         
         
     }
@@ -137,8 +169,12 @@ Motor h=new Motor();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        mina1 = new Exagonal.Mina();
+        punteroDelMouse1 = new Exagonal.PunteroDelMouse();
+        jLAlimentos = new Exagonal.Etiqueta();
+        jLOro = new Exagonal.Etiqueta();
+        jLMadera = new Exagonal.Etiqueta();
+        jLPiedra = new Exagonal.Etiqueta();
+        jLPoblacion = new Exagonal.Etiqueta();
         territorio1 = new Exagonal.Territorio();
         territorio2 = new Exagonal.Territorio();
         territorio3 = new Exagonal.Territorio();
@@ -148,64 +184,17 @@ Motor h=new Motor();
         territorio7 = new Exagonal.Territorio();
         territorio8 = new Exagonal.Territorio();
         territorio9 = new Exagonal.Territorio();
-        farm1 = new Exagonal.Farm();
-        farm2 = new Exagonal.Farm();
-        jLAlimentos = new Exagonal.Etiqueta();
-        jLOro = new Exagonal.Etiqueta();
-        jLMadera = new Exagonal.Etiqueta();
-        jLPiedra = new Exagonal.Etiqueta();
-        jLPoblacion = new Exagonal.Etiqueta();
-        casa1 = new Exagonal.Casa();
+        territorio10 = new Exagonal.Territorio();
+        territorio11 = new Exagonal.Territorio();
+        territorio12 = new Exagonal.Territorio();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
+        getContentPane().add(punteroDelMouse1);
+        punteroDelMouse1.setBounds(900, 200, 42, 38);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(690, 60, 77, 25);
-
-        mina1.setCantidadDeRecursosHaGenerar(5);
-        mina1.setMax(7);
-        getContentPane().add(mina1);
-        mina1.setBounds(450, 180, 120, 140);
-        getContentPane().add(territorio1);
-        territorio1.setBounds(270, 280, 130, 140);
-        getContentPane().add(territorio2);
-        territorio2.setBounds(50, 80, 130, 140);
-        getContentPane().add(territorio3);
-        territorio3.setBounds(160, 80, 130, 140);
-        getContentPane().add(territorio4);
-        territorio4.setBounds(170, 280, 130, 140);
-        getContentPane().add(territorio5);
-        territorio5.setBounds(220, 180, 130, 140);
-
-        territorio6.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/dirt_06.png"))); // NOI18N
-        getContentPane().add(territorio6);
-        territorio6.setBounds(270, 80, 130, 140);
-        getContentPane().add(territorio7);
-        territorio7.setBounds(330, 180, 130, 140);
-        getContentPane().add(territorio8);
-        territorio8.setBounds(110, 180, 130, 140);
-        getContentPane().add(territorio9);
-        territorio9.setBounds(0, 180, 130, 140);
-
-        farm1.setCantidadDeRecursosHaGenerar(4);
-        farm1.setMax(5);
-        getContentPane().add(farm1);
-        farm1.setBounds(510, 280, 120, 140);
-
-        farm2.setCantidadDeRecursosHaGenerar(4);
-        farm2.setMax(5);
-        getContentPane().add(farm2);
-        farm2.setBounds(570, 180, 120, 140);
-
-        jLAlimentos.setMax(farm1.getMax());
         getContentPane().add(jLAlimentos);
         jLAlimentos.setBounds(120, 0, 150, 47);
 
@@ -218,7 +207,6 @@ Motor h=new Motor();
         getContentPane().add(jLMadera);
         jLMadera.setBounds(440, 0, 150, 47);
 
-        jLPiedra.setMax(mina1.getMax());
         jLPiedra.setTexto("Piedra");
         getContentPane().add(jLPiedra);
         jLPiedra.setBounds(600, 0, 150, 47);
@@ -226,53 +214,70 @@ Motor h=new Motor();
         jLPoblacion.setTexto("Poblacion");
         getContentPane().add(jLPoblacion);
         jLPoblacion.setBounds(770, 0, 150, 47);
+        getContentPane().add(territorio1);
+        territorio1.setBounds(650, 170, 120, 140);
+        getContentPane().add(territorio2);
+        territorio2.setBounds(100, 170, 120, 140);
+        getContentPane().add(territorio3);
+        territorio3.setBounds(40, 70, 120, 140);
+        getContentPane().add(territorio4);
+        territorio4.setBounds(150, 70, 120, 140);
+        getContentPane().add(territorio5);
+        territorio5.setBounds(210, 170, 120, 140);
+        getContentPane().add(territorio6);
+        territorio6.setBounds(260, 70, 120, 140);
+        getContentPane().add(territorio7);
+        territorio7.setBounds(150, 270, 120, 140);
+        getContentPane().add(territorio8);
+        territorio8.setBounds(320, 170, 120, 140);
+        getContentPane().add(territorio9);
+        territorio9.setBounds(430, 170, 120, 140);
+        getContentPane().add(territorio10);
+        territorio10.setBounds(490, 70, 120, 140);
+        getContentPane().add(territorio11);
+        territorio11.setBounds(490, 270, 120, 140);
+        getContentPane().add(territorio12);
+        territorio12.setBounds(540, 170, 120, 140);
 
-        casa1.setCantidadDeRecursosHaGenerar(2);
-        casa1.setMax(9);
-        getContentPane().add(casa1);
-        casa1.setBounds(820, 250, 120, 140);
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(840, 300, 70, 70);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void detectar(){
-//        for (int i=0; i<Territorio.rsTerritorios.size(); i++){
-//            if(Territorio.rsTerritorios.get(i).estaSeleccionado()==true){
-//                 this.setTitle("Territorio seleccionado " + Territorio.rsTerritorios.get(i).instanciaNumero);
-//            }else{
+        for (int i=0; i<Territorio.rsTerritorios.size(); i++){
+            if(Territorio.rsTerritorios.get(i).getEstaSeleccionado()==true){
+//                 this.setTitle("Territorio seleccionado " + Territorio.rsTerritorios.get(i).getNumeroDeInstancia());
+            }else{
 //                System.out.println("No colicion");
-//            }
-//        }
+            }
+        }
     }
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//       jProgressBar1.setValue(jProgressBar1.getValue()+1);
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void territorio2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio2MouseMoved
-        territorio7.setLocation(territorio7.getX(), territorio7.getY());
+        
     }//GEN-LAST:event_territorio2MouseMoved
 
     private void territorio3MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio3MouseMoved
-        territorio7.setLocation(territorio3.getX(), territorio3.getY());
+        
     }//GEN-LAST:event_territorio3MouseMoved
 
     private void territorio4MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio4MouseMoved
-        territorio7.setLocation(territorio4.getX(), territorio4.getY());
+        
     }//GEN-LAST:event_territorio4MouseMoved
 
     private void territorio1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio1MouseMoved
-        territorio7.setLocation(territorio1.getX(), territorio1.getY());
+        
     }//GEN-LAST:event_territorio1MouseMoved
 
     private void territorio6MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio6MouseMoved
-       territorio7.setLocation(territorio6.getX(), territorio6.getY());
+      
     }//GEN-LAST:event_territorio6MouseMoved
 
     private void territorio5MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio5MouseMoved
-        territorio7.setLocation(territorio5.getX(), territorio5.getY());
+        
     }//GEN-LAST:event_territorio5MouseMoved
 
     private void territorio8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_territorio8MouseMoved
@@ -330,14 +335,56 @@ Motor h=new Motor();
     class Eventos extends AbstractDoubleClick{
         @Override
         public void eveClick(int x, int y, Point puntoXY) {
-            System.out.println("Click");
+//            System.out.println("Click");
         }
 
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
-            //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
+                if(estaSeleccionado(punteroDelMouse1)){//(AbstractTerritorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
+                    
+                    class FrmOpcionesDeConstruccion extends FrmMenu{
+
+                        @Override
+                        public void eveCancelar() {
+                            //Operacion cancelada.
+                        }
+
+                        @Override
+                        public void eveAceptar(int tipo_de_edificio) {
+                            switch(tipo_de_edificio){
+                                case 1 -> {
+                                    //Construir casa.
+                                    Casa casa=new Casa();
+                                    casa.setLocation(territorio8.getLocation());
+                                    casa.setBounds(territorio8.getBounds());
+                                    casa.setVisible(true);
+                                    AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                                    getContentPane().add(casa);
+                                    
+                                    JOptionPane.showMessageDialog(null,"Casa "+id);
+                                }
+                                case 2 -> {
+                                    //Construir granja.
+                                    JOptionPane.showMessageDialog(null,"Granja");
+                                }
+                                case 3 -> {
+                                    //Construir mina.
+                                    JOptionPane.showMessageDialog(null,"Mina");
+                                }
+                            }
+                        }
+
+                    }
+                    FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
+//                    JOptionPane.showMessageDialog(null,"Que desea hacer en el territorio numero " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia());
+                    return;
+                }
+            }
         }
 
+        
+        
         @Override
         public void mousePressed() {
 //            System.out.println("Numero de instancia " + instanciaNumero + "; cantiad de instancias " + cantidadDeInstancias);
@@ -345,37 +392,43 @@ Motor h=new Motor();
 
         @Override
         public void mouseMoviendose(int nuevoX, int nuevoY) {
-            
             for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
-//                if(territorio7.getNumeroDeInstancia()!=Territorio.rsTerritorios.get(i).getNumeroDeInstancia()){
-                    territorio7.setLocation(nuevoX-territorio7.getWidth(), nuevoY-(territorio7.getHeight()));
-//                }
-                if(estaSeleccionado(AbstractTerritorio.rsTerritorios.get(i))==true ){
-                    System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(i).getNumeroDeInstancia() );
-//                    break;
-                }
+                punteroDelMouse1.setLocation(nuevoX-punteroDelMouse1.getWidth(), nuevoY-(punteroDelMouse1.getHeight()));
             }
+                if(estaSeleccionado(punteroDelMouse1)==true ){
+//                    System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
+                }
         }
 
         @Override
         public void mouseArrastrastrado() {
 //            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
-        
+
+        @Override
+        public void eveMouseHaSalido() {
+//            System.out.println("El mouse ha salido.");
+            punteroDelMouse1.setVisible(false);
+        }
+
+        @Override
+        public void eveMouseHaEntrado() {
+            punteroDelMouse1.setVisible(true);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private Exagonal.Casa casa1;
-    private Exagonal.Farm farm1;
-    private Exagonal.Farm farm2;
-    private javax.swing.JButton jButton1;
     private Exagonal.Etiqueta jLAlimentos;
     private Exagonal.Etiqueta jLMadera;
     private Exagonal.Etiqueta jLOro;
     private Exagonal.Etiqueta jLPiedra;
     private Exagonal.Etiqueta jLPoblacion;
-    private Exagonal.Mina mina1;
+    private javax.swing.JLabel jLabel1;
+    private Exagonal.PunteroDelMouse punteroDelMouse1;
     private Exagonal.Territorio territorio1;
+    private Exagonal.Territorio territorio10;
+    private Exagonal.Territorio territorio11;
+    private Exagonal.Territorio territorio12;
     private Exagonal.Territorio territorio2;
     private Exagonal.Territorio territorio3;
     private Exagonal.Territorio territorio4;
