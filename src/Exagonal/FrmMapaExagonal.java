@@ -33,8 +33,9 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             for(int i=0; i<Casa.rsCasas.size(); i++){
                 if(casaTiempoDeConstruccion>=Casa.rsCasas.get(i).getMax()){
                     casaTiempoDeConstruccion=0;
-                    Casa.rsCasas.get(i).generandoRecursos();
-//                    System.out.println("casa numero " + i);
+                    if(Casa.rsCasas.get(i).isVisible()==true){
+                        Casa.rsCasas.get(i).generandoRecursos();
+                    }
                 }
                 Casa.rsCasas.get(i).setProgress(casaTiempoDeConstruccion);
             }
@@ -42,7 +43,10 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             for(int i=0; i<Mina.rsMinas.size(); i++){
                 if(minaTiempoDeConstruccion>=Mina.rsMinas.get(i).getMax()){
                     minaTiempoDeConstruccion=0;
-                    Mina.rsMinas.get(i).generandoRecursos();
+                    if(Mina.rsMinas.get(i).isVisible()==true){
+                        Mina.rsMinas.get(i).generandoRecursos();
+                    }
+                    
                 }
                 Mina.rsMinas.get(i).setProgress(minaTiempoDeConstruccion);
             }
@@ -50,16 +54,18 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             for(int i=0; i<Farm.rsFarms.size(); i++){
                 if(granjaTiempoDeConstruccion>=Farm.rsFarms.get(i).getMax()){
                     granjaTiempoDeConstruccion=0;
-                    Farm.rsFarms.get(i).generandoRecursos();
+                    if(Farm.rsFarms.get(i).isVisible()==true){
+                        Farm.rsFarms.get(i).generandoRecursos();
+                    }
                 }
                 Farm.rsFarms.get(i).setProgress(granjaTiempoDeConstruccion);
             }
             
-//            jLPoblacion.setMax(AbstractTerritorio.rsTerritorios.size());
-//            jLPoblacion.setProgress(AbstractTerritorio.poblacion);
-//            jLPiedra.setProgress(minaTiempoDeConstruccion);
-//            jLOro.setProgress(casaTiempoDeConstruccion);
-//            jLAlimentos.setProgress(granjaTiempoDeConstruccion);
+            jLPoblacion.setMax(AbstractTerritorio.rsTerritorios.size());
+            jLPoblacion.setProgress(AbstractTerritorio.poblacion);
+            jLPiedra.setProgress(minaTiempoDeConstruccion);
+            jLOro.setProgress(casaTiempoDeConstruccion);
+            jLAlimentos.setProgress(granjaTiempoDeConstruccion);
             granjaTiempoDeConstruccion++;
             minaTiempoDeConstruccion++;
             casaTiempoDeConstruccion++;
@@ -90,11 +96,11 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         
         @Override
         public void evento() {
-//            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
-//            jLPoblacion.setTexto("Poblacion " + Casa.poblacion);
-//            jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
-//            jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
-//            jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
+////            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
+            jLPoblacion.setTexto("Poblacion " + Casa.poblacion);
+            jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
+            jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
+            jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
         }
     }
 
@@ -122,21 +128,27 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         return false;
     }
     
+    private Casa casa=new Casa();
     private Eventos vEventos=new Eventos();
     /**
      * Creates new form FrmMapaExagonal
      */
     public FrmMapaExagonal() {
         initComponents();
+        Casa.maxDelProgressBar=12;
+        this.jLOro.setMax(Casa.maxDelProgressBar);
+        Mina.maxDelProgressBar=10;
+        this.jLPiedra.setMax(Mina.maxDelProgressBar);
+        Farm.maxDelProgressBar=5;
+        this.jLAlimentos.setMax(Farm.maxDelProgressBar);
         
-        Casa casa=new Casa();
 //        casa.setLocation(this.jLabel1.getLocation());
         
 //        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
-        getContentPane().add(casa);
-        casa.setBounds(840, 80, 70, 70);
-        casa.setVisible(true);
-        JOptionPane.showMessageDialog(null, casa);
+//        getContentPane().add(casa);
+//        casa.setBounds(800, 50, 120, 140);
+//        casa.setVisible(true);
+//        JOptionPane.showMessageDialog(null, casa);
         
         AbstractTerritorio.setEventosParaTodasLasInstancias(vEventos);
         Casa.maxDelProgressBar=12;
@@ -169,31 +181,29 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        punteroDelMouse1 = new Exagonal.PunteroDelMouse();
         jLAlimentos = new Exagonal.Etiqueta();
         jLOro = new Exagonal.Etiqueta();
         jLMadera = new Exagonal.Etiqueta();
         jLPiedra = new Exagonal.Etiqueta();
         jLPoblacion = new Exagonal.Etiqueta();
+        jPanel1 = new javax.swing.JPanel();
+        punteroDelMouse1 = new Exagonal.PunteroDelMouse();
         territorio1 = new Exagonal.Territorio();
         territorio2 = new Exagonal.Territorio();
-        territorio3 = new Exagonal.Territorio();
         territorio4 = new Exagonal.Territorio();
+        territorio7 = new Exagonal.Territorio();
         territorio5 = new Exagonal.Territorio();
         territorio6 = new Exagonal.Territorio();
-        territorio7 = new Exagonal.Territorio();
         territorio8 = new Exagonal.Territorio();
-        territorio9 = new Exagonal.Territorio();
         territorio10 = new Exagonal.Territorio();
-        territorio11 = new Exagonal.Territorio();
+        territorio9 = new Exagonal.Territorio();
         territorio12 = new Exagonal.Territorio();
-        jLabel1 = new javax.swing.JLabel();
+        territorio3 = new Exagonal.Territorio();
+        territorio11 = new Exagonal.Territorio();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 500));
         getContentPane().setLayout(null);
-        getContentPane().add(punteroDelMouse1);
-        punteroDelMouse1.setBounds(900, 200, 42, 38);
 
         getContentPane().add(jLAlimentos);
         jLAlimentos.setBounds(120, 0, 150, 47);
@@ -214,34 +224,38 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         jLPoblacion.setTexto("Poblacion");
         getContentPane().add(jLPoblacion);
         jLPoblacion.setBounds(770, 0, 150, 47);
-        getContentPane().add(territorio1);
-        territorio1.setBounds(650, 170, 120, 140);
-        getContentPane().add(territorio2);
-        territorio2.setBounds(100, 170, 120, 140);
-        getContentPane().add(territorio3);
-        territorio3.setBounds(40, 70, 120, 140);
-        getContentPane().add(territorio4);
-        territorio4.setBounds(150, 70, 120, 140);
-        getContentPane().add(territorio5);
-        territorio5.setBounds(210, 170, 120, 140);
-        getContentPane().add(territorio6);
-        territorio6.setBounds(260, 70, 120, 140);
-        getContentPane().add(territorio7);
-        territorio7.setBounds(150, 270, 120, 140);
-        getContentPane().add(territorio8);
-        territorio8.setBounds(320, 170, 120, 140);
-        getContentPane().add(territorio9);
-        territorio9.setBounds(430, 170, 120, 140);
-        getContentPane().add(territorio10);
-        territorio10.setBounds(490, 70, 120, 140);
-        getContentPane().add(territorio11);
-        territorio11.setBounds(490, 270, 120, 140);
-        getContentPane().add(territorio12);
-        territorio12.setBounds(540, 170, 120, 140);
 
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(840, 300, 70, 70);
+        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        jPanel1.setLayout(null);
+        jPanel1.add(punteroDelMouse1);
+        punteroDelMouse1.setBounds(640, 220, 42, 38);
+        jPanel1.add(territorio1);
+        territorio1.setBounds(0, 0, 120, 140);
+        jPanel1.add(territorio2);
+        territorio2.setBounds(120, 0, 120, 140);
+        jPanel1.add(territorio4);
+        territorio4.setBounds(60, 100, 120, 140);
+        jPanel1.add(territorio7);
+        territorio7.setBounds(0, 200, 120, 140);
+        jPanel1.add(territorio5);
+        territorio5.setBounds(120, 200, 120, 140);
+        jPanel1.add(territorio6);
+        territorio6.setBounds(180, 100, 120, 140);
+        jPanel1.add(territorio8);
+        territorio8.setBounds(240, 200, 120, 140);
+        jPanel1.add(territorio10);
+        territorio10.setBounds(300, 100, 120, 140);
+        jPanel1.add(territorio9);
+        territorio9.setBounds(420, 100, 120, 140);
+        jPanel1.add(territorio12);
+        territorio12.setBounds(480, 0, 120, 140);
+        jPanel1.add(territorio3);
+        territorio3.setBounds(600, 0, 120, 140);
+        jPanel1.add(territorio11);
+        territorio11.setBounds(480, 200, 120, 140);
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 50, 730, 360);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,6 +347,50 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
     }
     
     class Eventos extends AbstractDoubleClick{
+        private class FrmOpcionesDeConstruccion extends FrmMenu{
+
+            @Override
+            public void eveCancelar() {
+                //Operacion cancelada.
+            }
+
+            @Override
+            public void eveAceptar(int tipo_de_edificio) {
+                switch(getNumeroDeEdificio()){
+                    case 1 -> {
+                        //Construir casa.
+                        Casa casa=new Casa();
+                        jPanel1.add(casa);
+
+                        casa.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
+                        casa.setVisible(true);
+
+                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                    }
+                    case 2 -> {
+                        //Construir granja.
+                        Farm farm=new Farm();
+                        jPanel1.add(farm);
+
+                        farm.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
+                        farm.setVisible(true);
+
+                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                    }
+                    case 3 -> {
+                        //Construir mina.
+                        Mina mina=new Mina();
+                        jPanel1.add(mina);
+
+                        mina.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
+                        mina.setVisible(true);
+
+                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                    }
+                }
+            }
+
+        }
         @Override
         public void eveClick(int x, int y, Point puntoXY) {
 //            System.out.println("Click");
@@ -341,42 +399,9 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
             for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
-                if(estaSeleccionado(punteroDelMouse1)){//(AbstractTerritorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
-                    
-                    class FrmOpcionesDeConstruccion extends FrmMenu{
-
-                        @Override
-                        public void eveCancelar() {
-                            //Operacion cancelada.
-                        }
-
-                        @Override
-                        public void eveAceptar(int tipo_de_edificio) {
-                            switch(tipo_de_edificio){
-                                case 1 -> {
-                                    //Construir casa.
-                                    Casa casa=new Casa();
-                                    casa.setLocation(territorio8.getLocation());
-                                    casa.setBounds(territorio8.getBounds());
-                                    casa.setVisible(true);
-                                    AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
-                                    getContentPane().add(casa);
-                                    
-                                    JOptionPane.showMessageDialog(null,"Casa "+id);
-                                }
-                                case 2 -> {
-                                    //Construir granja.
-                                    JOptionPane.showMessageDialog(null,"Granja");
-                                }
-                                case 3 -> {
-                                    //Construir mina.
-                                    JOptionPane.showMessageDialog(null,"Mina");
-                                }
-                            }
-                        }
-
-                    }
+                if(AbstractTerritorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
                     FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
+                    
 //                    JOptionPane.showMessageDialog(null,"Que desea hacer en el territorio numero " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia());
                     return;
                 }
@@ -393,7 +418,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         @Override
         public void mouseMoviendose(int nuevoX, int nuevoY) {
             for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
-                punteroDelMouse1.setLocation(nuevoX-punteroDelMouse1.getWidth(), nuevoY-(punteroDelMouse1.getHeight()));
+                punteroDelMouse1.setLocation(nuevoX-punteroDelMouse1.getWidth(), nuevoY-(punteroDelMouse1.getHeight()*2));
             }
                 if(estaSeleccionado(punteroDelMouse1)==true ){
 //                    System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
@@ -423,7 +448,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
     private Exagonal.Etiqueta jLOro;
     private Exagonal.Etiqueta jLPiedra;
     private Exagonal.Etiqueta jLPoblacion;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private Exagonal.PunteroDelMouse punteroDelMouse1;
     private Exagonal.Territorio territorio1;
     private Exagonal.Territorio territorio10;

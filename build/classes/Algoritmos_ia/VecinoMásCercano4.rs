@@ -1,5 +1,0 @@
-Algoritmos_ia.Etiqueta
-Algoritmos_ia.VecinoMásCercano4
-Algoritmos_ia.RsGrupoDeEtiquetas
-Algoritmos_ia.KNN
-Algoritmos_ia.RsEtiquetas

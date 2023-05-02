@@ -1,2 +1,0 @@
-TrabajosEnCosturas.EscribirLeer
-TrabajosEnCosturas.Uno

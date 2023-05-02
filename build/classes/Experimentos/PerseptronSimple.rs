@@ -1,3 +1,0 @@
-Experimentos.ElMain
-Experimentos.PerseptronSimple
-Experimentos.EntradasPesos

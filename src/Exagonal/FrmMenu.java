@@ -13,138 +13,19 @@ import java.awt.Point;
 public abstract class FrmMenu extends javax.swing.JFrame {
     
     
-    private class EventosMina extends AbstractDoubleClick{
-
-        @Override
-        public void eveClick(int x, int y, Point puntoXY) {
-            rbtnMina.setSelected(true);
-        }
-
-        @Override
-        public void eveDobleClick(int x, int y, Point puntoXY) {
-            eveAceptar(getNumeroDeCasa());
-            dispose();
-        }
-
-        @Override
-        public void mouseMoviendose(int nuevoX, int nuevoY) {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mouseArrastrastrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mousePressed() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaSalido() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaEntrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
-    }
-    
-    
-    private class EventosGranja extends AbstractDoubleClick{
-
-        @Override
-        public void eveClick(int x, int y, Point puntoXY) {
-            rbtnGranja.setSelected(true);
-        }
-
-        @Override
-        public void eveDobleClick(int x, int y, Point puntoXY) {
-            eveAceptar(getNumeroDeCasa());
-            dispose();
-        }
-
-        @Override
-        public void mouseMoviendose(int nuevoX, int nuevoY) {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mouseArrastrastrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mousePressed() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaSalido() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaEntrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
-    }
     
     
     
-    private class EventosCasa extends AbstractDoubleClick{
-
-        @Override
-        public void eveClick(int x, int y, Point puntoXY) {
-            rbtnCasa.setSelected(true);
-        }
-
-        @Override
-        public void eveDobleClick(int x, int y, Point puntoXY) {
-            eveAceptar(getNumeroDeCasa());
-            dispose();
-        }
-
-        @Override
-        public void mouseMoviendose(int nuevoX, int nuevoY) {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mouseArrastrastrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void mousePressed() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaSalido() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-
-        @Override
-        public void eveMouseHaEntrado() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
-    }
+    
+    
 
     /**
      * Creates new form FrmMenu
      */
     public FrmMenu() {
         initComponents();
-        this.casa1.setEventos(new FrmMenu.EventosCasa());
-        this.mina1.setEventos(new FrmMenu.EventosMina());
-        this.farm1.setEventos(new FrmMenu.EventosGranja());
         this.setVisible(true);
+        this.setLocation(300,100);
     }
 
     /**
@@ -158,30 +39,25 @@ public abstract class FrmMenu extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        casa1 = new Exagonal.Casa();
-        farm1 = new Exagonal.Farm();
-        mina1 = new Exagonal.Mina();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         rbtnCasa = new javax.swing.JRadioButton();
         rbtnGranja = new javax.swing.JRadioButton();
         rbtnMina = new javax.swing.JRadioButton();
+        jLbMina = new javax.swing.JLabel();
+        jLbCasa = new javax.swing.JLabel();
+        jLbFarm = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones de construccion");
         setPreferredSize(new java.awt.Dimension(520, 350));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Elija el edificio que desea construir.");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(12, 13, 350, 25);
-        getContentPane().add(casa1);
-        casa1.setBounds(0, 70, 121, 143);
-        getContentPane().add(farm1);
-        farm1.setBounds(190, 70, 119, 143);
-        getContentPane().add(mina1);
-        mina1.setBounds(390, 70, 121, 143);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +80,7 @@ public abstract class FrmMenu extends javax.swing.JFrame {
         buttonGroup1.add(rbtnCasa);
         rbtnCasa.setText("Casa");
         getContentPane().add(rbtnCasa);
-        rbtnCasa.setBounds(20, 220, 100, 25);
+        rbtnCasa.setBounds(30, 185, 100, 40);
 
         buttonGroup1.add(rbtnGranja);
         rbtnGranja.setText("Granja");
@@ -215,6 +91,33 @@ public abstract class FrmMenu extends javax.swing.JFrame {
         rbtnMina.setText("Mina");
         getContentPane().add(rbtnMina);
         rbtnMina.setBounds(390, 210, 101, 25);
+
+        jLbMina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/medieval_mine.png"))); // NOI18N
+        jLbMina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbMinaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLbMina);
+        jLbMina.setBounds(370, 70, 120, 130);
+
+        jLbCasa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/medieval_farm.png"))); // NOI18N
+        jLbCasa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbCasaMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLbCasa);
+        jLbCasa.setBounds(20, 60, 120, 130);
+
+        jLbFarm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/medieval_windmill.png"))); // NOI18N
+        jLbFarm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLbFarmMouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLbFarm);
+        jLbFarm.setBounds(210, 70, 120, 130);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -229,11 +132,12 @@ public abstract class FrmMenu extends javax.swing.JFrame {
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         
-        eveAceptar(getNumeroDeCasa());
+        eveAceptar(getNumeroDeEdificio());
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
-    private int getNumeroDeCasa(){
+    
+    public int getNumeroDeEdificio(){
         if(rbtnCasa.isSelected()==true){ return 1;}
         if(rbtnGranja.isSelected()==true){ return 2;}
         if(rbtnMina.isSelected()==true){ return 3;}
@@ -247,14 +151,26 @@ public abstract class FrmMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void jLbCasaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbCasaMouseClicked
+        this.rbtnCasa.setSelected(true);
+    }//GEN-LAST:event_jLbCasaMouseClicked
+
+    private void jLbFarmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbFarmMouseClicked
+        rbtnGranja.setSelected(true);
+    }//GEN-LAST:event_jLbFarmMouseClicked
+
+    private void jLbMinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbMinaMouseClicked
+        rbtnMina.setSelected(true);
+    }//GEN-LAST:event_jLbMinaMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.ButtonGroup buttonGroup1;
-    private Exagonal.Casa casa1;
-    private Exagonal.Farm farm1;
     private javax.swing.JLabel jLabel1;
-    private Exagonal.Mina mina1;
+    private javax.swing.JLabel jLbCasa;
+    private javax.swing.JLabel jLbFarm;
+    private javax.swing.JLabel jLbMina;
     private javax.swing.JRadioButton rbtnCasa;
     private javax.swing.JRadioButton rbtnGranja;
     private javax.swing.JRadioButton rbtnMina;
