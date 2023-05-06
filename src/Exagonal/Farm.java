@@ -12,7 +12,13 @@ import java.util.ArrayList;
  */
 public class Farm extends Edificio {
     
+    public static int precioEnOro=30;
     
+    public static int precioEnMadera=50;
+    
+    public static int precioEnAlimentos=20;
+    
+    public static int precioEnPiedra=5;
 
     public static ArrayList<Farm> rsFarms=new ArrayList<Farm>();
     public static int maxDelProgressBar=100;
@@ -36,7 +42,7 @@ public class Farm extends Edificio {
     public void generandoRecursos() {
         
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
-        recursosGeneradosPorTodasLasGranjas=getRecursosEnGenerados();
+        recursosGeneradosPorTodasLasGranjas+=getRecursosEnGenerados();
         addFarm(this);
         
     }
@@ -49,6 +55,10 @@ public class Farm extends Edificio {
         setNombre("Granja" + this.getNumeroDeInstancia());
         setImagen(AbstractTerritorio.imagenes.getGranja());
         this.setMax(maxDelProgressBar);
+        Farm.precioEnAlimentos=10;
+        Farm.precioEnOro=50;
+        Farm.precioEnPiedra=10;
+        this.setCantidadDeRecursosHaGenerar(10);
         addFarm(this);
     }
 
@@ -72,6 +82,11 @@ public class Farm extends Edificio {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public void eveEventosAgregados() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

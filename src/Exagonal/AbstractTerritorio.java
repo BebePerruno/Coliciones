@@ -77,6 +77,7 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         return(getBounds().intersects(nuevo_objeto.getBounds())==true);
     }
     
+    public abstract void eveEventosAgregados();
     public void setEventos(AbstractDoubleClick nuevoMouseListener){
 //        this.jLbImagen.addMouseListener(nuevoMouseListener);
         this.jLabel6.addMouseListener(nuevoMouseListener);
@@ -96,21 +97,25 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
         this.jLabel12.addMouseMotionListener(nuevoMouseListener);
         this.jLabel13.addMouseMotionListener(nuevoMouseListener);
         this.jLabel14.addMouseMotionListener(nuevoMouseListener);
+        AbstractTerritorio.add(this);
+        eveEventosAgregados();
+//        System.out.println("Cantidad " + AbstractTerritorio.rsInstancias.size());
     }
     
-    public static ArrayList<AbstractTerritorio> rsTerritorios=new ArrayList<AbstractTerritorio>();
+    public static ArrayList<AbstractTerritorio> rsInstancias=new ArrayList<AbstractTerritorio>();
     
     private static void add(AbstractTerritorio nuevo){
-        for(int i=0; i<rsTerritorios.size(); i++){
-            if(rsTerritorios.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
-//                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
-                rsTerritorios.remove(i);
-                rsTerritorios.add(nuevo);
+        for(int i=0; i<rsInstancias.size(); i++){
+            if(rsInstancias.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
+//                System.out.println(rsInstancias.get(i).getNombre()+rsInstancias.get(i).getNumeroDeInstancia()+ " actualizandose con los datos de " + nuevo.getNombre());
+                rsInstancias.remove(i);
+                rsInstancias.add(nuevo);
                 
                 return;//Salta de una sola vez.
             }
         }
-        rsTerritorios.add(nuevo);
+//        System.out.println("Agregando " +nuevo.getNombre()+nuevo.getNumeroDeInstancia());
+        rsInstancias.add(nuevo);
     }
     
     /**

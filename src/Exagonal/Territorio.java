@@ -4,17 +4,42 @@
  */
 package Exagonal;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Jugador
  */
 public class Territorio extends AbstractTerritorio{
+    
+    public static int precioEnOro=100;
+    
+    public static int precioEnMadera=100;
+    
+    public static int precioEnAlimentos=100;
+    
+    public static int precioEnPiedra=100;
 
+    public static ArrayList<AbstractTerritorio> rsTerritorios=new ArrayList<AbstractTerritorio>();
+    
+    private static void addTerritorio(AbstractTerritorio nuevo){
+        for(int i=0; i<rsTerritorios.size(); i++){
+            if(rsTerritorios.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
+//                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
+                rsTerritorios.remove(i);
+                rsTerritorios.add(nuevo);
+                
+                return;//Salta de una sola vez.
+            }
+        }
+        rsTerritorios.add(nuevo);
+    }
     /**
      * Creates new form NewJPanel
      */
     public Territorio() {
         initComponents();
+        addTerritorio(this);
     }
 
     /**
@@ -39,6 +64,11 @@ public class Territorio extends AbstractTerritorio{
             .addGap(0, 164, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public void eveEventosAgregados() {
+        addTerritorio(this);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

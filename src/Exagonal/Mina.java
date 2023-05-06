@@ -40,6 +40,7 @@ public class Mina extends Edificio {
         this.setNombre("Mina" + this.getNumeroDeInstancia());
         setImagen(AbstractTerritorio.imagenes.getMina());
         this.setMax(maxDelProgressBar);
+        this.setCantidadDeRecursosHaGenerar(10);
         addMina(this);
     }
 
@@ -67,8 +68,21 @@ public class Mina extends Edificio {
     @Override
     public void generandoRecursos() {
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
-        recursosGeneradosPorTodasLasMinas=getRecursosEnGenerados();
+        recursosGeneradosPorTodasLasMinas+=getRecursosEnGenerados();
         addMina(this);
+    }
+    
+    public static int precioEnOro=150;
+    
+    public static int precioEnMadera=150;
+    
+    public static int precioEnAlimentos=100;
+    
+    public static int precioEnPiedra=10;
+
+    @Override
+    public void eveEventosAgregados() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

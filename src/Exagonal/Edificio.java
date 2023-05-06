@@ -34,41 +34,7 @@ public abstract class Edificio extends AbstractTerritorio {
     }
     
 
-    private int precioEnOro=100;
     
-    public void setPrecioEnOro(int nuevo_precio_en_oro){
-        precioEnOro=nuevo_precio_en_oro;
-    }
-    public int getPrecioEnOro(){
-        return precioEnOro;
-    }
-    
-    private int precioEnMadera=100;
-    
-    public void setPrecioEnMadera(int nuevo_precio_en_madera){
-        precioEnMadera=nuevo_precio_en_madera;
-    }
-    public int getPrecioEnMadera(){
-        return precioEnMadera;
-    }
-    
-    private int precioEnAlimentos=100;
-    
-    public void setPrecioEnAlimentos(int nuevo_precio_en_alimentos){
-        precioEnAlimentos=nuevo_precio_en_alimentos;
-    }
-    public int getPrecioEnAlimentos(){
-        return precioEnAlimentos;
-    }
-    
-    private int precioEnPiedra=100;
-    
-    public void setPrecioEnPiedra(int nuevo_precio_en_piedra){
-        precioEnPiedra=nuevo_precio_en_piedra;
-    }
-    public int getPrecioEnPiedra(){
-        return precioEnPiedra;
-    }
     
     
     private int recursosGenerados=0;

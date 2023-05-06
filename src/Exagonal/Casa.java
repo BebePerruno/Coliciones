@@ -6,12 +6,20 @@ package Exagonal;
 
 import java.util.ArrayList;
 import java.util.EventListener;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jugador
  */
 public class Casa extends Edificio {
+    public static int precioEnOro=100;
+    
+    public static int precioEnMadera=100;
+    
+    public static int precioEnAlimentos=100;
+    
+    public static int precioEnPiedra=75;
   
     public static ArrayList<Casa> rsCasas=new ArrayList<Casa>();
     
@@ -38,21 +46,29 @@ public class Casa extends Edificio {
     @Override
     public void generandoRecursos() {
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
-        recursosGeneradosPorTodasLasCasas=getRecursosEnGenerados();
+        recursosGeneradosPorTodasLasCasas+=getRecursosEnGenerados();
+        this.setCantidadDeRecursosHaGenerar(5);
         addCasa(this);//Actualiza las modificasiones en el ArrayList.
     }
 
+    public static int habitantesPorCasa=4;
+//    /**
+//     * Permite evitar que aparescan 4 pobladores sin haber creado ninguna casa.
+//     * Posiblemente se debe a que el class es llamado para algunas funciones nivel static o globales.
+//     */
+//    private static boolean poblacinInicial=false;
     public static int recursosGeneradosPorTodasLasCasas=0;
     /**
      * Creates new form Casa
      */
     public Casa() {
-        super();
+//        super();
         initComponents();
         setNombre("Casa" + this.getNumeroDeInstancia());
         this.setImagen(AbstractTerritorio.imagenes.getCasa());
-        AbstractTerritorio.poblacion+=4;//Cada vez que se crea una casa la poblacion aumenta a 4.
+        AbstractTerritorio.poblacion+=habitantesPorCasa;//Cada vez que se crea una casa la poblacion aumenta a 4.
         this.setMax(maxDelProgressBar);
+        this.setCantidadDeRecursosHaGenerar(5);
         addCasa(this);
     }
 
@@ -67,6 +83,11 @@ public class Casa extends Edificio {
 
         setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    @Override
+    public void eveEventosAgregados() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -29,9 +29,10 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         
         @Override
         public void produciendo() {
+            
 //            System.out.println("casa1.getMax() " + casa1.getMax()+"; mina1.getMax() " + mina1.getMax());
             for(int i=0; i<Casa.rsCasas.size(); i++){
-                if(casaTiempoDeConstruccion>=Casa.rsCasas.get(i).getMax()){
+                if(casaTiempoDeConstruccion>Casa.rsCasas.get(i).getMax()){
                     casaTiempoDeConstruccion=0;
                     if(Casa.rsCasas.get(i).isVisible()==true){
                         Casa.rsCasas.get(i).generandoRecursos();
@@ -41,7 +42,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             }
             
             for(int i=0; i<Mina.rsMinas.size(); i++){
-                if(minaTiempoDeConstruccion>=Mina.rsMinas.get(i).getMax()){
+                if(minaTiempoDeConstruccion>Mina.rsMinas.get(i).getMax()){
                     minaTiempoDeConstruccion=0;
                     if(Mina.rsMinas.get(i).isVisible()==true){
                         Mina.rsMinas.get(i).generandoRecursos();
@@ -52,7 +53,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             }
             
             for(int i=0; i<Farm.rsFarms.size(); i++){
-                if(granjaTiempoDeConstruccion>=Farm.rsFarms.get(i).getMax()){
+                if(granjaTiempoDeConstruccion>Farm.rsFarms.get(i).getMax()){
                     granjaTiempoDeConstruccion=0;
                     if(Farm.rsFarms.get(i).isVisible()==true){
                         Farm.rsFarms.get(i).generandoRecursos();
@@ -61,11 +62,13 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
                 Farm.rsFarms.get(i).setProgress(granjaTiempoDeConstruccion);
             }
             
-            jLPoblacion.setMax(AbstractTerritorio.rsTerritorios.size());
-            jLPoblacion.setProgress(AbstractTerritorio.poblacion);
+            jLPoblacion.setMax(Territorio.rsTerritorios.size());
+            jLPoblacion.setProgress(Casa.poblacion);
+            
             jLPiedra.setProgress(minaTiempoDeConstruccion);
             jLOro.setProgress(casaTiempoDeConstruccion);
             jLAlimentos.setProgress(granjaTiempoDeConstruccion);
+            
             granjaTiempoDeConstruccion++;
             minaTiempoDeConstruccion++;
             casaTiempoDeConstruccion++;
@@ -97,7 +100,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         @Override
         public void evento() {
 ////            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
-            jLPoblacion.setTexto("Poblacion " + Casa.poblacion);
+            jLPoblacion.setTexto("Poblacion " + Casa.poblacion+"/" +( (Territorio.rsTerritorios.size()-1)*Casa.habitantesPorCasa));
             jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
             jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
             jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
@@ -128,44 +131,44 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         return false;
     }
     
-    private Casa casa=new Casa();
     private Eventos vEventos=new Eventos();
     /**
      * Creates new form FrmMapaExagonal
      */
     public FrmMapaExagonal() {
         initComponents();
-        Casa.maxDelProgressBar=12;
-        this.jLOro.setMax(Casa.maxDelProgressBar);
-        Mina.maxDelProgressBar=10;
-        this.jLPiedra.setMax(Mina.maxDelProgressBar);
+        this.punteroDelMouse1.setVisible(false);
+        JOptionPane.showMessageDialog(null, "Crear un editor de mapas.");
+        this.jLPoblacion.setTexto("Poblacion 0/" +( (Territorio.rsTerritorios.size()-1)*Casa.habitantesPorCasa));
+        Casa.maxDelProgressBar=8;
+        Mina.maxDelProgressBar=7;
+        Mina.recursosGeneradosPorTodasLasMinas=300;
         Farm.maxDelProgressBar=5;
+        this.jLOro.setMax(Casa.maxDelProgressBar);
+        this.jLPiedra.setMax(Mina.maxDelProgressBar);
         this.jLAlimentos.setMax(Farm.maxDelProgressBar);
-        
-//        casa.setLocation(this.jLabel1.getLocation());
-        
-//        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
-//        getContentPane().add(casa);
-//        casa.setBounds(800, 50, 120, 140);
-//        casa.setVisible(true);
-//        JOptionPane.showMessageDialog(null, casa);
-        
         AbstractTerritorio.setEventosParaTodasLasInstancias(vEventos);
-        Casa.maxDelProgressBar=12;
-        Mina.maxDelProgressBar=10;
-        Farm.maxDelProgressBar=8;
-        territorio1.setEventos(vEventos);
-        territorio2.setEventos(vEventos);
-        this.territorio3.setEventos(vEventos);
-        this.territorio4.setEventos(vEventos);
-        this.territorio5.setEventos(vEventos);
-        this.territorio6.setEventos(vEventos);
-        this.territorio7.setEventos(vEventos);
-        territorio8.setEventos(vEventos);
-        territorio9.setEventos(vEventos);
-        territorio10.setEventos(vEventos);
-        territorio11.setEventos(vEventos);
-        territorio12.setEventos(vEventos);
+        Casa.recursosGeneradosPorTodasLasCasas=300; //Permite crear la primer casa.
+        
+        Farm.recursosGeneradosPorTodasLasGranjas=300;
+        /**
+         * Sirve más o menos.
+         */
+        for(int i=0; i<Territorio.rsTerritorios.size(); i++){
+            Territorio.rsTerritorios.get(id).setEventos(vEventos);
+        }
+//        territorio1.setEventos(vEventos);
+//        territorio2.setEventos(vEventos);
+//        this.territorio3.setEventos(vEventos);
+//        this.territorio4.setEventos(vEventos);
+//        this.territorio5.setEventos(vEventos);
+//        this.territorio6.setEventos(vEventos);
+//        this.territorio7.setEventos(vEventos);
+//        territorio8.setEventos(vEventos);
+//        territorio9.setEventos(vEventos);
+//        territorio10.setEventos(vEventos);
+//        territorio11.setEventos(vEventos);
+//        territorio12.setEventos(vEventos);
         Motor h=new Motor();
 //        JOptionPane.showMessageDialog(null, Casa.rsCasas.size());
         
@@ -353,53 +356,87 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             public void eveCancelar() {
                 //Operacion cancelada.
             }
-
+            
             @Override
             public void eveAceptar(int tipo_de_edificio) {
+//                JOptionPane.showMessageDialog(null, Mina.precioEnOro + "vs"+Casa.precioEnOro + "vs"+Farm.precioEnOro);
                 switch(getNumeroDeEdificio()){
                     case 1 -> {
                         //Construir casa.
-                        Casa casa=new Casa();
-                        jPanel1.add(casa);
+                        
+                        if(Casa.recursosGeneradosPorTodasLasCasas>=Casa.precioEnOro && Mina.recursosGeneradosPorTodasLasMinas>= Casa.precioEnPiedra && Farm.recursosGeneradosPorTodasLasGranjas>= Casa.precioEnAlimentos){
+                            Casa.recursosGeneradosPorTodasLasCasas-=Casa.precioEnOro;
+                            Mina.recursosGeneradosPorTodasLasMinas-= Casa.precioEnPiedra;
+                            Farm.recursosGeneradosPorTodasLasGranjas-=Casa.precioEnPiedra;
+                            
+                            Casa casa=new Casa();
+                            jPanel1.add(casa);
 
-                        casa.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
-                        casa.setVisible(true);
+                            casa.setBounds(Territorio.rsTerritorios.get(id).getBounds());
+                            casa.setVisible(true);
 
-                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                            Territorio.rsTerritorios.get(id).setVisible(false);
+                        }else{ 
+                            JOptionPane.showMessageDialog(null, "No existen suficientes recursos para crear una casa.");
+                        }
                     }
                     case 2 -> {
                         //Construir granja.
-                        Farm farm=new Farm();
-                        jPanel1.add(farm);
+                        if(Casa.recursosGeneradosPorTodasLasCasas>=Farm.precioEnOro && Mina.recursosGeneradosPorTodasLasMinas>= Farm.precioEnPiedra && Farm.recursosGeneradosPorTodasLasGranjas>= Farm.precioEnAlimentos){
+                            Casa.recursosGeneradosPorTodasLasCasas=Casa.recursosGeneradosPorTodasLasCasas-Farm.precioEnOro;
+                            Mina.recursosGeneradosPorTodasLasMinas= Mina.recursosGeneradosPorTodasLasMinas-Farm.precioEnPiedra;
+                            Farm.recursosGeneradosPorTodasLasGranjas=Farm.recursosGeneradosPorTodasLasGranjas-Farm.precioEnPiedra;
+                            
+                            Farm farm=new Farm();
+                            jPanel1.add(farm);
 
-                        farm.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
-                        farm.setVisible(true);
+                            farm.setBounds(Territorio.rsTerritorios.get(id).getBounds());
+                            farm.setVisible(true);
 
-                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                            Territorio.rsTerritorios.get(id).setVisible(false);
+                        }
+                        else{ 
+                            JOptionPane.showMessageDialog(null, "No existen suficientes recursos para crear una granja.");
+                        }
+                        
                     }
                     case 3 -> {
                         //Construir mina.
-                        Mina mina=new Mina();
-                        jPanel1.add(mina);
+                        
+                        if(Casa.recursosGeneradosPorTodasLasCasas>=Mina.precioEnOro && Mina.recursosGeneradosPorTodasLasMinas>= Mina.precioEnPiedra && Farm.recursosGeneradosPorTodasLasGranjas>= Mina.precioEnAlimentos){
+                            Casa.recursosGeneradosPorTodasLasCasas-=Mina.precioEnOro;
+                            Mina.recursosGeneradosPorTodasLasMinas-= Mina.precioEnPiedra;
+                            Farm.recursosGeneradosPorTodasLasGranjas-=Mina.precioEnPiedra;
+                            
+                            Mina mina=new Mina();
+                            jPanel1.add(mina);
 
-                        mina.setBounds(AbstractTerritorio.rsTerritorios.get(id).getBounds());
-                        mina.setVisible(true);
+                            mina.setBounds(Territorio.rsTerritorios.get(id).getBounds());
+                            mina.setVisible(true);
 
-                        AbstractTerritorio.rsTerritorios.get(id).setVisible(false);
+                            Territorio.rsTerritorios.get(id).setVisible(false);
+                        }
+                        else{ 
+                            JOptionPane.showMessageDialog(null, "No existen suficientes recursos para crear una mina.");
+                        }
+                        
                     }
                 }
             }
 
         }
+        
         @Override
         public void eveClick(int x, int y, Point puntoXY) {
-//            System.out.println("Click");
+            if(estaSeleccionado(punteroDelMouse1)==true ){
+//                System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
+            }
         }
 
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
-            for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
-                if(AbstractTerritorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
+            for(int i=1; i<Territorio.rsTerritorios.size(); i++){
+                if(Territorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
                     FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
                     
 //                    JOptionPane.showMessageDialog(null,"Que desea hacer en el territorio numero " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia());
@@ -417,12 +454,9 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
 
         @Override
         public void mouseMoviendose(int nuevoX, int nuevoY) {
-            for(int i=1; i<AbstractTerritorio.rsTerritorios.size(); i++){
+            for(int i=1; i<Territorio.rsTerritorios.size(); i++){
                 punteroDelMouse1.setLocation(nuevoX-punteroDelMouse1.getWidth(), nuevoY-(punteroDelMouse1.getHeight()*2));
             }
-                if(estaSeleccionado(punteroDelMouse1)==true ){
-//                    System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
-                }
         }
 
         @Override
