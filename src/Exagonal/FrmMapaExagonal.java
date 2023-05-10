@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -127,6 +128,14 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
                     return seleccionado;
                 }
             }
+        }
+        return false;
+    }
+    
+    public boolean desactivarSeleccion(){
+        boolean seleccionado=false;
+        for(int i=0; i<Territorio.rsTerritorios.size(); i++){
+            Territorio.rsTerritorios.get(i).setEstaSeleccionado(false);
         }
         return false;
     }
@@ -422,27 +431,73 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
                         
                     }
                 }
+                desactivarSeleccion();
             }
 
         }
         
         @Override
         public void eveClick(int x, int y, Point puntoXY) {
-            if(estaSeleccionado(punteroDelMouse1)==true ){
-//                System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
+//            if(estaSeleccionado(punteroDelMouse1)==true ){
+////                System.out.println("El puntero esta en " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia() );
+//            }
+        }
+        
+        private class FrmComprar extends FrmComprarTerritorio{
+
+            public FrmComprar(int id) {
+                super((Territorio)Territorio.rsTerritorios.get(id)); //Castin
+                setVisible(true);
             }
+
+            @Override
+            public void eveAceptar(Territorio territorio_comprado) {
+                for(int i=0; i<Territorio.rsTerritorios.size(); i++){
+//System.out.println(i+" Es comprado "+territorio_comprado.getComprado());
+                    if(Territorio.rsTerritorios.get(i).getEstaSeleccionado()==true){
+                        Territorio.rsTerritorios.get(i).setComprado(territorio_comprado.getComprado());
+                        Casa.recursosGeneradosPorTodasLasCasas-=Territorio.precioEnOro;
+                        Mina.recursosGeneradosPorTodasLasMinas-=Territorio.precioEnPiedra;
+                        Farm.recursosGeneradosPorTodasLasGranjas-=Territorio.precioEnAlimentos;
+                        JOptionPane.showMessageDialog(null, "Territorio " + Territorio.rsTerritorios.get(i).getNumeroDeInstancia() + " comprado.\nYa puedes contruir en este territorio. " );
+                        int siNo=-1;
+                       siNo= JOptionPane.showConfirmDialog(null, "Desea comprar en este nuevo territorio.", "Opciones de construccion", JOptionPane.YES_NO_OPTION);
+                        if(siNo==JOptionPane.YES_OPTION){
+                            FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
+                        }
+                        return;
+                    }
+                }
+                desactivarSeleccion();
+            }
+
+            @Override
+            public void eveCancelar() {
+                //
+            }
+            
         }
 
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
-            for(int i=1; i<Territorio.rsTerritorios.size(); i++){
+            estaSeleccionado(punteroDelMouse1); 
+//            for(int i=0; i<Territorio.rsTerritorios.size(); i++){
+//                System.out.println(id+" Es comprado "+Territorio.rsTerritorios.get(id).getNombre() + Territorio.rsTerritorios.get(id).getNumeroDeInstancia() + "="+Territorio.rsTerritorios.get(id).getComprado());
                 if(Territorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
-                    FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
-                    
-//                    JOptionPane.showMessageDialog(null,"Que desea hacer en el territorio numero " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia());
-                    return;
+                    if(Territorio.rsTerritorios.get(id).getComprado()==true){
+//                        if(Territorio.rsTerritorios.get(i).isVisible()==true){
+//                            JOptionPane.showMessageDialog(null, "Si es visible");
+//                        }
+                            FrmOpcionesDeConstruccion frmOpciones=new FrmOpcionesDeConstruccion();
+
+        //                    JOptionPane.showMessageDialog(null,"Que desea hacer en el territorio numero " + AbstractTerritorio.rsTerritorios.get(id).getNumeroDeInstancia());
+                            return;
+                    }else{
+                        FrmComprar frmComprar=new FrmComprar(id);
+                        frmComprar.setTerritorio(territorio1);
+                    }
                 }
-            }
+//            }
         }
 
         

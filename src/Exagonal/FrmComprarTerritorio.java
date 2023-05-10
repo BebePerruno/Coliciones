@@ -8,13 +8,11 @@ package Exagonal;
  *
  * @author Jugador
  */
-public class FrmComprarTerritorio extends javax.swing.JFrame {
+public abstract class FrmComprarTerritorio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmComprarTerritorio
-     */
-    public FrmComprarTerritorio() {
+    public FrmComprarTerritorio(Territorio nuevo_territorio) {
         initComponents();
+        territorio=nuevo_territorio;
     }
 
     /**
@@ -26,23 +24,26 @@ public class FrmComprarTerritorio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLbCasa = new javax.swing.JLabel();
+        jLbTerritorioSinComprar = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLbPrecio = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLbNombre = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(355, 250));
+        setResizable(false);
         getContentPane().setLayout(null);
 
-        jLbCasa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/medieval_farm.png"))); // NOI18N
-        jLbCasa.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLbTerritorioSinComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exagonal/dirt_12.png"))); // NOI18N
+        jLbTerritorioSinComprar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbCasaMouseClicked(evt);
+                jLbTerritorioSinComprarMouseClicked(evt);
             }
         });
-        getContentPane().add(jLbCasa);
-        jLbCasa.setBounds(10, 10, 120, 130);
+        getContentPane().add(jLbTerritorioSinComprar);
+        jLbTerritorioSinComprar.setBounds(10, 10, 120, 130);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -51,7 +52,7 @@ public class FrmComprarTerritorio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAceptar);
-        btnAceptar.setBounds(80, 190, 80, 25);
+        btnAceptar.setBounds(80, 170, 80, 25);
 
         btnCancelar1.setText("Cancelar");
         btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
@@ -60,75 +61,58 @@ public class FrmComprarTerritorio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCancelar1);
-        btnCancelar1.setBounds(180, 190, 80, 25);
+        btnCancelar1.setBounds(180, 170, 80, 25);
 
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(150, 100, 130, 16);
+        jLbPrecio.setText("0");
+        getContentPane().add(jLbPrecio);
+        jLbPrecio.setBounds(150, 100, 130, 16);
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("¿Desea comprar el territorio?");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(150, 30, 160, 16);
+        jLabel2.setBounds(150, 30, 170, 16);
+
+        jLbNombre.setText("0");
+        getContentPane().add(jLbNombre);
+        jLbNombre.setBounds(150, 60, 150, 16);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLbCasaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbCasaMouseClicked
+    private void jLbTerritorioSinComprarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbTerritorioSinComprarMouseClicked
 //        this.rbtnCasa.setSelected(true);
-    }//GEN-LAST:event_jLbCasaMouseClicked
+    }//GEN-LAST:event_jLbTerritorioSinComprarMouseClicked
 
+    public abstract void eveAceptar(Territorio territorio_comprado);
+    
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
-//        eveAceptar(getNumeroDeEdificio());
+        territorio.setComprado(true);
+        eveAceptar(territorio);
         this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    public abstract void eveCancelar();
+    
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
-//        eveCancelar();
+        eveCancelar();
         this.dispose();
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmComprarTerritorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmComprarTerritorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmComprarTerritorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmComprarTerritorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmComprarTerritorio().setVisible(true);
-            }
-        });
+    private Territorio territorio;
+    public void setTerritorio(Territorio nuevo_territorio){
+        territorio=nuevo_territorio;
+        this.jLbNombre.setText(territorio.getNombre() + territorio.getNumeroDeInstancia());
+        this.jLbPrecio.setText(""+100);
+    }
+    public Territorio getTerritorio(){
+        return territorio;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCancelar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLbCasa;
+    private javax.swing.JLabel jLbNombre;
+    private javax.swing.JLabel jLbPrecio;
+    private javax.swing.JLabel jLbTerritorioSinComprar;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,6 +12,15 @@ import java.util.ArrayList;
  */
 public class Territorio extends AbstractTerritorio{
     
+    private boolean comprado;
+    
+    public void setComprado(boolean esta_comprado){
+        comprado=esta_comprado;
+    }
+    public boolean getComprado(){
+        return comprado;
+    }
+    
     public static int precioEnOro=100;
     
     public static int precioEnMadera=100;
@@ -20,9 +29,9 @@ public class Territorio extends AbstractTerritorio{
     
     public static int precioEnPiedra=100;
 
-    public static ArrayList<AbstractTerritorio> rsTerritorios=new ArrayList<AbstractTerritorio>();
+    public static ArrayList<Territorio> rsTerritorios=new ArrayList<Territorio>();
     
-    private static void addTerritorio(AbstractTerritorio nuevo){
+    private static void addTerritorio(Territorio nuevo){
         for(int i=0; i<rsTerritorios.size(); i++){
             if(rsTerritorios.get(i).getNumeroDeInstancia()==nuevo.getNumeroDeInstancia()){
 //                System.out.println(rsTerritorios.get(i).getNombre()+" modificado por " + nuevo.getNombre());
