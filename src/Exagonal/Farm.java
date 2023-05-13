@@ -55,9 +55,6 @@ public class Farm extends Edificio {
         setNombre("Granja" + this.getNumeroDeInstancia());
         setImagen(AbstractTerritorio.imagenes.getGranja());
         this.setMax(maxDelProgressBar);
-        Farm.precioEnAlimentos=10;
-        Farm.precioEnOro=50;
-        Farm.precioEnPiedra=10;
         this.setCantidadDeRecursosHaGenerar(10);
         addFarm(this);
     }

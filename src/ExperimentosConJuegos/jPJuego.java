@@ -461,91 +461,91 @@ public class jPJuego extends javax.swing.JPanel {
         }
     }
     
-    /**
-     * No sirve para gestionar las acciones del personaje.
-     * Pero podria servir para gestionar las acciones de unidades diferentes.
-     */
-    private class H_ConsumidorProductor extends HiloProductorConsumidor{
-
-        public H_ConsumidorProductor(){
-            super();
-            this.setRecipienteLleno(true);
-        }
-        
-        private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
-        
-        private boolean parar=false;
-        
-        Personaje personaje=null;
-        
-        private int contador=100;
-        
-        @Override
-        public void produciendo() {
-            System.out.println("Produciendo");
-            if(contador>0){
-                accionesEnemigas.moverse();
-                contador--;
-            }else{
-                try{
-                    int id=numeroAleatorio(-1,soldadosEnemigos.size());
-                    if(id==soldadosEnemigos.size() || id<0){id=0;}
-                    personaje=null;
-                    personaje=soldadosEnemigos.get(id);
-
-                   
-                    if(personaje!=null){
-//                         soldadosEnemigos.get(id).memoriaRuta.VerResultados();
-//                        personaje.quitarLabel();
-//                        personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
-//                        for(int i=0; i<personaje.memoriaRuta.size(); i++){
-//                            if(personaje.memoriaRuta.getMemoria(contador)!=null){
-//                                try{
-//                                personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
-//                                System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
-//                                }catch(Exception e){}
-//                            }
-//                        }
-                    }
-                    this.setRecipienteLleno(true);
-                    this.setRecipiente();//Esta lleno.
-                }catch(Exception e){
-                   this.setRecipienteLleno(true);
-                   setRecipiente();
-                   System.out.println("Error produciendo");
-                }
-            }
-        }
-
-        @Override
-        public void gastado(boolean llenar_recipiente) {
-            System.out.println("Consumiendo un recipiente lleno");
-            int id=numeroAleatorio(1,100);
-            System.out.println("Unidad seleccionada numero " + id);
-//            if(id==soldadosEnemigos.size() || id<0){id=0;}
-//            personaje=null;
-//            personaje=soldadosEnemigos.get(id);
-            if(id!=45){
-//                personaje.quitarLabel();
-//                personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
-//                for(int i=0; i<personaje.memoriaRuta.size(); i++){
-//                    if(personaje.memoriaRuta.getMemoria(contador)!=null){
-//                        personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
-//                        System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
+//    /**
+//     * No sirve para gestionar las acciones del personaje.
+//     * Pero podria servir para gestionar las acciones de unidades diferentes.
+//     */
+//    private class H_ConsumidorProductor extends HiloProductorConsumidor{
+//
+//        public H_ConsumidorProductor(){
+//            super();
+//            this.setRecipienteLleno(true);
+//        }
+//        
+//        private AccionesEnemigas accionesEnemigas=new AccionesEnemigas();
+//        
+//        private boolean parar=false;
+//        
+//        Personaje personaje=null;
+//        
+//        private int contador=100;
+//        
+//        @Override
+//        public void produciendo() {
+//            System.out.println("Produciendo");
+//            if(contador>0){
+//                accionesEnemigas.moverse();
+//                contador--;
+//            }else{
+//                try{
+//                    int id=numeroAleatorio(-1,soldadosEnemigos.size());
+//                    if(id==soldadosEnemigos.size() || id<0){id=0;}
+//                    personaje=null;
+//                    personaje=soldadosEnemigos.get(id);
+//
+//                   
+//                    if(personaje!=null){
+////                         soldadosEnemigos.get(id).memoriaRuta.VerResultados();
+////                        personaje.quitarLabel();
+////                        personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
+////                        for(int i=0; i<personaje.memoriaRuta.size(); i++){
+////                            if(personaje.memoriaRuta.getMemoria(contador)!=null){
+////                                try{
+////                                personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
+////                                System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
+////                                }catch(Exception e){}
+////                            }
+////                        }
 //                    }
+//                    this.setRecipienteLleno(true);
+//                    this.setRecipiente();//Esta lleno.
+//                }catch(Exception e){
+//                   this.setRecipienteLleno(true);
+//                   setRecipiente();
+//                   System.out.println("Error produciendo");
 //                }
-                System.out.println("Recipiente bacio");
-                contador=100;
-                setRecipienteLleno(false);
-            }
-        }
-
-        @Override
-        public void evento() {
-//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
-        
-    }
+//            }
+//        }
+//
+//        @Override
+//        public void gastado(boolean llenar_recipiente) {
+//            System.out.println("Consumiendo un recipiente lleno");
+//            int id=numeroAleatorio(1,100);
+//            System.out.println("Unidad seleccionada numero " + id);
+////            if(id==soldadosEnemigos.size() || id<0){id=0;}
+////            personaje=null;
+////            personaje=soldadosEnemigos.get(id);
+//            if(id!=45){
+////                personaje.quitarLabel();
+////                personaje.ponerLabel(personaje.getX_UltimaPosicion(), personaje.getY_UltimaPosicion(), TipoDeImagen.Robot);
+////                for(int i=0; i<personaje.memoriaRuta.size(); i++){
+////                    if(personaje.memoriaRuta.getMemoria(contador)!=null){
+////                        personaje.getLabel().setBounds(personaje.memoriaRuta.getMemoria(contador).XY_final.getX(),personaje.memoriaRuta.getMemoria(contador).XY_final.getY(), personaje.getLabel().getWidth(), personaje.getLabel().getHeight());
+////                        System.out.println("Recorriendo: "+personaje.memoriaRuta.getMemoria(contador).XY_final);
+////                    }
+////                }
+//                System.out.println("Recipiente bacio");
+//                contador=100;
+//                setRecipienteLleno(false);
+//            }
+//        }
+//
+//        @Override
+//        public void evento() {
+////            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        }
+//        
+//    }
     
     
     class Hilo1 extends Thread{
@@ -614,7 +614,7 @@ public class jPJuego extends javax.swing.JPanel {
         this.setBounds(new Rectangle(1000,450));
 //        Hilo h=new Hilo();
 //        h.start();
-          H_ConsumidorProductor h=new H_ConsumidorProductor();
+//          H_ConsumidorProductor h=new H_ConsumidorProductor();
           
     }
 

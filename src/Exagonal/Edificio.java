@@ -33,9 +33,6 @@ public abstract class Edificio extends AbstractTerritorio {
         jProgressBar1.setValue(valor);
     }
     
-
-    
-    
     
     private int recursosGenerados=0;
     

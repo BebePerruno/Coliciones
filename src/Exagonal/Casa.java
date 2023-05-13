@@ -47,7 +47,6 @@ public class Casa extends Edificio {
     public void generandoRecursos() {
         setRecursosEnGenerados(getRecursosEnGenerados()+this.getCantidadDeRecursosHaGenerar());
         recursosGeneradosPorTodasLasCasas+=getRecursosEnGenerados();
-        this.setCantidadDeRecursosHaGenerar(5);
         addCasa(this);//Actualiza las modificasiones en el ArrayList.
     }
 
@@ -68,6 +67,7 @@ public class Casa extends Edificio {
         this.setImagen(AbstractTerritorio.imagenes.getCasa());
         AbstractTerritorio.poblacion+=habitantesPorCasa;//Cada vez que se crea una casa la poblacion aumenta a 4.
         this.setMax(maxDelProgressBar);
+        this.setCantidadDeRecursosHaGenerar(5);
         this.setCantidadDeRecursosHaGenerar(5);
         addCasa(this);
     }

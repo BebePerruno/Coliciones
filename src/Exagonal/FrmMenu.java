@@ -11,13 +11,6 @@ import java.awt.Point;
  * @author Jugador
  */
 public abstract class FrmMenu extends javax.swing.JFrame {
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * Creates new form FrmMenu

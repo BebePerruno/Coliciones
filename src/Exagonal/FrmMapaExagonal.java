@@ -98,13 +98,19 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         }
 
         
+
         @Override
-        public void evento() {
-////            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
+        public void eventoProductor() {
+            ////            System.out.println("Tiempo="+casaTiempoDeConstruccion+"_"+minaTiempoDeConstruccion+"_"+granjaTiempoDeConstruccion);
             jLPoblacion.setTexto("Poblacion " + Casa.poblacion+"/" +( (Territorio.rsTerritorios.size()-1)*Casa.habitantesPorCasa));
             jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
             jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
             jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
+        }
+
+        @Override
+        public void eventoConsumidor() {
+//            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         }
     }
 
@@ -166,18 +172,6 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         for(int i=0; i<Territorio.rsTerritorios.size(); i++){
             Territorio.rsTerritorios.get(id).setEventos(vEventos);
         }
-//        territorio1.setEventos(vEventos);
-//        territorio2.setEventos(vEventos);
-//        this.territorio3.setEventos(vEventos);
-//        this.territorio4.setEventos(vEventos);
-//        this.territorio5.setEventos(vEventos);
-//        this.territorio6.setEventos(vEventos);
-//        this.territorio7.setEventos(vEventos);
-//        territorio8.setEventos(vEventos);
-//        territorio9.setEventos(vEventos);
-//        territorio10.setEventos(vEventos);
-//        territorio11.setEventos(vEventos);
-//        territorio12.setEventos(vEventos);
         Motor h=new Motor();
 //        JOptionPane.showMessageDialog(null, Casa.rsCasas.size());
         

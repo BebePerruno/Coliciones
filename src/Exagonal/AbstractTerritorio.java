@@ -78,6 +78,7 @@ public abstract class AbstractTerritorio extends javax.swing.JPanel {
     }
     
     public abstract void eveEventosAgregados();
+    
     public void setEventos(AbstractDoubleClick nuevoMouseListener){
 //        this.jLbImagen.addMouseListener(nuevoMouseListener);
         this.jLabel6.addMouseListener(nuevoMouseListener);

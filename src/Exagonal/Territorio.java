@@ -16,6 +16,7 @@ public class Territorio extends AbstractTerritorio{
     
     public void setComprado(boolean esta_comprado){
         comprado=esta_comprado;
+        addTerritorio(this);
     }
     public boolean getComprado(){
         return comprado;

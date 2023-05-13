@@ -13,10 +13,35 @@ import java.util.logging.Logger;
  * @author Jugador
  */
 public abstract class HiloProductorConsumidor {
-    public abstract void produciendo();
-    public abstract void gastado(boolean llenar_recipiente);
-    public abstract void evento();
     
+    public void intervalo(int nuevo_intervalo_para_el_sleep){
+        try {
+                sleep(nuevo_intervalo_para_el_sleep);
+            } catch (InterruptedException ex) {
+//                Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    /**
+     * Sucede cuando se esta produciendo, se recomienda usarlo como principal y dejar los demas como secundarios.
+     */
+    public abstract void produciendo();
+    /**
+     * Sucede cuando se han gastado los recursos.
+     * En esta situacion se indica con un boolean.
+     * @param llenar_recipiente Un boolean true para indicar que se debe llenar el recipiente.
+     */
+    public abstract void gastado(boolean llenar_recipiente);
+    
+    /**
+     * Sucede en todo momento, es igual que el metoo run de un hilo.
+     * En el hilo productor.
+     */
+    public abstract void eventoProductor();
+    /**
+     * Sucede en todo momento, es igual que el metoo run de un hilo.
+     * En el hilo consumidor.
+     */
+    public abstract void eventoConsumidor();
     
     private HiloProductor hProductor=new HiloProductor();
     private HiloConsumidor hConsumidor=new HiloConsumidor();
@@ -62,7 +87,8 @@ public abstract class HiloProductorConsumidor {
     public synchronized boolean getRecipiente(){
         while(recipienteLleno==true){
             try {
-                wait();
+                sleep(1000);
+//                wait(500);
             } catch (InterruptedException ex) { }
         }
         recipiente=false;
@@ -76,7 +102,8 @@ public abstract class HiloProductorConsumidor {
     public synchronized void setRecipiente(){//(boolean nueva_cantidad){
         while(recipienteLleno==false){
             try {
-                wait();
+//                wait(150);
+                sleep(500);
             } catch (InterruptedException ex) { }
         }
         recipiente=true;
@@ -95,7 +122,7 @@ public abstract class HiloProductorConsumidor {
         @Override
         public void run(){
             while(true){
-                evento();
+                eventoProductor();
 //              setProducto(1);
 //                System.out.println("\n\nProduciendo " + cantidad + " productos.\n\n");
                 produciendo();
@@ -112,6 +139,7 @@ public abstract class HiloProductorConsumidor {
      * Permite recorrer los caminos guardados.
      */
     public class HiloConsumidor extends Thread{
+        
 
             /**
              * Permite recorrer los caminos guardados.
