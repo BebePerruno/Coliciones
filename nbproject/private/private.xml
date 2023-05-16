@@ -20,13 +20,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/Territorio.java</file>
             <file>file:/R:/Trabajos%20Java/Coliciones/src/ExperimentosConJuegos/HiloProductorConsumidor.java</file>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/AbstractDoubleClick.java</file>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/FrmMapaExagonal.java</file>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/Mina.java</file>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/PunteroDelMouse.java</file>
-            <file>file:/R:/Trabajos%20Java/Coliciones/src/Exagonal/AbstractTerritorio.java</file>
+            <file>file:/R:/Trabajos%20Java/Coliciones/src/ia/FrmAlgoritmoGenetico.java</file>
+            <file>file:/R:/Trabajos%20Java/Coliciones/src/ia/Evolutivo3.java</file>
         </group>
     </open-files>
 </project-private>

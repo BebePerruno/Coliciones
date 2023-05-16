@@ -14,6 +14,12 @@ import java.util.logging.Logger;
  */
 public abstract class HiloProductorConsumidor {
     
+    public void esperar(int cantidad_de_tiempo_de_espera){
+        try{
+            sleep(cantidad_de_tiempo_de_espera);
+        }catch(Exception e){}
+    }
+    
     public void intervalo(int nuevo_intervalo_para_el_sleep){
         try {
                 sleep(nuevo_intervalo_para_el_sleep);
@@ -51,17 +57,21 @@ public abstract class HiloProductorConsumidor {
        hConsumidor.start();
    }
    
-   public HiloProductorConsumidor(boolean llenar_recipiente){
-       recipienteLleno=llenar_recipiente;
+   public void desactivar(){
+       hProductor.stop();
+       hConsumidor.stop();
+   }
+   
+   public void activar(){
        hProductor.start();
        hConsumidor.start();
    }
    
-   public HiloProductorConsumidor(boolean llenar_recipiente, boolean estado_del_recipiente){
-       recipienteLleno=llenar_recipiente;
-       recipiente=estado_del_recipiente;
-       hProductor.start();
-       hConsumidor.start();
+   public HiloProductorConsumidor(boolean el_recipiente_esta_lleno, boolean comenzar){
+       recipienteLleno=el_recipiente_esta_lleno;
+       if(comenzar==true){
+           activar();
+       }
    }
    
    /**
@@ -70,8 +80,8 @@ public abstract class HiloProductorConsumidor {
     */
     private boolean recipienteLleno=true;
     
-    public void setRecipienteLleno(boolean llenar_recipiente){
-        recipienteLleno=llenar_recipiente;
+    public void setRecipienteLleno(boolean esta_lleno){
+        recipienteLleno=esta_lleno;
     }
     public boolean getRecipienteLleno(){
         return recipienteLleno;
@@ -125,7 +135,9 @@ public abstract class HiloProductorConsumidor {
                 eventoProductor();
 //              setProducto(1);
 //                System.out.println("\n\nProduciendo " + cantidad + " productos.\n\n");
-                produciendo();
+//                try{
+                    produciendo();
+//                }catch(Exception e){}
                 
 //                try {
 //    //                System.out.println((numeroAleatorio(1, 50)));
@@ -148,18 +160,11 @@ public abstract class HiloProductorConsumidor {
         public void run(){
 //            boolean comiendo=getLlenarlo();
             while(true){
-//                try {
-//                    //            System.out.println("Consumiendo " + consumiendo + " productos");
-//                    sleep(10);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(HiloProductorConsumidor.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                comiendo=recipienteLleno;
-                gastado(recipienteLleno);
-                //if(comiendo!=getLlenarlo()){
                 if(recipienteLleno==false){
     //                System.out.println("Ya se consumió todo. Esperando la produccion.");
                     recipienteLleno=getRecipiente();
+                }else{
+                    gastado(recipienteLleno);
                 }
             }
         }

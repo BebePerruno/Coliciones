@@ -87,14 +87,15 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
 //            int consumido=granja1.getRecursosEnGenerados()-Casa.ConsumoDeComida();
 //            granja1.setRecursosEnGenerados(consumido);
 //            System.out.println("Consumiendo " + consumido + "=" + granja1.getRecursosEnGenerados());
-//            System.out.println( "=" + granja1.getRecursosEnGenerados());
+//            System.out.println( "Gastando");
+            this.setRecipienteLleno(false);
 //            mina1.setRecursosEnGenerados(granja1.getRecursosEnGenerados()-casa1.getCantidadDeRecursosHaGenerar());
             try {
                 sleep(1000);
             } catch (InterruptedException ex) {
 //                Logger.getLogger(FrmMapaExagonal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            llenar_recipiente=true;
+            
         }
 
         
@@ -106,6 +107,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
             jLPiedra.setTexto("Pidra " + Mina.recursosGeneradosPorTodasLasMinas);
             jLOro.setTexto("Oro " + Casa.recursosGeneradosPorTodasLasCasas);
             jLAlimentos.setTexto("Alimentos " + Farm.recursosGeneradosPorTodasLasGranjas);
+            this.setRecipienteLleno(true);
         }
 
         @Override
@@ -462,7 +464,7 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
                         return;
                     }
                 }
-                desactivarSeleccion();
+//                desactivarSeleccion();
             }
 
             @Override
@@ -475,7 +477,6 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
         @Override
         public void eveDobleClick(int x, int y, Point puntoXY) {
             estaSeleccionado(punteroDelMouse1); 
-//            for(int i=0; i<Territorio.rsTerritorios.size(); i++){
 //                System.out.println(id+" Es comprado "+Territorio.rsTerritorios.get(id).getNombre() + Territorio.rsTerritorios.get(id).getNumeroDeInstancia() + "="+Territorio.rsTerritorios.get(id).getComprado());
                 if(Territorio.rsTerritorios.get(id).getEstaSeleccionado()==true){
                     if(Territorio.rsTerritorios.get(id).getComprado()==true){
@@ -491,7 +492,6 @@ public class FrmMapaExagonal extends javax.swing.JFrame {
                         frmComprar.setTerritorio(territorio1);
                     }
                 }
-//            }
         }
 
         
