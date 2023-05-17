@@ -13,14 +13,22 @@ import javax.swing.AbstractListModel;
  */
 public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
 
+    private int numeroDeGeneraciones=0;
+    
+    public int getMaximoNumeroDePoblaciones(){
+        return numeroDeGeneraciones;
+    }
     
     /**
      * Creates new form FrmAlgoritmoGenetico
      */
-    public FrmAlgoritmoGenetico(int maxima_poblacion) {
+    public FrmAlgoritmoGenetico(int maxima_poblacion, int numero_de_generaciones, int maximo_de_genes) {
         initComponents();
+        this.jProgressBarGenes.setMinimum(maximo_de_genes);
         this.jProgressBarPoblacionActual.setMinimum(maxima_poblacion);
-        System.out.println("jProgressBarPoblacionActual.getMaximum()="+jProgressBarPoblacionActual.getMaximum());
+        numeroDeGeneraciones=numero_de_generaciones;
+        jProgressBarTodasLasPoblaciones.setMaximum(numero_de_generaciones*maxima_poblacion);
+        System.out.println("jProgressBarPoblacionActual.getMaximum()="+jProgressBarTodasLasPoblaciones.getMaximum());
     }
 
     /**
@@ -40,7 +48,8 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jLstTodasLasPoblaciones = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
         jProgressBarPoblacionActual = new javax.swing.JProgressBar();
-        jTxtPoblacionActual = new javax.swing.JTextField();
+        jTxtGenomaSeleccionado = new javax.swing.JTextField();
+        jProgressBarTodasLasPoblaciones = new javax.swing.JProgressBar();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -49,7 +58,7 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jLstGenomaModelo = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        jProgressBarGenes = new javax.swing.JProgressBar();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTxtGenoma = new javax.swing.JTextField();
@@ -95,18 +104,25 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        jLstTodasLasPoblaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLstTodasLasPoblacionesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jLstTodasLasPoblaciones);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(160, 40, 120, 280);
+        jScrollPane3.setBounds(160, 40, 120, 220);
 
         jLabel6.setText("Poblacion actual");
         jPanel1.add(jLabel6);
         jLabel6.setBounds(20, 20, 100, 16);
         jPanel1.add(jProgressBarPoblacionActual);
         jProgressBarPoblacionActual.setBounds(20, 260, 120, 20);
-        jPanel1.add(jTxtPoblacionActual);
-        jTxtPoblacionActual.setBounds(20, 280, 120, 22);
+        jPanel1.add(jTxtGenomaSeleccionado);
+        jTxtGenomaSeleccionado.setBounds(20, 280, 260, 22);
+        jPanel1.add(jProgressBarTodasLasPoblaciones);
+        jProgressBarTodasLasPoblaciones.setBounds(160, 260, 120, 20);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(420, 20, 310, 360);
@@ -144,9 +160,9 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jPanel2.add(jLabel3);
         jLabel3.setBounds(20, 200, 110, 16);
 
-        jProgressBar1.setMaximum(6);
-        jPanel2.add(jProgressBar1);
-        jProgressBar1.setBounds(10, 180, 160, 14);
+        jProgressBarGenes.setMaximum(6);
+        jPanel2.add(jProgressBarGenes);
+        jProgressBarGenes.setBounds(10, 180, 160, 14);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(10, 20, 190, 360);
@@ -217,18 +233,91 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jBtnSalirActionPerformed
 
+    private MiArray rsGenomaModelo=new MiArray();
+    private MiArray rsPoblacionActual=new MiArray();
+    private MiArray rsTodaLasPoblaciones=new MiArray();
+    
+    public class MiArray{
+        private String []matriz={""};
+        
+        public MiArray(){
+        }
+        
+        public int size(){
+            return matriz.length;
+        }
+        
+        public void add(String datos){
+            String []m=matriz;
+            if(matriz[0].equals("")==true){
+                matriz[0]=datos;
+            }else{
+                matriz=new String[1+m.length];
+                for(int i=0; i<m.length; i++){
+                    matriz[i]=m[i];
+                }
+                matriz[matriz.length-1]=datos;
+            }
+        }
+        
+        public String get(int id){
+            if(idValido(id)==false){
+                return "";
+            }
+            return matriz[id];
+        }
+        
+        private boolean idValido(int id){
+            if(id>matriz.length-1){
+                new Exception("El id es mayor al maximo en class MiArray.");
+                return false;
+            }
+            
+            if(id<0){
+                new Exception("El id es es al maximo en class MiArray.");
+                return false;
+            }
+            return true;
+        }
+        
+        public void remover(int id){
+            if(idValido(id)==false){
+                return;
+            }
+            matriz[id]=null;
+            String []m=new String[matriz.length-2];
+            for(int i=0; i<matriz.length; i++){
+                if(matriz[id].isEmpty()==true){
+                    //No hacer nada
+                }else{
+                    m[i]=matriz[i];
+                }
+            }
+            matriz=m;
+        }
+        
+        public void modificar(int id, String datos){
+            if(idValido(id)==false){
+                return;
+            }
+            matriz[id]=datos;
+        }
+    }
+    
    /**
-    * Sirve para todas las listas.
+    * Sirve para todas las listas. 
     */
     private class Lista extends AbstractListModel<String>{
 
-        private ArrayList<String> rsLista=new ArrayList();
+        private MiArray rsLista=new MiArray();
         
-        
-        
-        public void add(String texto){
-            rsLista.add(texto);
+        public Lista(MiArray nuevo_rs){
+            rsLista=nuevo_rs;
         }
+        
+//        public void add(String texto){
+//            rsLista.add(texto);
+//        }
         
         @Override
         public int getSize() {
@@ -254,7 +343,8 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     }
     
     public String []getmGenomaObjetivo(){
-        return listaGenomaModelo.getGenoma();
+        Lista g=new Lista(this.rsGenomaModelo);
+        return g.getGenoma();
     }
     
     public String getGenomaObjetivo(){
@@ -268,78 +358,92 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     
     public abstract void eveAgregarGenomaModelo(int numero_elegido);
     public abstract void eveGenerandoGenomaObjetivo(String []mGenoma);
-    private Lista listaGenomaModelo=new Lista();
+//    private Lista listaGenomaModelo=new Lista();
     
     private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
-        listaGenomaModelo.add(jCmbGenesElegibles.getSelectedItem().toString());
         
-        jProgressBar1.setValue(listaGenomaModelo.getSize());
-        if(listaGenomaModelo.getSize()==6){
-            jCmbGenesElegibles.setEnabled(false);
-            jLstGenomaModelo.setModel(listaGenomaModelo);
-            jBtnAgregar.setEnabled(false);
-            eveGenerandoGenomaObjetivo(listaGenomaModelo.getGenoma());
-        }
-//        this.setTitle(jCmbGenesElegibles.getSelectedItem().toString());
+        this.rsGenomaModelo.add(jCmbGenesElegibles.getSelectedItem().toString());
+        jProgressBarGenes.setValue(rsGenomaModelo.size());
+        Lista listaGenomaModelo=new Lista(rsGenomaModelo);
+        jLstGenomaModelo.setModel(listaGenomaModelo);
+        eveGenerandoGenomaObjetivo(listaGenomaModelo.getGenoma());
         eveAgregarGenomaModelo(Integer.parseInt(this.jCmbGenesElegibles.getSelectedItem().toString()));
+        
+        if(rsGenomaModelo.size()>=jProgressBarGenes.getMaximum()){
+            this.setTitle(rsGenomaModelo.size()+", maximo");
+            jBtnAgregar.setEnabled(false);
+            jCmbGenesElegibles.setEnabled(false);
+        }
+        
     }//GEN-LAST:event_jBtnAgregarActionPerformed
 
     public abstract void eveIniciarEvolucion();
     
     private void jBtnIniciarEvolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIniciarEvolucionActionPerformed
-        listaPoblacionActual=new Lista();
+        LimpiarPoblacionActual();
+        LimpiarTodasLasPoblaciones();
         eveIniciarEvolucion();
     }//GEN-LAST:event_jBtnIniciarEvolucionActionPerformed
 
     public abstract void eveDetenerEvolucion();
     private void jBtnDetenerEvolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDetenerEvolucionActionPerformed
         eveDetenerEvolucion();
-         this.jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
+        Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
+        this.jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
     }//GEN-LAST:event_jBtnDetenerEvolucionActionPerformed
 
     private void jLstPoblacionActualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstPoblacionActualMouseClicked
-        jTxtPoblacionActual.setText(""+jLstPoblacionActual.getSelectedValue());
+        jTxtGenomaSeleccionado.setText(""+jLstPoblacionActual.getSelectedValue());
     }//GEN-LAST:event_jLstPoblacionActualMouseClicked
+
+    private void jLstTodasLasPoblacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstTodasLasPoblacionesMouseClicked
+        jTxtGenomaSeleccionado.setText(this.jLstTodasLasPoblaciones.getSelectedValue()+"");
+    }//GEN-LAST:event_jLstTodasLasPoblacionesMouseClicked
 
     public void setMejorHabitante(String nuevo_genoma, int valor_del_fitness){
         this.jTxtGenoma.setText(nuevo_genoma);
         this.jTxtFitness.setText(""+valor_del_fitness);
     }
     
-    private Lista listaPoblacionActual=new Lista();
     
     public void LimpiarPoblacionActual(){
-        listaPoblacionActual=new Lista();
+        rsPoblacionActual=new MiArray();
+        Lista listaPoblacionActual=new Lista(rsPoblacionActual);
         jLstPoblacionActual.setModel(listaPoblacionActual);
     }
     
     public abstract void eveListandoPoblacionActual(String genomaDelIndividuo);
     
     public void addPoblacionActual(String genomaDelIndividuo){
-        listaPoblacionActual.add(genomaDelIndividuo);
+        
+        rsPoblacionActual.add(genomaDelIndividuo);
         eveListandoPoblacionActual(genomaDelIndividuo);
-        System.out.println("listaPoblacionActual.getSize()="+listaPoblacionActual.getSize());
-        jProgressBarPoblacionActual.setValue(listaPoblacionActual.getSize());
-        if(jProgressBarPoblacionActual.getMaximum()==listaPoblacionActual.getSize()){
+//        System.out.println("listaPoblacionActual.getSize()="+rsPoblacionActual.size());
+        jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
+            Lista listaPoblacionActual=new Lista(rsPoblacionActual);
             this.jLstPoblacionActual.setModel(listaPoblacionActual);
-//            LimpiarPoblacionActual();
-        }
+            
     }
     
-    private Lista listaTodasLasPoblaciones=new Lista();
-    
     public void LimpiarTodasLasPoblaciones(){
-        listaTodasLasPoblaciones=new Lista();
+        this.rsTodaLasPoblaciones=new MiArray();
+        Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
         this.jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
     }
     
     public abstract void eveListandoTodasLasPoblaciones(String genomaDelIndividuo);
     
+    public int getConteoDeLasGeneraciones(){
+        return jProgressBarTodasLasPoblaciones.getValue();
+    }
+    
+//    private int cont=0;
     public void addTodasLasPoblaciones(String genomaDelIndividuo){
-        listaTodasLasPoblaciones.add(genomaDelIndividuo);
+        this.rsTodaLasPoblaciones.add(genomaDelIndividuo);
         eveListandoTodasLasPoblaciones(genomaDelIndividuo);
-        
-       
+        Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
+        jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
+       jProgressBarTodasLasPoblaciones.setValue(rsTodaLasPoblaciones.size());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -364,13 +468,14 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar jProgressBarGenes;
     private javax.swing.JProgressBar jProgressBarPoblacionActual;
+    private javax.swing.JProgressBar jProgressBarTodasLasPoblaciones;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTxtFitness;
     private javax.swing.JTextField jTxtGenoma;
-    private javax.swing.JTextField jTxtPoblacionActual;
+    private javax.swing.JTextField jTxtGenomaSeleccionado;
     // End of variables declaration//GEN-END:variables
 }

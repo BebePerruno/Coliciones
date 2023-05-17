@@ -53,6 +53,8 @@ public abstract class HiloProductorConsumidor {
     private HiloConsumidor hConsumidor=new HiloConsumidor();
     
    public HiloProductorConsumidor(){
+       hProductor=new HiloProductor();
+       hConsumidor=new HiloConsumidor();
        hProductor.start();
        hConsumidor.start();
    }

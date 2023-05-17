@@ -23,40 +23,6 @@ public class Evolutivo3 {
     
     public static void main(String []m){
         new Hilo();
-//        class F extends FrmAlgoritmoGenetico{
-//            
-//            public F(){
-//                super(12);
-//                this.setVisible(true);
-//            }
-//
-//            @Override
-//            public void eveAgregarGenomaModelo(int numero_elegido) {
-////                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//            }
-//
-//            @Override
-//            public void eveIniciarEvolucion() {
-////                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//            }
-//
-//            @Override
-//            public void eveDetenerEvolucion() {
-////                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//            }
-//
-//            @Override
-//            public void eveListandoPoblacionActual(String genomaDelIndividuo) {
-////                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//            }
-//
-//            @Override
-//            public void eveListandoTodasLasPoblaciones(String genomaDelIndividuo) {
-////                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//            }
-//            
-//        }
-//        F f=new F();
     }
     
 }
@@ -67,7 +33,7 @@ class Hilo extends HiloProductorConsumidor{
     public class Formulario extends FrmAlgoritmoGenetico{
         
         public Formulario(){
-            super(Habitante.cantidadDeHabitantes);
+            super(Habitante.cantidadDeHabitantes, Habitante.cantidadDegeneraciones,Habitante.cantidadDeGenes);
         }
 
         @Override
@@ -188,7 +154,7 @@ class Hilo extends HiloProductorConsumidor{
 //            datos=""+mGenomaModelo[0]+mGenomaModelo[1]+mGenomaModelo[2]+mGenomaModelo[3]+mGenomaModelo[4]+mGenomaModelo[5];
 //            System.out.println("Genoma modelo= + "  + datos + "\nMejor habitante " + m[0] + "; su fitness " + m[0].getFitness() + "\n\n");
 
-//            frm1.LimpiarPoblacionActual();
+            
             for(int i=0; i<Habitante.poblacion.size(); i++){
                 if(m[0].getFitness()==0){
                     Habitante.poblacion.get(i).cruzamiento(Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)),Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)));
@@ -199,7 +165,7 @@ class Hilo extends HiloProductorConsumidor{
                 frm1.addTodasLasPoblaciones(Habitante.poblacion.get(i).getGenes()+ " fitness " + Habitante.poblacion.get(i).getFitness());
             }
 
-            for(int i=0; i<Habitante.poblacion.size()/2; i++){
+            for(int i=0; i<Habitante.poblacion.size()/4; i++){
                 Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)).mutar(mGenomaAleatorio());
             }
 
@@ -208,7 +174,7 @@ class Hilo extends HiloProductorConsumidor{
 //        }catch(Exception e){}
         this.esperar(1000);
         this.setRecipienteLleno(true);
-        if(contador==50){
+        if(contador==Habitante.cantidadDegeneraciones){
             this.desactivar();
         }
     }
@@ -217,6 +183,7 @@ class Hilo extends HiloProductorConsumidor{
     @Override
     public void gastado(boolean llenar_recipiente) {
         esperar(1100);
+//        frm1.LimpiarPoblacionActual();
         setRecipienteLleno(false);
     }
 
@@ -242,6 +209,8 @@ class Hilo extends HiloProductorConsumidor{
  */
 class Habitante{
     public static int cantidadDeHabitantes=20;
+    public static int cantidadDegeneraciones=100;
+    public static int cantidadDeGenes=6;
     
     @Override
     public String toString(){
