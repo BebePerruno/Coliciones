@@ -5,6 +5,8 @@
 package ia;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 
 /**
@@ -247,60 +249,59 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
             return matriz.length;
         }
         
+        private static String SEPARADOR="_";
+        
+        private String todosLosDatos="";
+        
         public void add(String datos){
-            String []m=matriz;
-            if(matriz[0].equals("")==true){
-                matriz[0]=datos;
-            }else{
-                matriz=new String[1+m.length];
-                for(int i=0; i<m.length; i++){
-                    matriz[i]=m[i];
-                }
-                matriz[matriz.length-1]=datos;
-            }
+            todosLosDatos+=datos+SEPARADOR;
+            matriz=todosLosDatos.split(SEPARADOR);
         }
         
         public String get(int id){
-            if(idValido(id)==false){
-                return "";
+            try {
+                    idValido(id);
+                    return matriz[id];
+            } catch (Exception ex) {
+                Logger.getLogger(FrmAlgoritmoGenetico.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return matriz[id];
+            return "";
         }
         
-        private boolean idValido(int id){
+        private boolean idValido(int id) throws Exception{
             if(id>matriz.length-1){
-                new Exception("El id es mayor al maximo en class MiArray.");
-                return false;
+                throw new Exception("El id es mayor al maximo en class MiArray.");
             }
             
             if(id<0){
-                new Exception("El id es es al maximo en class MiArray.");
-                return false;
+                throw new Exception("El id es es al maximo en class MiArray.");
             }
             return true;
         }
         
         public void remover(int id){
-            if(idValido(id)==false){
-                return;
-            }
-            matriz[id]=null;
-            String []m=new String[matriz.length-2];
-            for(int i=0; i<matriz.length; i++){
-                if(matriz[id].isEmpty()==true){
-                    //No hacer nada
-                }else{
-                    m[i]=matriz[i];
+            try {
+                this.todosLosDatos="";
+                idValido(id);
+                matriz[id]="";
+                for(int i=0; i<matriz.length; i++){
+                    if(i!=id){
+                        todosLosDatos+=matriz[i];
+                    }
                 }
+                matriz=todosLosDatos.split(SEPARADOR);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmAlgoritmoGenetico.class.getName()).log(Level.SEVERE, null, ex);
             }
-            matriz=m;
         }
         
         public void modificar(int id, String datos){
-            if(idValido(id)==false){
-                return;
+            try {
+                idValido(id);
+                matriz[id]=datos;
+            } catch (Exception ex) {
+                Logger.getLogger(FrmAlgoritmoGenetico.class.getName()).log(Level.SEVERE, null, ex);
             }
-            matriz[id]=datos;
         }
     }
     
@@ -419,10 +420,11 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         rsPoblacionActual.add(genomaDelIndividuo);
         eveListandoPoblacionActual(genomaDelIndividuo);
 //        System.out.println("listaPoblacionActual.getSize()="+rsPoblacionActual.size());
-        jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
+        if(jProgressBarPoblacionActual.getMaximum()==rsPoblacionActual.size()){
+            jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
             Lista listaPoblacionActual=new Lista(rsPoblacionActual);
             this.jLstPoblacionActual.setModel(listaPoblacionActual);
-            
+        }
     }
     
     public void LimpiarTodasLasPoblaciones(){
@@ -441,8 +443,10 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     public void addTodasLasPoblaciones(String genomaDelIndividuo){
         this.rsTodaLasPoblaciones.add(genomaDelIndividuo);
         eveListandoTodasLasPoblaciones(genomaDelIndividuo);
-        Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
-        jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
+        if(jProgressBarTodasLasPoblaciones.getMinimum()==rsTodaLasPoblaciones.size()){
+            Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
+            jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
+        }
        jProgressBarTodasLasPoblaciones.setValue(rsTodaLasPoblaciones.size());
     }
 

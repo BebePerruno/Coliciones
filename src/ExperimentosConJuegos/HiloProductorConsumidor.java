@@ -62,9 +62,13 @@ public abstract class HiloProductorConsumidor {
    public void desactivar(){
        hProductor.stop();
        hConsumidor.stop();
+       hProductor=null;
+       hConsumidor=null;
    }
    
    public void activar(){
+       hProductor=new HiloProductor();
+       hConsumidor=new HiloConsumidor();
        hProductor.start();
        hConsumidor.start();
    }

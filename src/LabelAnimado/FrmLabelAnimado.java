@@ -138,7 +138,7 @@ public class FrmLabelAnimado extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jPJuego1 = new ExperimentosConJuegos.jPJuego();
+        jpLienzoAmbiente1 = new ejemploLabel.jpLienzoAmbiente();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(100, 100));
@@ -159,9 +159,9 @@ public class FrmLabelAnimado extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(40, 240, 69, 25);
-        getContentPane().add(jPJuego1);
-        jPJuego1.setBounds(90, 10, 450, 270);
+        jButton1.setBounds(10, 20, 69, 25);
+        getContentPane().add(jpLienzoAmbiente1);
+        jpLienzoAmbiente1.setBounds(170, 30, 670, 470);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -212,6 +212,6 @@ public class FrmLabelAnimado extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private ExperimentosConJuegos.jPJuego jPJuego1;
+    private ejemploLabel.jpLienzoAmbiente jpLienzoAmbiente1;
     // End of variables declaration//GEN-END:variables
 }

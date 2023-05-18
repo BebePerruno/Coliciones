@@ -5,9 +5,7 @@
 package ia;
 
 import ExperimentosConJuegos.HiloProductorConsumidor;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-//import Hilos.HiloDelJuego;
 
 /**
  *Pasos del algoritmo evolutivo.
@@ -16,6 +14,8 @@ import java.util.ArrayList;
  * 3) Seleccion.
  * 4) Cruzamiento.
  * 5) Mutacion.
+ * 
+ * Queda comprobado que este algoritmo evolutivo si funciona.
  * 
  * @author Angel
  */
@@ -85,7 +85,8 @@ class Hilo extends HiloProductorConsumidor{
     
     public Hilo() {
         super(false, false);
-        Habitante.cantidadDeHabitantes=100;
+        Habitante.cantidadDeHabitantes=10;
+        Habitante.cantidadDegeneraciones=10;
         frm1=new Formulario();
         frm1.setVisible(true);
         
@@ -109,7 +110,7 @@ class Hilo extends HiloProductorConsumidor{
 //        System.out.println("m="+dame_una_matriz.length);
         for(int idSuperior=0; idSuperior<dame_una_matriz.length; idSuperior++){
             for(int idInterno=0; idInterno<dame_una_matriz.length; idInterno++){
-                if(m[idSuperior].getFitness()<m[idInterno].getFitness()){
+                if(m[idSuperior].getFitness()>m[idInterno].getFitness()){
                     aux=m[idInterno];
                     m[idInterno]=m[idSuperior];
                     m[idSuperior]=aux;
@@ -159,10 +160,10 @@ class Hilo extends HiloProductorConsumidor{
                 if(m[0].getFitness()==0){
                     Habitante.poblacion.get(i).cruzamiento(Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)),Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)));
                 }else{
-                    Habitante.poblacion.get(i).cruzamiento(Habitante.poblacion.get(i),m[0]);
+                    Habitante.poblacion.get(i).cruzamiento(m[0],m[1]);
                 }
-                frm1.addPoblacionActual(Habitante.poblacion.get(i).getGenes() + " fitness " + Habitante.poblacion.get(i).getFitness());
-                frm1.addTodasLasPoblaciones(Habitante.poblacion.get(i).getGenes()+ " fitness " + Habitante.poblacion.get(i).getFitness());
+                frm1.addPoblacionActual(Habitante.poblacion.get(i).toString());
+                frm1.addTodasLasPoblaciones(Habitante.poblacion.get(i).toString());
             }
 
             for(int i=0; i<Habitante.poblacion.size()/4; i++){
@@ -208,13 +209,16 @@ class Hilo extends HiloProductorConsumidor{
  * @author Rafael
  */
 class Habitante{
+    
+    
+    
     public static int cantidadDeHabitantes=20;
     public static int cantidadDegeneraciones=100;
     public static int cantidadDeGenes=6;
     
     @Override
     public String toString(){
-        return this.getGenes();
+        return this.getGenes() + ", fitness " + this.getFitness() ;
     }
     
     public static int instancias=-1;
@@ -401,12 +405,8 @@ class Habitante{
      */
     public void mutar(){
         for(int i=0; i<mGenes.length/2;++i){
-            mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenes[numeroAleatorio(0,mGenes.length-1)];
+            mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenesDeseados[numeroAleatorio(0,mGenes.length-1)];
         }
         Habitante.add(this);
     }
-}
-
-class Genes{
-    
 }
