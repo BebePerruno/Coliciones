@@ -162,7 +162,7 @@ public class jpLienzoAmbiente extends javax.swing.JPanel implements AccionesDeMo
 //        this.setDoubleBuffered(true);
         UnidadLabel.LimiteDerecho=500;
         UnidadLabel.LimiteInferior=400;
-        jLCuadrante=new LabelAnimado(0, 300, 100, 100, Foto_a_elegir.Explosion);
+        jLCuadrante=new LabelAnimado(0, 300, 100, 100, Foto_a_elegir.Fabrica);
         base=new LabelAnimado(200, 0, 100, 100, Foto_a_elegir.Base);
         fabrica=new LabelAnimado(350, 400, 100, 100, Foto_a_elegir.Fabrica);
         robot=new UnidadLabel(0, 0, 60, 60, Foto_a_elegir.Robot);

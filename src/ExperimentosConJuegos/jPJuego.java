@@ -570,7 +570,10 @@ public class jPJuego extends javax.swing.JPanel {
                         contador=0;
                         int id=numeroAleatorio(1,soldadosEnemigos.size());
                         if(id==soldadosEnemigos.size()){id=0;}
-                        Personaje nuevo=soldadosEnemigos.get(id);
+//                        Personaje nuevo=soldadosEnemigos.get(id);
+                        
+//                        agregar(nuevo);
+                        contador=100;
                         //Aqui va el algoritmo.
                         //Recargando caminos guardados y ejecutandolos.
                     }
@@ -601,6 +604,9 @@ public class jPJuego extends javax.swing.JPanel {
         this.add(unLabel);
     }
     
+    private void agregar(JLabel nuevo){
+        this.add(nuevo);
+    }
     /**
      * Creates new form jPJuego
      */
@@ -612,9 +618,8 @@ public class jPJuego extends javax.swing.JPanel {
         this.add(edificiosEnemigos.getBase(870, numeroAleatorio(1,350)).getLabel());
         
         this.setBounds(new Rectangle(1000,450));
-//        Hilo h=new Hilo();
-//        h.start();
-//          H_ConsumidorProductor h=new H_ConsumidorProductor();
+        Hilo1 h=new Hilo1();
+        h.start();
           
     }
 
@@ -649,73 +654,73 @@ public class jPJuego extends javax.swing.JPanel {
         jLbCualquierEdificiao2.setText("Cualquier edificio");
         jLbCualquierEdificiao2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao2);
-        jLbCualquierEdificiao2.setBounds(150, 280, 60, 40);
+        jLbCualquierEdificiao2.setBounds(150, 280, 40, 30);
 
         jLbCualquierEdificiao3.setText("Cualquier edificio");
         jLbCualquierEdificiao3.setToolTipText("");
         jLbCualquierEdificiao3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao3);
-        jLbCualquierEdificiao3.setBounds(10, 160, 110, 80);
+        jLbCualquierEdificiao3.setBounds(10, 160, 90, 80);
 
         jLbCualquierEdificiao5.setText("Cualquier edificio");
         jLbCualquierEdificiao5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao5);
-        jLbCualquierEdificiao5.setBounds(240, 360, 110, 40);
+        jLbCualquierEdificiao5.setBounds(300, 360, 50, 40);
 
         jLbCualquierEdificiao4.setText("Cualquier edificio");
         jLbCualquierEdificiao4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao4);
-        jLbCualquierEdificiao4.setBounds(400, 260, 110, 30);
+        jLbCualquierEdificiao4.setBounds(470, 260, 40, 30);
 
         jLbCualquierEdificiao6.setText("Cualquier edificio");
         jLbCualquierEdificiao6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao6);
-        jLbCualquierEdificiao6.setBounds(160, 10, 100, 80);
+        jLbCualquierEdificiao6.setBounds(160, 10, 80, 70);
 
         jLbCualquierEdificiao7.setText("Cualquier edificio");
         jLbCualquierEdificiao7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao7);
-        jLbCualquierEdificiao7.setBounds(260, 190, 110, 70);
+        jLbCualquierEdificiao7.setBounds(260, 190, 50, 50);
 
         jLbCualquierEdificiao8.setText("Cualquier edificio");
         jLbCualquierEdificiao8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao8);
-        jLbCualquierEdificiao8.setBounds(550, 310, 140, 40);
+        jLbCualquierEdificiao8.setBounds(640, 310, 50, 40);
 
         jLbCualquierEdificiao9.setText("Cualquier edificio");
         jLbCualquierEdificiao9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao9);
-        jLbCualquierEdificiao9.setBounds(390, 90, 110, 40);
+        jLbCualquierEdificiao9.setBounds(420, 90, 40, 40);
 
         jLbCualquierEdificiao10.setText("Cualquier edificio");
         jLbCualquierEdificiao10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao10);
-        jLbCualquierEdificiao10.setBounds(540, 170, 120, 30);
+        jLbCualquierEdificiao10.setBounds(540, 170, 40, 30);
 
         jLbCualquierEdificiao11.setText("Cualquier edificio");
         jLbCualquierEdificiao11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao11);
-        jLbCualquierEdificiao11.setBounds(850, 200, 140, 30);
+        jLbCualquierEdificiao11.setBounds(950, 200, 40, 30);
 
         jLbCualquierEdificiao12.setText("Cualquier edificio");
         jLbCualquierEdificiao12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao12);
-        jLbCualquierEdificiao12.setBounds(780, 130, 130, 30);
+        jLbCualquierEdificiao12.setBounds(780, 130, 40, 30);
 
         jLbCualquierEdificiao13.setText("Cualquier edificio");
         jLbCualquierEdificiao13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao13);
-        jLbCualquierEdificiao13.setBounds(620, 60, 130, 40);
+        jLbCualquierEdificiao13.setBounds(620, 60, 50, 40);
 
         jLbCualquierEdificiao14.setText("Cualquier edificio");
         jLbCualquierEdificiao14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao14);
-        jLbCualquierEdificiao14.setBounds(770, 380, 110, 30);
+        jLbCualquierEdificiao14.setBounds(840, 380, 40, 30);
 
         jLbCualquierEdificiao15.setText("Cualquier edificio");
         jLbCualquierEdificiao15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbCualquierEdificiao15);
-        jLbCualquierEdificiao15.setBounds(690, 220, 110, 30);
+        jLbCualquierEdificiao15.setBounds(770, 240, 40, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,21 +16,56 @@ import javax.swing.AbstractListModel;
  */
 public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
 
-    private int numeroDeGeneraciones=0;
     
-    public int getMaximoNumeroDePoblaciones(){
-        return numeroDeGeneraciones;
+    public void setGeneraciones(int numero_de_generaciones){
+        this.jTxtCantidadDeGeneraciones.setText(""+numero_de_generaciones);
+        if(getPoblacion()!=0){
+            jProgressBarTodasLasPoblaciones.setMaximum(numero_de_generaciones*getPoblacion());
+        }
+    }
+    public int getGeneraciones(){
+        int respuesta=0;
+        try{
+            respuesta=Integer.parseInt(this.jTxtCantidadDeGeneraciones.getText());
+        }catch(Exception e){}
+        return respuesta;
+    }
+    
+//    private FrmGrafica f=new FrmGrafica();
+    public void setPromedio(int []mSumatoria){
+//        f.setPromedio(mSumatoria);
+    }
+    
+    public void setPoblacion(int numero_de_pobladores){
+        this.jTxtCantidadDeHabitantes.setText(""+numero_de_pobladores);
+        this.jProgressBarPoblacionActual.setMinimum(numero_de_pobladores);
+    }
+    
+    public int getPoblacion(){
+        int respuesta=0;
+        try{
+            respuesta=Integer.parseInt(this.jTxtCantidadDeHabitantes.getText());
+        }catch(Exception e){}
+        return respuesta;
+    }
+    
+    public FrmAlgoritmoGenetico( ) {
+        initComponents();
+    }
+    
+    public FrmAlgoritmoGenetico( int maximo_de_genes) {
+        initComponents();
+        this.jProgressBarGenes.setMinimum(maximo_de_genes);
     }
     
     /**
      * Creates new form FrmAlgoritmoGenetico
      */
-    public FrmAlgoritmoGenetico(int maxima_poblacion, int numero_de_generaciones, int maximo_de_genes) {
+    public FrmAlgoritmoGenetico( int maximo_de_genes, int numero_de_generaciones, int numero_de_habitantes) {
         initComponents();
         this.jProgressBarGenes.setMinimum(maximo_de_genes);
-        this.jProgressBarPoblacionActual.setMinimum(maxima_poblacion);
-        numeroDeGeneraciones=numero_de_generaciones;
-        jProgressBarTodasLasPoblaciones.setMaximum(numero_de_generaciones*maxima_poblacion);
+        this.jTxtCantidadDeGeneraciones.setText(""+numero_de_generaciones);
+        setPoblacion(numero_de_habitantes);
         System.out.println("jProgressBarPoblacionActual.getMaximum()="+jProgressBarTodasLasPoblaciones.getMaximum());
     }
 
@@ -57,10 +93,15 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jCmbGenesElegibles = new javax.swing.JComboBox<>();
         jBtnAgregar = new javax.swing.JButton();
+        jProgressBarGenes = new javax.swing.JProgressBar();
+        jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jLstGenomaModelo = new javax.swing.JList<>();
-        jLabel3 = new javax.swing.JLabel();
-        jProgressBarGenes = new javax.swing.JProgressBar();
+        jLabel16 = new javax.swing.JLabel();
+        jTxtGenomaObjetivo = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jCmbCantidadDeGenes = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jTxtGenoma = new javax.swing.JTextField();
@@ -72,10 +113,18 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jBtnDetenerEvolucion = new javax.swing.JButton();
         jBtnSalir = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jTxtCantidadDeGeneraciones = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jTxtCantidadDeHabitantes = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Algoritmo genetico");
-        setPreferredSize(new java.awt.Dimension(742, 500));
+        setPreferredSize(new java.awt.Dimension(1000, 500));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -84,7 +133,7 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
 
         jLabel5.setText("Todas las poblaciones");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(160, 20, 130, 16);
+        jLabel5.setBounds(170, 20, 130, 16);
 
         jLstPoblacionActual.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "0" };
@@ -99,7 +148,7 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jLstPoblacionActual);
 
         jPanel1.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 40, 120, 220);
+        jScrollPane2.setBounds(10, 40, 140, 260);
 
         jLstTodasLasPoblaciones.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "0" };
@@ -114,60 +163,104 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jLstTodasLasPoblaciones);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(160, 40, 120, 220);
+        jScrollPane3.setBounds(170, 40, 140, 260);
 
         jLabel6.setText("Poblacion actual");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(20, 20, 100, 16);
+        jLabel6.setBounds(10, 20, 100, 16);
         jPanel1.add(jProgressBarPoblacionActual);
-        jProgressBarPoblacionActual.setBounds(20, 260, 120, 20);
+        jProgressBarPoblacionActual.setBounds(10, 300, 140, 20);
         jPanel1.add(jTxtGenomaSeleccionado);
-        jTxtGenomaSeleccionado.setBounds(20, 280, 260, 22);
+        jTxtGenomaSeleccionado.setBounds(10, 320, 300, 22);
         jPanel1.add(jProgressBarTodasLasPoblaciones);
-        jProgressBarTodasLasPoblaciones.setBounds(160, 260, 120, 20);
+        jProgressBarTodasLasPoblaciones.setBounds(170, 300, 140, 20);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(420, 20, 310, 360);
+        jPanel1.setBounds(640, 20, 320, 360);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.orange, java.awt.Color.green));
         jPanel2.setLayout(null);
 
         jLabel1.setText("Agregue el genoma modelo");
         jPanel2.add(jLabel1);
-        jLabel1.setBounds(20, 10, 200, 16);
+        jLabel1.setBounds(10, 110, 180, 16);
 
         jLabel2.setText("Elija un numero del 0 al 9");
         jPanel2.add(jLabel2);
-        jLabel2.setBounds(20, 70, 140, 16);
+        jLabel2.setBounds(10, 130, 140, 16);
 
         jCmbGenesElegibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        jCmbGenesElegibles.setEnabled(false);
+        jCmbGenesElegibles.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCmbGenesElegiblesItemStateChanged(evt);
+            }
+        });
+        jCmbGenesElegibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCmbGenesElegiblesMouseClicked(evt);
+            }
+        });
         jPanel2.add(jCmbGenesElegibles);
-        jCmbGenesElegibles.setBounds(20, 90, 60, 22);
+        jCmbGenesElegibles.setBounds(10, 150, 60, 22);
 
         jBtnAgregar.setText("Agregar");
+        jBtnAgregar.setEnabled(false);
         jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnAgregarActionPerformed(evt);
             }
         });
         jPanel2.add(jBtnAgregar);
-        jBtnAgregar.setBounds(20, 140, 110, 25);
-
-        jScrollPane1.setViewportView(jLstGenomaModelo);
-
-        jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 230, 90, 110);
-
-        jLabel3.setText("Genoma objetivo");
-        jPanel2.add(jLabel3);
-        jLabel3.setBounds(20, 200, 110, 16);
+        jBtnAgregar.setBounds(80, 150, 110, 25);
 
         jProgressBarGenes.setMaximum(6);
         jPanel2.add(jProgressBarGenes);
-        jProgressBarGenes.setBounds(10, 180, 160, 14);
+        jProgressBarGenes.setBounds(10, 180, 180, 14);
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(204, 0, 204)));
+        jPanel7.setLayout(null);
+
+        jScrollPane1.setViewportView(jLstGenomaModelo);
+
+        jPanel7.add(jScrollPane1);
+        jScrollPane1.setBounds(20, 30, 140, 60);
+
+        jLabel16.setText("Genoma ojetivo");
+        jPanel7.add(jLabel16);
+        jLabel16.setBounds(20, 10, 140, 16);
+
+        jTxtGenomaObjetivo.setBackground(new java.awt.Color(0, 51, 51));
+        jTxtGenomaObjetivo.setDisabledTextColor(new java.awt.Color(0, 255, 0));
+        jTxtGenomaObjetivo.setEnabled(false);
+        jPanel7.add(jTxtGenomaObjetivo);
+        jTxtGenomaObjetivo.setBounds(20, 100, 140, 22);
+
+        jPanel2.add(jPanel7);
+        jPanel7.setBounds(10, 210, 180, 130);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(0, 153, 153), new java.awt.Color(204, 0, 204)));
+        jPanel8.setLayout(null);
+
+        jLabel15.setText("Elija la cantidad de genes");
+        jPanel8.add(jLabel15);
+        jLabel15.setBounds(10, 10, 140, 16);
+
+        jCmbCantidadDeGenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "4", "6", "8", "10", "12", "14", "16", "18", "20" }));
+        jCmbCantidadDeGenes.setSelectedItem(null);
+        jCmbCantidadDeGenes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCmbCantidadDeGenesItemStateChanged(evt);
+            }
+        });
+        jPanel8.add(jCmbCantidadDeGenes);
+        jCmbCantidadDeGenes.setBounds(10, 40, 130, 22);
+
+        jPanel2.add(jPanel8);
+        jPanel8.setBounds(10, 20, 180, 80);
 
         getContentPane().add(jPanel2);
-        jPanel2.setBounds(10, 20, 190, 360);
+        jPanel2.setBounds(10, 20, 220, 360);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.orange, java.awt.Color.green));
         jPanel4.setLayout(null);
@@ -189,35 +282,37 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jLabel8.setBounds(10, 100, 70, 16);
 
         getContentPane().add(jPanel4);
-        jPanel4.setBounds(220, 220, 180, 160);
+        jPanel4.setBounds(440, 220, 180, 160);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.orange, java.awt.Color.green));
         jPanel3.setLayout(null);
 
         jBtnIniciarEvolucion.setText("Iniciar evolucion");
+        jBtnIniciarEvolucion.setEnabled(false);
         jBtnIniciarEvolucion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnIniciarEvolucionActionPerformed(evt);
             }
         });
         jPanel3.add(jBtnIniciarEvolucion);
-        jBtnIniciarEvolucion.setBounds(20, 60, 130, 25);
+        jBtnIniciarEvolucion.setBounds(20, 60, 140, 25);
 
         jLabel4.setText("Evolucionar");
         jPanel3.add(jLabel4);
         jLabel4.setBounds(40, 10, 80, 16);
 
         jBtnDetenerEvolucion.setText("Detener evolucion");
+        jBtnDetenerEvolucion.setEnabled(false);
         jBtnDetenerEvolucion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnDetenerEvolucionActionPerformed(evt);
             }
         });
         jPanel3.add(jBtnDetenerEvolucion);
-        jBtnDetenerEvolucion.setBounds(20, 110, 130, 25);
+        jBtnDetenerEvolucion.setBounds(20, 110, 140, 25);
 
         getContentPane().add(jPanel3);
-        jPanel3.setBounds(220, 20, 180, 160);
+        jPanel3.setBounds(440, 20, 180, 160);
 
         jBtnSalir.setText("Salir");
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -226,7 +321,43 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jBtnSalir);
-        jBtnSalir.setBounds(330, 410, 77, 25);
+        jBtnSalir.setBounds(440, 410, 77, 25);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.orange, java.awt.Color.green));
+        jPanel5.setLayout(null);
+
+        jLabel9.setText("Cantidad de generaciones");
+        jPanel5.add(jLabel9);
+        jLabel9.setBounds(20, 20, 150, 16);
+
+        jTxtCantidadDeGeneraciones.setText("100");
+        jPanel5.add(jTxtCantidadDeGeneraciones);
+        jTxtCantidadDeGeneraciones.setBounds(20, 100, 60, 22);
+
+        jLabel11.setText("Escriba un numero.");
+        jPanel5.add(jLabel11);
+        jLabel11.setBounds(20, 80, 130, 16);
+
+        getContentPane().add(jPanel5);
+        jPanel5.setBounds(240, 20, 180, 160);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.orange, java.awt.Color.green));
+        jPanel6.setLayout(null);
+
+        jLabel12.setText("Tamaño de la poblacion");
+        jPanel6.add(jLabel12);
+        jLabel12.setBounds(20, 20, 150, 16);
+
+        jTxtCantidadDeHabitantes.setText("20");
+        jPanel6.add(jTxtCantidadDeHabitantes);
+        jTxtCantidadDeHabitantes.setBounds(20, 100, 60, 22);
+
+        jLabel13.setText("Escriba un numero.");
+        jPanel6.add(jLabel13);
+        jLabel13.setBounds(20, 80, 130, 16);
+
+        getContentPane().add(jPanel6);
+        jPanel6.setBounds(240, 220, 180, 160);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -364,26 +495,32 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
         
         this.rsGenomaModelo.add(jCmbGenesElegibles.getSelectedItem().toString());
+        jTxtGenomaObjetivo.setText(jTxtGenomaObjetivo.getText()+jCmbGenesElegibles.getSelectedItem().toString());
         jProgressBarGenes.setValue(rsGenomaModelo.size());
         Lista listaGenomaModelo=new Lista(rsGenomaModelo);
         jLstGenomaModelo.setModel(listaGenomaModelo);
-        eveGenerandoGenomaObjetivo(listaGenomaModelo.getGenoma());
+        
         eveAgregarGenomaModelo(Integer.parseInt(this.jCmbGenesElegibles.getSelectedItem().toString()));
         
         if(rsGenomaModelo.size()>=jProgressBarGenes.getMaximum()){
-            this.setTitle(rsGenomaModelo.size()+", maximo");
+//            this.setTitle(rsGenomaModelo.size()+", maximo");
+            eveGenerandoGenomaObjetivo(listaGenomaModelo.getGenoma());
             jBtnAgregar.setEnabled(false);
             jCmbGenesElegibles.setEnabled(false);
+            jBtnIniciarEvolucion.setEnabled(true);
+            jBtnDetenerEvolucion.setEnabled(true);
         }
         
     }//GEN-LAST:event_jBtnAgregarActionPerformed
 
-    public abstract void eveIniciarEvolucion();
+    public abstract void eveIniciarEvolucion(int numero_de_habitantes, int numero_de_generaciones, int numero_de_genes);
     
     private void jBtnIniciarEvolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIniciarEvolucionActionPerformed
+//        this.setVisible(false);
         LimpiarPoblacionActual();
         LimpiarTodasLasPoblaciones();
-        eveIniciarEvolucion();
+//        f.setVisible(true);
+        eveIniciarEvolucion(this.getPoblacion(), this.getGeneraciones(),this.getNumeroDeGenes());
     }//GEN-LAST:event_jBtnIniciarEvolucionActionPerformed
 
     public abstract void eveDetenerEvolucion();
@@ -400,6 +537,31 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private void jLstTodasLasPoblacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLstTodasLasPoblacionesMouseClicked
         jTxtGenomaSeleccionado.setText(this.jLstTodasLasPoblaciones.getSelectedValue()+"");
     }//GEN-LAST:event_jLstTodasLasPoblacionesMouseClicked
+
+    public int getNumeroDeGenes(){
+        int respuesta=0;
+        try{
+            respuesta=Integer.parseInt(jCmbCantidadDeGenes.getSelectedItem().toString());
+        }catch(Exception e){}
+        return respuesta;
+    }
+    
+    public abstract void eveNumeroDeGenes(int numero_de_genes);
+    
+    private void jCmbCantidadDeGenesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCmbCantidadDeGenesItemStateChanged
+        this.jProgressBarGenes.setMaximum(Integer.parseInt(jCmbCantidadDeGenes.getSelectedItem().toString()));
+        eveNumeroDeGenes(jProgressBarGenes.getMaximum());
+        jCmbGenesElegibles.setEnabled(true);
+//        JOptionPane.showMessageDialog(null, jCmbCantidadDeGenes.getSelectedItem().toString());
+    }//GEN-LAST:event_jCmbCantidadDeGenesItemStateChanged
+
+    private void jCmbGenesElegiblesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCmbGenesElegiblesItemStateChanged
+        this.jBtnAgregar.setEnabled(true);
+    }//GEN-LAST:event_jCmbGenesElegiblesItemStateChanged
+
+    private void jCmbGenesElegiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCmbGenesElegiblesMouseClicked
+
+    }//GEN-LAST:event_jCmbGenesElegiblesMouseClicked
 
     public void setMejorHabitante(String nuevo_genoma, int valor_del_fitness){
         this.jTxtGenoma.setText(nuevo_genoma);
@@ -419,9 +581,9 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         
         rsPoblacionActual.add(genomaDelIndividuo);
         eveListandoPoblacionActual(genomaDelIndividuo);
+        jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
 //        System.out.println("listaPoblacionActual.getSize()="+rsPoblacionActual.size());
         if(jProgressBarPoblacionActual.getMaximum()==rsPoblacionActual.size()){
-            jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
             Lista listaPoblacionActual=new Lista(rsPoblacionActual);
             this.jLstPoblacionActual.setModel(listaPoblacionActual);
         }
@@ -455,16 +617,22 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDetenerEvolucion;
     private javax.swing.JButton jBtnIniciarEvolucion;
     private javax.swing.JButton jBtnSalir;
+    private javax.swing.JComboBox<String> jCmbCantidadDeGenes;
     private javax.swing.JComboBox<String> jCmbGenesElegibles;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jLstGenomaModelo;
     private javax.swing.JList<String> jLstPoblacionActual;
     private javax.swing.JList<String> jLstTodasLasPoblaciones;
@@ -472,14 +640,21 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JProgressBar jProgressBarGenes;
     private javax.swing.JProgressBar jProgressBarPoblacionActual;
     private javax.swing.JProgressBar jProgressBarTodasLasPoblaciones;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTxtCantidadDeGeneraciones;
+    private javax.swing.JTextField jTxtCantidadDeHabitantes;
     private javax.swing.JTextField jTxtFitness;
     private javax.swing.JTextField jTxtGenoma;
+    private javax.swing.JTextField jTxtGenomaObjetivo;
     private javax.swing.JTextField jTxtGenomaSeleccionado;
     // End of variables declaration//GEN-END:variables
 }

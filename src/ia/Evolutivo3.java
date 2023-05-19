@@ -5,7 +5,10 @@
 package ia;
 
 import ExperimentosConJuegos.HiloProductorConsumidor;
+import java.awt.Graphics;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *Pasos del algoritmo evolutivo.
@@ -28,12 +31,47 @@ public class Evolutivo3 {
 }
 
 class Hilo extends HiloProductorConsumidor{
+    
+    public class PoblacionEvolutiva extends Poblacion{
 
+        
+        public PoblacionEvolutiva(int numero_de_genes, int numero_de_habitantes) {
+            super(numero_de_genes,  numero_de_habitantes);
+        }
+
+        @Override
+        public void eveFitness(String genes_del_habitante_actual) {
+            frm1.addPoblacionActual(genes_del_habitante_actual);
+        }
+
+        private int []m=new int[Habitante.cantidadDeHabitantes];
+        private int a=0;
+        
+        @Override
+        public void eveSeleccion(String genes_del_mejor_habitante, int fitness_del_mejor_habitante) {
+            frm1.addTodasLasPoblaciones(genes_del_mejor_habitante + ", fitness " + fitness_del_mejor_habitante);
+            m[a]=fitness_del_mejor_habitante;
+            a++;
+        }
+
+        
+        
+        @Override
+        public void eveNuevaGeneracion(int numero_de_la_generacion, double promedio_de_esta_generacion, int sumatoria_de_fitness_sin_promediar) {
+            System.out.println("Promedio de fintness de la generacion " + numero_de_la_generacion+ " es iagual a " + promedio_de_esta_generacion);
+            frm1.setPromedio(m);
+            m=new int[Habitante.cantidadDeHabitantes];
+            a=0;
+        }
+        
+    }
+
+    private PoblacionEvolutiva poblacion=null;
     
     public class Formulario extends FrmAlgoritmoGenetico{
         
         public Formulario(){
-            super(Habitante.cantidadDeHabitantes, Habitante.cantidadDegeneraciones,Habitante.cantidadDeGenes);
+//            super(Habitante.cantidadDeGenes);
         }
 
         @Override
@@ -42,7 +80,12 @@ class Hilo extends HiloProductorConsumidor{
         }
 
         @Override
-        public void eveIniciarEvolucion() {
+        public void eveIniciarEvolucion(int numero_de_habitantes, int numero_de_generaciones, int numero_de_genes) {
+            Habitante.cantidadDeHabitantes=numero_de_habitantes;
+            Habitante.cantidadDegeneraciones=numero_de_generaciones;
+            Habitante.cantidadDeGenes=numero_de_genes;
+            poblacion=new PoblacionEvolutiva(numero_de_genes,numero_de_habitantes);
+            poblacion.poblacionInicial();
             activar();
         }
 
@@ -63,115 +106,52 @@ class Hilo extends HiloProductorConsumidor{
 
         @Override
         public void eveGenerandoGenomaObjetivo(String[] mGenoma) {
-            mGenomaModelo=getmGenomaObjetivo();
-            Habitante.mGenesDeseados=getmGenomaObjetivo();
-            System.out.println("Agregando gen modelo "+getGenomaObjetivo());
+//            mGenomaModelo=getmGenomaObjetivo();
+            Habitante.mGenesDeseados=mGenoma;
+        }
+
+        @Override
+        public void eveNumeroDeGenes(int numero_de_genes) {
+            Habitante.cantidadDeGenes=numero_de_genes;
         }
         
     }
     
-    private String []mGenomaModelo={"2","3","4","5","6","7"};
+//    private String []mGenomaModelo={};
     
-    private String []mGenomaAleatorio(){
-        String []mGenoma=new String[6];
-            for(int id=0; id<=5; id++){
-                mGenoma[id]=""+Habitante.numeroAleatorio(2, 7);
-            }
-            return mGenoma;
-    }
+    
     
     private Formulario frm1=null;
     
     
     public Hilo() {
         super(false, false);
-        Habitante.cantidadDeHabitantes=10;
-        Habitante.cantidadDegeneraciones=10;
+//        Habitante.cantidadDeHabitantes=10;
+//        Habitante.cantidadDegeneraciones=10;
         frm1=new Formulario();
         frm1.setVisible(true);
         
         
-        for(int i=1; i<=Habitante.cantidadDeHabitantes; i++){
-            Habitante.add(new   Habitante(mGenomaAleatorio()));
-            frm1.addPoblacionActual(Habitante.poblacion.get(Habitante.poblacion.size()-1).getGenes());
-            frm1.addTodasLasPoblaciones(Habitante.poblacion.get(Habitante.poblacion.size()-1).getGenes());
-        }
+//        for(int i=1; i<=Habitante.cantidadDeHabitantes; i++){
+//            Habitante.add(new   Habitante(mGenomaAleatorio()));
+//            frm1.addPoblacionActual(Habitante.rsPoblacion.get(Habitante.rsPoblacion.size()-1).getGenes());
+//            frm1.addTodasLasPoblaciones(Habitante.rsPoblacion.get(Habitante.rsPoblacion.size()-1).getGenes());
+//        }
         
         
-        System.out.println("Cantidad de habitantes ="+Habitante.poblacion.size());
 //        this.activar();
     }
     
     private int contador=0;
     
-    public Habitante []mOrdenarDeMenor_a_mayor(Habitante []dame_una_matriz){
-        Habitante aux=null;
-        Habitante []m=dame_una_matriz;
-//        System.out.println("m="+dame_una_matriz.length);
-        for(int idSuperior=0; idSuperior<dame_una_matriz.length; idSuperior++){
-            for(int idInterno=0; idInterno<dame_una_matriz.length; idInterno++){
-                if(m[idSuperior].getFitness()>m[idInterno].getFitness()){
-                    aux=m[idInterno];
-                    m[idInterno]=m[idSuperior];
-                    m[idSuperior]=aux;
-                }
-            }
-        }
-//        System.out.println("m="+m.length);
-        Habitante []mDosElegidos=new Habitante[2];
-        mDosElegidos[0]=m[0];
-        mDosElegidos[1]=m[1];
-        return mDosElegidos;
-    }
     
-    private Habitante []seleccion(){
-        Habitante []m=new Habitante[Habitante.poblacion.size()] ;
-        for(int i=0; i<Habitante.poblacion.size(); i++){
-            m[i]=Habitante.poblacion.get(i);
-        }
-        
-        return mOrdenarDeMenor_a_mayor(m);
-    }
     
     @Override
     public void produciendo() {
 //        try{
-
-
-        for(int i=0; i<Habitante.poblacion.size(); i++){
-            Habitante.poblacion.get(i).setFitness(mGenomaModelo);
-        }
             contador++;
-            for(int i=0; i<Habitante.poblacion.size(); i++){
-                for(int id=0; id<Habitante.poblacion.size(); id++){
-                    Habitante.poblacion.get(i).setFitness(mGenomaModelo);
-                }
-            }
             
-
-            Habitante []m=seleccion();
-            frm1.setMejorHabitante(m[0].getGenes(), m[0].getFitness());
-//            String datos="";
-//            datos=""+mGenomaModelo[0]+mGenomaModelo[1]+mGenomaModelo[2]+mGenomaModelo[3]+mGenomaModelo[4]+mGenomaModelo[5];
-//            System.out.println("Genoma modelo= + "  + datos + "\nMejor habitante " + m[0] + "; su fitness " + m[0].getFitness() + "\n\n");
-
-            
-            for(int i=0; i<Habitante.poblacion.size(); i++){
-                if(m[0].getFitness()==0){
-                    Habitante.poblacion.get(i).cruzamiento(Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)),Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)));
-                }else{
-                    Habitante.poblacion.get(i).cruzamiento(m[0],m[1]);
-                }
-                frm1.addPoblacionActual(Habitante.poblacion.get(i).toString());
-                frm1.addTodasLasPoblaciones(Habitante.poblacion.get(i).toString());
-            }
-
-            for(int i=0; i<Habitante.poblacion.size()/4; i++){
-                Habitante.poblacion.get(Habitante.numeroAleatorio(0, Habitante.poblacion.size()-1)).mutar(mGenomaAleatorio());
-            }
-
-            
-            
+            poblacion.evolucionar();
 //        }catch(Exception e){}
         this.esperar(1000);
         this.setRecipienteLleno(true);
@@ -203,210 +183,5 @@ class Hilo extends HiloProductorConsumidor{
     
 }
 
-/**
- * Los genes puede ser un vector cargado con diferentes rutas.
- * Como cuando se crea un juego con una unidad que tenga diferentes movimientos.
- * @author Rafael
- */
-class Habitante{
-    
-    
-    
-    public static int cantidadDeHabitantes=20;
-    public static int cantidadDegeneraciones=100;
-    public static int cantidadDeGenes=6;
-    
-    @Override
-    public String toString(){
-        return this.getGenes() + ", fitness " + this.getFitness() ;
-    }
-    
-    public static int instancias=-1;
-    private int numero_de_instancia=-1;
-    public void setNumeroDeInstancia(int nuevo_numero_de_instancia){
-        numero_de_instancia=nuevo_numero_de_instancia;
-    }
-    public int getNumeroDeInstancia(){
-        return numero_de_instancia;
-    }
-    
-    public static ArrayList<Habitante> poblacion=new ArrayList();
-    
-    public Habitante(){
-        instancias++;
-        numero_de_instancia=instancias;
-        Habitante.add(this);
-    }
-    
-    public Habitante(String []mNuevosgenes){
-        instancias++;
-        numero_de_instancia=instancias;
-        this.mGenes=mNuevosgenes;
-        Habitante.add(this);
-        
-    }
-    
-    public static String add(Habitante nuevo_habitante){
-        try{
-            for(int i=0; i< poblacion.size(); i++){
-                if(poblacion.get(i).getNumeroDeInstancia()==nuevo_habitante.getNumeroDeInstancia()){
-                    poblacion.remove(i);
-                    poblacion.add(nuevo_habitante);
-                    return "Habitante modificado ";
-                }
-            }
-        }catch(Exception e){}
-        poblacion.add(nuevo_habitante);
-        System.out.println(""+instancias);
-        return "Agregando nuevo habitante.";
-    }
-    
-    public String []mGenes={};
-    
-    public String []getmGenes(){
-        return mGenes;
-    }
-    
-    
-    public String getGenes(){
-        String respuesta="";
-        for(String s: mGenes){
-            respuesta+=s;
-        }
-        return respuesta;
-    }
-    
-    public void cruzarmiento(Habitante un_habitante){
-        String []mgenes_local={};
-        String nuevo_genoma="";
-        for(int i=0; i<mGenes.length/2;++i){
-            nuevo_genoma+=mGenes[i]+"_";
-        }
-        for(int i=0; i<mGenes.length/2;++i){
-            nuevo_genoma+=un_habitante.mGenes[i]+"_";
-        }
-        mgenes_local=nuevo_genoma.split("_");
-        mGenes=mgenes_local;
-        Habitante.add(this);
-    }
-    
-    /**
-     * Se elimina el genoma anterior indicando que es un nuevo individuo.
-     * @param un_habitante
-     * @param otro_habitante 
-     */
-    public void cruzamiento(Habitante un_habitante, Habitante otro_habitante){
-        String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
-        String nuevo_genoma="";
-        for(int i=0; i<mGenes_local.length/2;++i){
-            nuevo_genoma+=mGenes_local[i]+"_";
-        }
-        mGenes_local=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
-        for(int i=0; i<mGenes_local.length/2;++i){
-            nuevo_genoma+=mGenes_local[i]+"_";
-        }
-        mGenes_local=nuevo_genoma.split("_");
-        mGenes=mGenes_local;
-    }
-    
-    /**
-     * Cruza un habitante con este habitante.
-     * @param un_habitante 
-     */
-     public void cruzamiento(Habitante un_habitante){
-        String []mgenes_local={};
-        String nuevo_genoma="";
-        for(int i=0; i<mGenes.length/2;++i){
-            nuevo_genoma+=un_habitante.mGenes[i]+"_";
-        }
-        for(int i=0; i<mGenes.length/2;++i){
-            nuevo_genoma+=mGenes[i]+"_";
-        }
-        mgenes_local=nuevo_genoma.split("_");
-        mGenes=mgenes_local;
-        Habitante.add(this);
-    }
-    
-    private int fitnessValor=0;
-    
-    public int getFitness(){
-        return fitnessValor;
-    }
-    
-    public void setFitness(Habitante habitante_objetivo){
-        mGenesDeseados=habitante_objetivo.getmGenes();
-        for(int i=0; i<mGenes.length;++i){
-            if(mGenes[i].equalsIgnoreCase(habitante_objetivo.mGenes[i])){
-                fitnessValor++;
-            }
-        }
-        Habitante.add(this);
-    }
-    
-    private void fitnessEnCero(){
-        fitnessValor=0;
-    }
-    
-    public static String []mGenesDeseados={};
-    
-    private String  []ObtenerFitnessMitadDeGenes(String []mGenes){
-        String []m1=new String[mGenes.length];
-        
-        for(int i=0; i<mGenes.length; i++){
-            m1[i]=mGenes[Habitante.numeroAleatorio(0,mGenes.length-1)];
-        }
-        return m1;
-    }
-    
-    public void setFitness(String []mGenes_deseados){
-        fitnessEnCero();
-        for(int i=0; i<mGenes.length;++i){
-            if(mGenes[i].equalsIgnoreCase(mGenes_deseados[i])==true){
-                fitnessValor++;
-            }
-        }
-        Habitante.add(this);
-    }
-    
-    /**
-     * El default se usa en las interfaces, nuevo truco.
-     * @param Min
-     * @param Max
-     * @return 
-     */
-    public static int numeroAleatorio(int Min, int Max){
-        if(Min==0){
-            Min=-1;
-            int rnd=0;
-            for(int i=0;i<Max;i++){
-                rnd= (int)(Math.random()*(Max-Min+1)+Min);
-                if(rnd!=-1){
-                    return rnd;
-                }
-            }
-        }
-        
-        return (int)(Math.random()*(Max-Min+1)+Min);
-    }
-    
-    /**
-     * Toma los genes de otro habitante para mutar o de algun individuo modelo que esta fuera de la poblacion.
-     * @param habitante_que_proporcionara_los_genes Una instancia de Habitante.
-     */
-    public void mutar(String []mGenes_para_mutar){
-        for(int i=0; i<mGenes.length/2;++i){
-            mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenes_para_mutar[numeroAleatorio(0,mGenes.length-1)];
-        }
-        Habitante.add(this);
-    }
-    
-    /**
-     * Solo recoloca algunos genes del mismo vector en diferentes partes.
-     */
-    public void mutar(){
-        for(int i=0; i<mGenes.length/2;++i){
-            mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenesDeseados[numeroAleatorio(0,mGenes.length-1)];
-        }
-        Habitante.add(this);
-    }
-}
+
+

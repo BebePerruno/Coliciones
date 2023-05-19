@@ -139,18 +139,9 @@ public abstract class HiloProductorConsumidor {
         public void run(){
             while(true){
                 eventoProductor();
-//              setProducto(1);
-//                System.out.println("\n\nProduciendo " + cantidad + " productos.\n\n");
-//                try{
                     produciendo();
-//                }catch(Exception e){}
-                
-//                try {
-//    //                System.out.println((numeroAleatorio(1, 50)));
-//                    sleep(10 ); //
-//                } catch (InterruptedException ex) { }
-            }
-        } 
+            } 
+        }
     }
     
     /**
