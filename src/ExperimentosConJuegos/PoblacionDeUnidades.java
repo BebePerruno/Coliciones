@@ -61,4 +61,20 @@ public abstract class PoblacionDeUnidades  extends OrdenamientoDeLaPoblacion<Cer
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    public String []matrizGenomaAleatorio(){
+        String []mGenoma={};//new String[Habitante.cantidadDeGenes];
+//        for(int id=0; id<Habitante.cantidadDeGenes; id++){
+//            int numero=Habitante.numeroAleatorio(0, Habitante.cantidadDeGenes);
+//            if(numero<0){
+//                numero=0;
+//            }
+//            if(numero>Habitante.mGenesDeseados.length-1){
+//                numero=Habitante.mGenesDeseados.length-1;
+//            }
+//            mGenoma[id]=""+Habitante.mGenesDeseados[numero] ;
+//        }
+//        return mGenoma;
+        return mGenoma;
+    }
+    
 }

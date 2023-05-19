@@ -11,21 +11,21 @@ import java.util.ArrayList;
  * Como cuando se crea un juego con una unidad que tenga diferentes movimientos.
  * @author Rafael
  */
-public class Habitante{
+public class Habitante implements iAlgoritmoGenetico<Habitante>{
     
     public static String []mGenomaAleatorio(){
         String []mGenoma=new String[Habitante.cantidadDeGenes];
-            for(int id=0; id<Habitante.cantidadDeGenes; id++){
-                int numero=Habitante.numeroAleatorio(0, Habitante.cantidadDeGenes);
-                if(numero<0){
-                    numero=0;
-                }
-                if(numero>Habitante.mGenesDeseados.length-1){
-                    numero=Habitante.mGenesDeseados.length-1;
-                }
-                mGenoma[id]=""+Habitante.mGenesDeseados[numero] ;
+        for(int id=0; id<Habitante.cantidadDeGenes; id++){
+            int numero=Habitante.numeroAleatorio(0, Habitante.cantidadDeGenes);
+            if(numero<0){
+                numero=0;
             }
-            return mGenoma;
+            if(numero>Habitante.mGenesDeseados.length-1){
+                numero=Habitante.mGenesDeseados.length-1;
+            }
+            mGenoma[id]=""+Habitante.mGenesDeseados[numero] ;
+        }
+        return mGenoma;
     }
     
     public static int cantidadDeHabitantes=0;
@@ -39,9 +39,11 @@ public class Habitante{
     
     public static int instancias=-1;
     private int numero_de_instancia=-1;
+    @Override
     public void setNumeroDeInstancia(int nuevo_numero_de_instancia){
         numero_de_instancia=nuevo_numero_de_instancia;
     }
+    @Override
     public int getNumeroDeInstancia(){
         return numero_de_instancia;
     }
@@ -79,11 +81,13 @@ public class Habitante{
     
     public String []mGenes={};
     
+    @Override
     public String []getmGenes(){
         return mGenes;
     }
     
     
+    @Override
     public String getGenes(){
         String respuesta="";
         for(String s: mGenes){
@@ -92,6 +96,7 @@ public class Habitante{
         return respuesta;
     }
     
+    @Override
     public void cruzarmiento(Habitante un_habitante){
         String []mgenes_local={};
         String nuevo_genoma="";
@@ -111,6 +116,7 @@ public class Habitante{
      * @param un_habitante
      * @param otro_habitante 
      */
+    @Override
     public void cruzamiento(Habitante un_habitante, Habitante otro_habitante){
         String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
         String nuevo_genoma="";
@@ -129,6 +135,7 @@ public class Habitante{
      * Cruza un habitante con este habitante.
      * @param un_habitante 
      */
+    @Override
      public void cruzamiento(Habitante un_habitante){
          fitnessEnCero();
         String []mgenes_local={};
@@ -146,10 +153,12 @@ public class Habitante{
     
     private int fitnessValor=0;
     
+    @Override
     public int getFitness(){
         return fitnessValor;
     }
     
+    @Override
     public void setFitness(Habitante habitante_objetivo){
         mGenesDeseados=habitante_objetivo.getmGenes();
         for(int i=0; i<mGenes.length;++i){
@@ -175,6 +184,7 @@ public class Habitante{
         return m1;
     }
     
+    @Override
     public void setFitness(String []mGenes_deseados){
         fitnessEnCero();
         for(int i=0; i<mGenes_deseados.length;i++){
@@ -211,6 +221,7 @@ public class Habitante{
      * Toma los genes de otro habitante para mutar o de algun individuo modelo que esta fuera de la poblacion.
      * @param habitante_que_proporcionara_los_genes Una instancia de Habitante.
      */
+    @Override
     public void mutar(String []mGenes_para_mutar){
         for(int i=0; i<mGenes.length/2;++i){
             mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenes_para_mutar[numeroAleatorio(0,mGenes.length-1)];
@@ -221,6 +232,7 @@ public class Habitante{
     /**
      * Solo recoloca algunos genes del mismo vector en diferentes partes.
      */
+    @Override
     public void mutar(){
         for(int i=0; i<mGenes.length/2;++i){
             mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenesDeseados[numeroAleatorio(0,mGenes.length-1)];
