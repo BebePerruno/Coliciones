@@ -119,7 +119,8 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     
     
     /**
-     * Se puede usar este metodo para evolucionar la poblacion, pero se recomienda mejor realizarlo por fuera.
+     * Se puede usar este metodo para evolucionar la poblacion, 
+     * pero se recomienda mejor realizarlo por fuera.
      * 
      */
     @Override
@@ -130,7 +131,8 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
             this.cruzamiento();
             this.mutacion();
         }else{
-            JOptionPane.showMessageDialog(null, "No has creado una poblacion inicial.");
+            JOptionPane.showMessageDialog
+        (null, "No has creado una poblacion inicial.");
         }
     }
     

@@ -12,22 +12,20 @@ import ia.iAlgoritmoGenetico;
  * Yo deberia implementarlo con una matriz de n filas por 2 columnas.
  * @author Jugador
  */
-public abstract class Cerrebro implements iAlgoritmoGenetico<Cerrebro> {
-    
-//    private String [][]mGenoma=new String[n][2];
+public class Cerrebro implements iAlgoritmoGenetico<Habitante> {
 
     @Override
-    public void cruzamiento(Cerrebro un_habitante, Cerrebro otro_habitante) {
+    public void cruzamiento(Habitante un_habitante, Habitante otro_habitante) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void cruzamiento(Cerrebro un_habitante) {
+    public void cruzamiento(Habitante un_habitante) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void cruzarmiento(Cerrebro un_habitante) {
+    public void cruzarmiento(Habitante un_habitante) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -62,7 +60,7 @@ public abstract class Cerrebro implements iAlgoritmoGenetico<Cerrebro> {
     }
 
     @Override
-    public void setFitness(Cerrebro habitante_objetivo) {
+    public void setFitness(Habitante habitante_objetivo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -75,5 +73,38 @@ public abstract class Cerrebro implements iAlgoritmoGenetico<Cerrebro> {
     public void setNumeroDeInstancia(int nuevo_numero_de_instancia) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+ 
     
+    
+    
+}
+
+
+class Gen{
+    
+    public Gen(){}
+    
+    public Gen(String nuevo_gene, String nueva_codificasion){
+        mGene[0]=nuevo_gene;
+        mGene[1]=nueva_codificasion;
+    }
+    /**
+     * El id=0 es para el gen.
+     * El id=1 es para la codificasion o tarea.
+     */
+    private String []mGene=new String[2];
+    
+    public void setGene(String nuevo_gene, String nueva_codificasion){
+        mGene[0]=nuevo_gene;
+        mGene[1]=nueva_codificasion;
+    }
+    
+    public String []getGene(){
+        return mGene;
+    }
+    
+    @Override
+    public String toString(){
+        return "gen= " + mGene[0] + ", codificasion= " + mGene[1]; 
+    }
 }
