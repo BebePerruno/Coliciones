@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Como cuando se crea un juego con una unidad que tenga diferentes movimientos.
  * @author Rafael
  */
-public class Habitante implements iAlgoritmoGenetico<Habitante>{
+public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
     
     public static String []mGenomaAleatorio(){
         String []mGenoma=new String[Habitante.cantidadDeGenes];
@@ -56,10 +56,10 @@ public class Habitante implements iAlgoritmoGenetico<Habitante>{
         Habitante.add(this);
     }
     
-    public Habitante(String []mNuevosgenes){
+    public Habitante(String []mNuevosGenes){
         instancias++;
         numero_de_instancia=instancias;
-        this.mGenes=mNuevosgenes;
+        this.mGenes=mNuevosGenes;
         Habitante.add(this);
         
     }

@@ -8,7 +8,7 @@ package ia;
  *
  * @author Jugador
  */
-public interface iAlgoritmoGenetico<plantilla> {
+public interface iAlgoritmoGenetico<plantilla, plantilla2> {
 
     /**
      * Se elimina el genoma anterior indicando que es un nuevo individuo.
@@ -27,18 +27,18 @@ public interface iAlgoritmoGenetico<plantilla> {
 
     int getFitness();
 
-    String getGenes();
+    plantilla2 getGenes();
 
     int getNumeroDeInstancia();
 
-    String[] getmGenes();
+    plantilla2[] getmGenes();
 
     /**
      * Toma los genes de otro habitante para mutar o de algun individuo modelo que esta fuera de la poblacion.
      * @param mGenes_para_mutar
      * @param habitante_que_proporcionara_los_genes Una instancia de Habitante.
      */
-    void mutar(String[] mGenes_para_mutar);
+    void mutar(plantilla2[] mGenes_para_mutar);
 
     /**
      * Solo recoloca algunos genes del mismo vector en diferentes partes.
@@ -47,7 +47,7 @@ public interface iAlgoritmoGenetico<plantilla> {
 
     void setFitness(plantilla habitante_objetivo);
 
-    void setFitness(String[] mGenes_deseados);
+    void setFitness(plantilla2[] mGenes_deseados);
 
     void setNumeroDeInstancia(int nuevo_numero_de_instancia);
     
