@@ -21,7 +21,7 @@ public abstract class OrdenamientoDeLaPoblacion<plantilla> {
      * @param dame_una_matriz
      * @return
      */
-    protected abstract plantilla[] mOrdenarDeMenor_a_mayor(Habitante[] dame_una_matriz); 
+    protected abstract plantilla[] mOrdenarDeMenor_a_mayor(plantilla[] dame_una_matriz); 
 
     /**
      * Ordena la poblacion.

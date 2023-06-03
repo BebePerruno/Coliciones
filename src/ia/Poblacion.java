@@ -72,6 +72,7 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
      * @param sumatoria_de_fitness_sin_promediar Permite graficar.
      */
     public abstract void eveNuevaGeneracion(int numero_de_la_generacion, double promedio_de_esta_generacion, int sumatoria_de_fitness_sin_promediar);
+    
     /**
      * Evalua el fitnes de cada individio de la generacion actual y retorna un promedio del fitness de toda la poblacion.
      * @return Retorna un priomedio de la poblacion actual.
@@ -90,22 +91,24 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
         eveNuevaGeneracion(generacionNumero, promedio, sumatoria_de_fitness);
         return promedio;
     }
-    private Habitante []mPoblacionSeleccionadA_y_ordenada;
+    
+    private Habitante []mPoblacionSeleccionada_y_ordenada;
+    
     public abstract void eveSeleccion(String genes_del_mejor_habitante, int fitness_del_mejor_habitante);
+    
     @Override
     public void seleccion(){
-        mPoblacionSeleccionadA_y_ordenada=ordenarPoblacion();
-        eveSeleccion(mPoblacionSeleccionadA_y_ordenada[0].getGenes(), mPoblacionSeleccionadA_y_ordenada[0].getFitness());
-//            frm1.setMejorHabitante(m[0].getGenes(), m[0].getFitness());
+        mPoblacionSeleccionada_y_ordenada=ordenarPoblacion();
+        eveSeleccion(mPoblacionSeleccionada_y_ordenada[0].getGenes(), mPoblacionSeleccionada_y_ordenada[0].getFitness());
     }
     
     @Override
     public void cruzamiento(){
         for(int i=0; i<Habitante.rsPoblacion.size(); i++){
-            if(mPoblacionSeleccionadA_y_ordenada[0].getFitness()==0){
+            if(mPoblacionSeleccionada_y_ordenada[0].getFitness()==0){
                 Habitante.rsPoblacion.get(i).cruzamiento(Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)),Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)));
             }else{
-                Habitante.rsPoblacion.get(i).cruzamiento(mPoblacionSeleccionadA_y_ordenada[0],mPoblacionSeleccionadA_y_ordenada[1]);
+                Habitante.rsPoblacion.get(i).cruzamiento(mPoblacionSeleccionada_y_ordenada[0],mPoblacionSeleccionada_y_ordenada[1]);
             }
         }
     }
@@ -174,4 +177,3 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     }
 }
 
-///Luego uso esto RuntimeException

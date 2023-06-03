@@ -152,6 +152,7 @@ public class ListaDoblementeEnlazadaDeNodos {
         }
         tamaño++;
     }
+    
     /**
      * !estaBacio() si es false lo convierte en true y si es true lo convierte en false.
      * @param referencia
@@ -173,8 +174,15 @@ public class ListaDoblementeEnlazadaDeNodos {
         }
     }
     
+    /**
+     * Se usa en buscar.
+     */
     private int posicion=0;
-    
+    /**
+     * Busca nodos por referencia.
+     * @param referencia Un  nodo con datos a buscar.
+     * @return Retorna true si encuentra lo que se busca.
+     */
     public boolean buscar(Nodo referencia){
         posicion=0;
         Nodo aux = ListaDeNodos;
