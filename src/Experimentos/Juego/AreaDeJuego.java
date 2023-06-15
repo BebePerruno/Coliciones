@@ -4,8 +4,8 @@
  */
 package Experimentos.Juego;
 
-import Experimentos.HiloAleatorio;
-import Experimentos.frmDibujos;
+import investigacionSprites.HiloAleatorio;
+import investigacionSprites.frmDibujos;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;

@@ -4,7 +4,7 @@
  */
 package Experimentos.Juego;
 
-import Experimentos.HiloAleatorio;
+import investigacionSprites.HiloAleatorio;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;

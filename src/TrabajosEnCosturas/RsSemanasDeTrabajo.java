@@ -114,7 +114,7 @@ public class RsSemanasDeTrabajo implements RsEstructura<SemanaDeTrabajo>, Escrib
 
     @Override
     public String[][] getMatriz() throws getMatrizException {
-        String [][]m=new String[SemanasDeTrabajo.size()][SemanasDeTrabajo.size()];
+        String [][]m=new String[SemanasDeTrabajo.size()][3];
         for (int f=0; f<SemanasDeTrabajo.size(); f++){
                 m[f][0]=SemanasDeTrabajo.get(f).getFechaInicial();
                 m[f][1]=SemanasDeTrabajo.get(f).getFechaFinal();
@@ -185,8 +185,7 @@ public class RsSemanasDeTrabajo implements RsEstructura<SemanaDeTrabajo>, Escrib
     
     @Override
     public void escribir() {
-        try
-            {
+        try{
                 String texto="";
                 FileWriter fw = new FileWriter(nombreDelArchivo);
                 
@@ -198,19 +197,13 @@ public class RsSemanasDeTrabajo implements RsEstructura<SemanaDeTrabajo>, Escrib
                     texto+=""+SemanasDeTrabajo.get(i).getRsDiasDeTrabajoFormateados()+ SemanaDeTrabajo.EndField;
                     texto+=SemanaDeTrabajo.EndRs;
                     pw.println(texto);//Escribe en una nueva linea al estilo System.out.println...
-//                    String m[]=texto.split(SemanaDeTrabajo.EndRs);
                     texto="";
-                    
-//                    String F[]=m[0].split(SemanaDeTrabajo.EndField);
-                    
-//                    System.out.println("m="+ m.length + "\nF="+F.length + "Datos de F= " + F[2]);
-//                    System.out.println("Escribiendo " + SemanasDeTrabajo.get(i).toString());
                 }
                 pw.close();
                 fw.close();
-            } catch (Exception e) {
-                System.out.println(e.getCause());
-            }
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+        }
     }
 
     @Override
@@ -239,7 +232,6 @@ public class RsSemanasDeTrabajo implements RsEstructura<SemanaDeTrabajo>, Escrib
              SemanaDeTrabajo unaSemana;
              mRs=todoElTexto.split(SemanaDeTrabajo.EndRs);
              for(int i=0; i<mRs.length; ++i){
-//                 try{
                     mField=mRs[i].split(SemanaDeTrabajo.EndField);
 //                    System.out.println("mRs= "+mRs.length );
                     unaSemana=new SemanaDeTrabajo();
@@ -248,10 +240,6 @@ public class RsSemanasDeTrabajo implements RsEstructura<SemanaDeTrabajo>, Escrib
                     unaSemana.setTotalDeHoras(mField[2]);
                     unaSemana.setRsDiasDeTrabajoFormateados(mField[3] );
                     SemanasDeTrabajo.add(unaSemana);
-//                    System.out.println("Leyendo " + SemanasDeTrabajo.get(SemanasDeTrabajo.size()-1).toString());
-//                }catch(Exception e){
-//                    System.out.println(e.getMessage());
-//                }
              }
         }catch(Exception e){
            System.out.println("Error; " + e.getMessage() + "\n");

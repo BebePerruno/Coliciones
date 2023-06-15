@@ -39,7 +39,7 @@ System.out.println("Supuesta formula para elegir camino sqrt "+x);
         add(new Entrada(15,"cz",16));
         add(new Entrada(16,"d56y",19));
         
-        this.VecinosCercanos(5);
+        this.VecinosCercanos(9);
     }
     
     public ArrayList<Entrada> mEntradas=new ArrayList();
@@ -54,6 +54,7 @@ System.out.println("Supuesta formula para elegir camino sqrt "+x);
     
     /**
      * Ordena todo en un vector.
+     * ordena con el metodo de la burbuja.
      */
     private void ordenar(){
         mVectorEntradas=new Entrada[mEntradas.size()];
@@ -93,6 +94,11 @@ System.out.println("Supuesta formula para elegir camino sqrt "+x);
         return null;
     }
     
+    /**
+     * Ordena la lista y luego devuelve un vector con los vecinos más cercanos.
+     * @param id
+     * @return 
+     */
     private Entrada []VecinosCercanos(int id){
         ordenar();
         Entrada []m=new Entrada[4];
@@ -100,7 +106,7 @@ System.out.println("Supuesta formula para elegir camino sqrt "+x);
         m[1]=getUnVecinoOrdenado(id-1);
         m[2]=getUnVecinoOrdenado(id+1);
         m[3]=getUnVecinoOrdenado(id+2);
-        System.out.println("\n\nVecinos cercanos\n\n");//("Punto inicial " + getUnVecinoOrdenado(id) + "\nVecinos colindantes:");
+        System.out.println("\n\nVecinos cercanos a id =" + id +"\n\n");
         
         for(int i=0; i<4; i++)
         {

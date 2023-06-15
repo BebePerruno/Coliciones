@@ -17,7 +17,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author Jugador
  */
 public class RsDiasDeTrabajo implements RsEstructura<DiaDeTrabajo>, Iterable<DiaDeTrabajo>{
