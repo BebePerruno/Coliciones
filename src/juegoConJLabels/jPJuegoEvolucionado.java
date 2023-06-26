@@ -17,7 +17,7 @@ import javax.swing.JLabel;
  * Si se llega a tal punto entonces, crear un algoritmo para agregar nuevos caminos iniciando los pasos anteriores pero sin perder los datos de las rutas ya conocidas.
  * @author Jugador
  */
-public class jPJuego extends javax.swing.JPanel {
+public class jPJuegoEvolucionado extends javax.swing.JPanel {
 
     public int numeroAleatorio(int Min, int Max){
         return (int)(Math.random()*(Max-Min+1)+Min);
@@ -688,7 +688,7 @@ public class jPJuego extends javax.swing.JPanel {
                     }
                     contador--;
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(jPJuego.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(jPJuegoEvolucionado.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -719,7 +719,7 @@ public class jPJuego extends javax.swing.JPanel {
     /**
      * Creates new form jPJuego
      */
-    public jPJuego() {
+    public jPJuegoEvolucionado() {
         initComponents();
         Personaje.LimiteDerecho=1000;
         Personaje.LimiteInferior=370;
