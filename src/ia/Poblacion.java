@@ -132,7 +132,10 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
             this.fitness();
             this.seleccion();
             this.cruzamiento();
+//            this.fitness();
+//            this.seleccion();
             this.mutacion();
+            
         }else{
             JOptionPane.showMessageDialog
         (null, "No has creado una poblacion inicial.");

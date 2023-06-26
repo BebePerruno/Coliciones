@@ -194,6 +194,12 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
 
             Habitante.add(this);
         }
+        
+        //fitnessValor/=mGenes_deseados.length;
+        //Esta formula permite que si alguno tiene la solucion se de un uno.
+        //pero no permite que se generen soluciones parciales.
+        //Pero no sirve.
+        System.out.println("Evaluando fitness "+fitnessValor); 
     }
     
     /**

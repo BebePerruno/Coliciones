@@ -4,7 +4,7 @@
  */
 package ia;
 
-import ExperimentosConJuegos.HiloProductorConsumidor;
+import juegoConJLabels.HiloProductorConsumidor;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -50,6 +50,7 @@ class Hilo extends HiloProductorConsumidor{
         @Override
         public void eveSeleccion(String genes_del_mejor_habitante, int fitness_del_mejor_habitante) {
             frm1.addTodasLasPoblaciones(genes_del_mejor_habitante + ", fitness " + fitness_del_mejor_habitante);
+            System.out.println(genes_del_mejor_habitante + ", fitness " + fitness_del_mejor_habitante);
             m[a]=fitness_del_mejor_habitante;
             a++;
         }

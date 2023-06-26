@@ -583,10 +583,12 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         eveListandoPoblacionActual(genomaDelIndividuo);
         jProgressBarPoblacionActual.setValue(rsPoblacionActual.size());
 //        System.out.println("listaPoblacionActual.getSize()="+rsPoblacionActual.size());
-        if(jProgressBarPoblacionActual.getMaximum()==rsPoblacionActual.size()){
-            Lista listaPoblacionActual=new Lista(rsPoblacionActual);
-            this.jLstPoblacionActual.setModel(listaPoblacionActual);
-        }
+        Lista listaPoblacionActual=new Lista(rsPoblacionActual);
+//        if(jProgressBarPoblacionActual.getMaximum()==rsPoblacionActual.size()){
+//            
+//            this.jLstPoblacionActual.setModel(listaPoblacionActual);
+//        }
+        this.jLstPoblacionActual.setModel(listaPoblacionActual);
     }
     
     public void LimpiarTodasLasPoblaciones(){
@@ -605,10 +607,12 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     public void addTodasLasPoblaciones(String genomaDelIndividuo){
         this.rsTodaLasPoblaciones.add(genomaDelIndividuo);
         eveListandoTodasLasPoblaciones(genomaDelIndividuo);
-        if(jProgressBarTodasLasPoblaciones.getMinimum()==rsTodaLasPoblaciones.size()){
-            Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
-            jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
-        }
+        Lista listaTodasLasPoblaciones=new Lista(rsTodaLasPoblaciones);
+//        if(jProgressBarTodasLasPoblaciones.getMinimum()==rsTodaLasPoblaciones.size()){
+//            
+//            jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
+//        }
+        jLstTodasLasPoblaciones.setModel(listaTodasLasPoblaciones);
        jProgressBarTodasLasPoblaciones.setValue(rsTodaLasPoblaciones.size());
     }
 

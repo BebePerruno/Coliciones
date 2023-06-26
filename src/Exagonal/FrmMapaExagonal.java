@@ -5,7 +5,7 @@
 package Exagonal;
 
 import static Exagonal.AbstractTerritorio.cantidadDeInstancias;
-import ExperimentosConJuegos.HiloProductorConsumidor;
+import juegoConJLabels.HiloProductorConsumidor;
 import java.awt.Point;
 import java.awt.Rectangle;
 import static java.lang.Thread.sleep;
