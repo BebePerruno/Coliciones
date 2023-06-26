@@ -276,7 +276,7 @@ public class jPJuego extends javax.swing.JPanel {
          */
         @Override
         public void diferentesAcciones() {
-            int a=numeroAleatorio(1,2);
+            int a=numeroAleatorio(1,20);
             
             switch(a){
                 case 1:
