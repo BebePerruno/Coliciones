@@ -1,0 +1,6 @@
+investigacionSprites.TAD
+investigacionSprites.Arbol_binario
+investigacionSprites.Nodo_unidad
+investigacionSprites.Arbol_de_prendas$TAD_arbol
+investigacionSprites.Arbol_de_prendas
+investigacionSprites.Form_arbol

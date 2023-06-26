@@ -13,6 +13,4 @@ import java.util.ArrayList;
 public class ObjetosEstaticos {
     public static ArrayList<PersonajeEvolucionado> soldadosAliados=new ArrayList();
     public static ArrayList<PersonajeEvolucionado> soldadosEnemigos=new ArrayList();
-//    public static EdificiosAliados edificiosAliados=new EdificiosAliados();
-//    public static EdificiosEnemigos edificiosEnemigos=new EdificiosEnemigos();
 }

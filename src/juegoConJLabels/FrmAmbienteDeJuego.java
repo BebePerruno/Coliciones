@@ -15,7 +15,7 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
      */
     public FrmAmbienteDeJuego() {
         initComponents();
-//        this.setBounds(100, 0, 500, 400);
+        this.setBounds(100, 100, jPJuegoEvolucionado1.getWidth()+100, jPJuegoEvolucionado1.getHeight()+100);
     }
 
     /**
@@ -27,29 +27,15 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPJuego2 = new juegoConJLabels.jPJuego();
+        jPJuegoEvolucionado1 = new juegoConJLabels.jPJuegoEvolucionado();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(null);
         setPreferredSize(null);
         setSize(new java.awt.Dimension(500, 1100));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPJuego2, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPJuego2, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().setLayout(null);
+        getContentPane().add(jPJuegoEvolucionado1);
+        jPJuegoEvolucionado1.setBounds(10, 10, 1000, 500);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -103,6 +89,6 @@ public class FrmAmbienteDeJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private juegoConJLabels.jPJuego jPJuego2;
+    private juegoConJLabels.jPJuegoEvolucionado jPJuegoEvolucionado1;
     // End of variables declaration//GEN-END:variables
 }

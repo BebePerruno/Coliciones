@@ -13,8 +13,24 @@ import javax.swing.JLabel;
  */
 public abstract class PersonajeEvolucionado extends Personaje implements Acciones<PersonajeEvolucionado> {
     
-//    public static ArrayList<PersonajeEvolucionado> soldadosEnemigos=new ArrayList();
-    
+    private int numeroAnterior=0;
+    /**
+     * Numero aleatorio.
+     * Una formula historica e inolvidable.
+     * @param Min Un numero minimo para comenzar.
+     * @param Max Un numero maximo para terminar.
+     * @return Retorna un numero entre un minimo y un maximo.
+     */
+    private int numeroAleatorio(int Min, int Max){
+        return (int)(Math.random()*(Max-Min+1)+Min);
+    }
+    /**
+     * Este constructor no agrega la instancia al ArrayList estatico. Al crearse una instancia del descendiente entonces, se debe agregar manualmente.
+     * 
+     * @param nuevo_x Nueva posicion "x" donde aparecera la unidad.
+     * @param nuevo_y Nueva posicion "y" donde aparecera la unidad.
+     * @param imagen_para_el_personaje Un item del enum TipoDeImagen
+     */
     public PersonajeEvolucionado(int nuevo_x, int nuevo_y, TipoDeImagen imagen_para_el_personaje) {
         super(nuevo_x, nuevo_y, imagen_para_el_personaje);
     }
@@ -60,7 +76,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
 //        }
         
         public boolean puedoCrearNuevoSoldado(Personaje personaje_a_validar){
-            for(Personaje unSoldado: ObjetosEstaticos.soldadosEnemigos){
+            for(PersonajeEvolucionado unSoldado: ObjetosEstaticos.soldadosEnemigos){
                 if(unSoldado.getLabel().colision(personaje_a_validar.getLabel())==true){
                     return false; //No se puede colocar el edificio.
                 }
@@ -68,15 +84,12 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
             return true;//Si se puede colocar el edificio.
         }
         
-        public abstract PersonajeEvolucionado eveCrearUnidad();
+        public abstract void eveCrearUnidad();
         
         @Override
         public void crearUnidad() {
             if(ObjetosEstaticos.soldadosEnemigos.size()<=10){
-                PersonajeEvolucionado unaUnidad=eveCrearUnidad();
-                if(unaUnidad!=null){
-                    ObjetosEstaticos.soldadosEnemigos.add(unaUnidad);
-                }
+                eveCrearUnidad();
             }
         }
 
@@ -86,44 +99,42 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
         private static int maxDeBodegas=0;
         private static int maxDeTorres=0;
         
-        
-        
         @Override
         public void crearEdificio() {
-            int id=GeneradorAleatorio.numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size());
+            int id=numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size());
             if(id>=ObjetosEstaticos.soldadosEnemigos.size() || id<=-1){id=0;}
             Personaje unSoldado=ObjetosEstaticos.soldadosEnemigos.get(id);
-            int a=GeneradorAleatorio.numeroAleatorio(1,5);
+            int a=numeroAleatorio(1,5);
             switch(a){
                 case 1:
                     if(maxDeBases<=1){
-                        eveCrearBase(unSoldado.getX(), unSoldado.getY());
                         maxDeBases++;
+                        eveCrearBase(unSoldado.getX(), unSoldado.getY());
                     }
                     
                     break;
                 case 2:
                     if(this.maxFabricas<=2){
-                        eveCrearFabrica(unSoldado.getX(), unSoldado.getY());
                         maxFabricas++;
+                        eveCrearFabrica(unSoldado.getX(), unSoldado.getY());
                     }
                     break;
                 case 3:
-                    if(this.maxDeGeneradores<=4){
-                        eveCrearGenerador(unSoldado.getX(), unSoldado.getY());
+                    if(this.maxDeGeneradores<=2){
                         maxDeGeneradores++;
+                        eveCrearGenerador(unSoldado.getX(), unSoldado.getY());
                     }
                     break;
                 case 4:
-                    if(this.maxDeBodegas<=4){
-                        eveCrearBodega(unSoldado.getX(), unSoldado.getY());
+                    if(this.maxDeBodegas<=2){
                         maxDeBodegas++;
+                        eveCrearBodega(unSoldado.getX(), unSoldado.getY());
                     }
                     break;
                 case 5:
-                    if(this.maxDeTorres<=4){
+                    if(this.maxDeTorres<=3){
+                         maxDeTorres++;
                         eveCrearTorre(unSoldado.getX(), unSoldado.getY());
-                        maxDeTorres++;
                     }
                     break;
                 default:
@@ -138,7 +149,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
          * @return Retorna cualquier numero menos el que se pasó por parametro.
          */
         private int desiciones(int todos_los_numeros_menos_este ){
-            int desicionAleatoria=GeneradorAleatorio.numeroAleatorio(1,4);
+            int desicionAleatoria=numeroAleatorio(1,4);
             if(desicionAleatoria==todos_los_numeros_menos_este){
                 desicionAleatoria=(desiciones(todos_los_numeros_menos_este));
             }else{
@@ -235,7 +246,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
         
         @Override
         public void moverse() {
-            int id=GeneradorAleatorio.numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size()); //El movimeinto se transfiere a cualquier soldado en la llamada actual.
+            int id=numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size()); //El movimeinto se transfiere a cualquier soldado en la llamada actual.
             if(id==ObjetosEstaticos.soldadosEnemigos.size()){id=0;}
             PersonajeEvolucionado nuevo=ObjetosEstaticos.soldadosEnemigos.get(id);
             decisionSeleccionada(nuevo);
@@ -305,25 +316,20 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
          */
         @Override
         public void diferentesAcciones() {
-            int a=GeneradorAleatorio.numeroAleatorio(1,20);
+            int a=numeroAleatorio(1,2);
             
             switch(a){
                 case 1:
                     try{
-                        System.out.println("Creando un edificio. " + a);
+//                        System.out.println("Creando un edificio. " + a);
                         this.crearEdificio();
                     }catch(Exception e){}
                     break;
                 case 2:
-                    System.out.println("Creando una unidad. " + a);
+//                    System.out.println("Creando una unidad. " + a);
                     this.crearUnidad();
                     break;
-//                case 3:
-//                    System.out.println("Moviendose " + a);
-//                    this.moverse();
-//                    break;
             }
-            this.moverse();
         }
         
         /**

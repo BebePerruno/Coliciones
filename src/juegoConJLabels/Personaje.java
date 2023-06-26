@@ -32,9 +32,6 @@ public class Personaje  implements Movimientos {
     public boolean recorridoFinalizado=false;
     public void ejecutarRutasGuardadas(){
         recorridoFinalizado=false;
-//        int w=DibujoDelPersonaje.getWidth(), h=DibujoDelPersonaje.getHeight();
-//        this.quitarLabel();
-//        this.ponerLabel(memoriaRuta.getMemoria(0).XY_final.getX(), memoriaRuta.getMemoria(0).XY_final.getY(), imagentTemp);
         for(int i=0; i<memoriaRuta.size(); i++){
             int xInterna=0;
             int yInterna=0;
@@ -133,7 +130,7 @@ public class Personaje  implements Movimientos {
         DibujoDelPersonaje=new PersonajeLabel(x,y,imagen_para_el_personaje);
         DibujoDelPersonaje.setVisible(true);
         soloTexto();
-        System.out.println("Undad colocada con ponerLabel() ="+imagen_para_el_personaje);
+//        System.out.println("ponerLabel() ="+imagen_para_el_personaje);
     }
     
     public void quitarLabel(){
@@ -161,7 +158,7 @@ public class Personaje  implements Movimientos {
    public Personaje(int nuevo_x, int nuevo_y, int ancho, int altura, TipoDeImagen imagen_para_el_personaje){
        DibujoDelPersonaje=new PersonajeLabel(nuevo_x,nuevo_y,ancho, altura, imagen_para_el_personaje);
        imagenDelPersonaje=imagen_para_el_personaje;
-       System.out.println(imagen_para_el_personaje);
+//       System.out.println(imagen_para_el_personaje);
        soloTexto();
        this.setX_UltimaPosicion(nuevo_x);
        this.setY_UltimaPosicion(nuevo_y);
@@ -175,7 +172,7 @@ public class Personaje  implements Movimientos {
     public static int LimiteInferior=200;
     public static int LimiteSuperior=0;
     public static int LimiteIzquierdo=0;
-    public static int LimiteDerecho=200;
+    public static int LimiteDerecho=1000;
     
     public void setX_UltimaPosicion(int nueva_ultima_posicion){
         x=nueva_ultima_posicion;

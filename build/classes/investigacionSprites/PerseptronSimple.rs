@@ -1,0 +1,3 @@
+investigacionSprites.PerseptronSimple
+investigacionSprites.EntradasPesos
+investigacionSprites.ElMain
