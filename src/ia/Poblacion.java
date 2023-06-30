@@ -84,7 +84,8 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
         int sumatoria_de_fitness=0;
         for(int i=0; i<Habitante.rsPoblacion.size(); i++){
                 Habitante.rsPoblacion.get(i).setFitness(Habitante.mGenesDeseados);
-                eveFitness(Habitante.rsPoblacion.get(i).toString());
+                System.out.println("id " + i + ", fitness " + Habitante.rsPoblacion.get(i).getFitness() );
+                eveFitness(Habitante.rsPoblacion.get(i).toString() + ", id="+i);
                 sumatoria_de_fitness+=Habitante.rsPoblacion.get(i).getFitness();
             }
         promedio=sumatoria_de_fitness/Habitante.cantidadDeHabitantes;
@@ -96,9 +97,12 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     
     public abstract void eveSeleccion(String genes_del_mejor_habitante, int fitness_del_mejor_habitante);
     
+    private int contador=0;
     @Override
     public void seleccion(){
         mPoblacionSeleccionada_y_ordenada=ordenarPoblacion();
+        contador++;
+        System.out.println("Generacion numero " + contador);
         eveSeleccion(mPoblacionSeleccionada_y_ordenada[0].getGenes(), mPoblacionSeleccionada_y_ordenada[0].getFitness());
     }
     
@@ -107,16 +111,23 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
         for(int i=0; i<Habitante.rsPoblacion.size(); i++){
             if(mPoblacionSeleccionada_y_ordenada[0].getFitness()==0){
                 Habitante.rsPoblacion.get(i).cruzamiento(Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)),Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)));
+                
             }else{
                 Habitante.rsPoblacion.get(i).cruzamiento(mPoblacionSeleccionada_y_ordenada[0],mPoblacionSeleccionada_y_ordenada[1]);
+                
             }
+            
         }
     }
     
     @Override
     public void mutacion(){
         for(int i=0; i<Habitante.rsPoblacion.size()/4; i++){
-            Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)).mutar(Habitante.mGenomaAleatorio());
+            try{
+                Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)).mutar(Habitante.mGenomaAleatorio());
+            }catch(Exception e){
+                System.err.println("Erro en mutacion");
+            }
         }
     }
     
@@ -132,8 +143,8 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
             this.fitness();
             this.seleccion();
             this.cruzamiento();
-//            this.fitness();
-//            this.seleccion();
+            this.fitness();
+            this.seleccion();
             this.mutacion();
             
         }else{
@@ -173,7 +184,7 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     @Override
     protected Habitante[] ordenarPoblacion() {
         Habitante[] m = new Habitante[Habitante.rsPoblacion.size()];
-        for (int i = 0; i < Habitante.rsPoblacion.size(); i++) {
+        for (int i = 0; i < m.length; i++) {
             m[i] = Habitante.rsPoblacion.get(i);
         }
         return mOrdenarDeMenor_a_mayor(m);

@@ -187,6 +187,12 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
         }
         
         /**
+         * Permite decidir si la unidad se mueve en forma aleatoria o con una memoria ya guardada.
+         * @return Retorna verdadero si las decisiones de movimiento estan guardadas.
+         */
+        public abstract boolean getMoverseConMemoria();
+        
+        /**
          * Evalua la decision actual, verifica si no se ha llegado a alguno de los bordes.
          * Si no ha llegado a algun borde no hace nada, no cambia la ruta.
          * Pero si esta en un borde o se ha pasado si cambia la ruta.
@@ -237,22 +243,21 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                 }
             }
         }
-
-        /**
-         * No se usa pero lo conservo por si acaso.
-         */
-//        private int postcolision=0;
-        private DecisionesDeMovimientos desicion=DecisionesDeMovimientos.derecha, valorDeDesicion=DecisionesDeMovimientos.derecha;
         
-        @Override
-        public void moverse() {
-            int id=numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size()); //El movimeinto se transfiere a cualquier soldado en la llamada actual.
-            if(id==ObjetosEstaticos.soldadosEnemigos.size()){id=0;}
-            PersonajeEvolucionado nuevo=ObjetosEstaticos.soldadosEnemigos.get(id);
-            decisionSeleccionada(nuevo);
-//            System.out.println(desicion +"=En los bordes decidiendo a " + valorDeDesicion);
+        /**
+        * Permite ir retornando los items guardados de las decisiones por medio de un contador de llamadas.
+         * @return Retorna una decision de direccion guardada.
+         */
+        public abstract DecisionesDeMovimientos getDesicionGuardada();
+        
+        /**
+         * Permite gistionar la decision tomada, ya sea una decision guardada o una decision aleatoria.
+         * @param nuevo Un objeto del class PersonajeEvolucionado.
+         * @param nueva_decision Un objeto del class DecisionesDeMovimientos
+         */
+        private void gestionarDesicion(PersonajeEvolucionado nuevo, DecisionesDeMovimientos nueva_decision){
             //////Ejecutando las decisiones.
-            switch(desicion){
+            switch(nueva_decision){
                 case izquierda:
                     if(validarColision(nuevo)==false){
                         nuevo.moverIzquierda();
@@ -265,7 +270,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
 //                        nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
                         valorDeDesicion=desiciones(DecisionesDeMovimientos.izquierda);  //Aqui se podria implementar una descision aleatoria, pero ya se trabajo.
                         decisionSeleccionada(nuevo);//Se cambia la decision para no guardar la que cuaso la colicion.
-                        nuevo.memoriaDelCamino.setDecision(desicion); //Se guarda la nueva decision, diferente a la actual.
+                        nuevo.memoriaDelCamino.setDecision(nueva_decision); //Se guarda la nueva decision, diferente a la actual.
                         nuevo.moverDrecha();nuevo.moverDrecha(); //Permite alejarse de la colicion.
                     }
                     break;
@@ -278,7 +283,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                         nuevo.moverIzquierda();nuevo.moverIzquierda();
                         valorDeDesicion=desiciones(DecisionesDeMovimientos.derecha);
                         decisionSeleccionada(nuevo);
-                        nuevo.memoriaDelCamino.setDecision(desicion);
+                        nuevo.memoriaDelCamino.setDecision(nueva_decision);
                     }
                     break;
                 case arriba:
@@ -289,7 +294,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                         nuevo.moverAbajo();nuevo.moverAbajo(); 
                         valorDeDesicion=desiciones(DecisionesDeMovimientos.arriba); 
                         decisionSeleccionada(nuevo);
-                        nuevo.memoriaDelCamino.setDecision(desicion);
+                        nuevo.memoriaDelCamino.setDecision(nueva_decision);
                     }
                     break;
                 case abajo:
@@ -304,8 +309,37 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                     }
                     break;
             }
-//            nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
-//            System.out.println(desicion +"=Contra objetos decidiendo a " + valorDeDesicion);
+        }
+
+        /**
+         * No se usa pero lo conservo por si acaso.
+         */
+//        private int postcolision=0;
+        private DecisionesDeMovimientos desicion=DecisionesDeMovimientos.derecha, valorDeDesicion=DecisionesDeMovimientos.derecha;
+        
+        @Override
+        public void moverse() {
+            
+            int id=numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size()); //El movimeinto se transfiere a cualquier soldado en la llamada actual.
+            if(id==ObjetosEstaticos.soldadosEnemigos.size()){id=0;}
+            PersonajeEvolucionado nuevo=ObjetosEstaticos.soldadosEnemigos.get(id);
+            /**
+             * Se obtiene un valor booleano que indica que puede moverse aleatoriamente.
+             */
+            if(getMoverseConMemoria()==false){
+                decisionSeleccionada(nuevo);
+                gestionarDesicion(nuevo,this.desicion);
+    //            System.out.println(desicion +"=En los bordes decidiendo a " + valorDeDesicion);
+
+    //            nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+    //            System.out.println(desicion +"=Contra objetos decidiendo a " + valorDeDesicion);
+            }
+            /**
+             * Se realizan movimientos guardados.
+             */
+            if(getMoverseConMemoria()==true){
+                gestionarDesicion(nuevo,this.getDesicionGuardada());
+            }
         }
 
         /**

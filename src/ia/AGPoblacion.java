@@ -25,6 +25,9 @@ public interface AGPoblacion {
 
     /**
      * Se puede usar este metodo para evolucionar la poblacion, pero se recomienda mejor realizarlo por fuera.
+     * Ademas la funcion fitness y la seleccion debe ejecutarse previo al cruzamiento y luego
+     * despues despues del cruzamiento volver a ejecutar la funcion fitness y la funcion seleccion, 
+     * para proceder despues a la mutacion.
      *
      */
     void evolucionar();

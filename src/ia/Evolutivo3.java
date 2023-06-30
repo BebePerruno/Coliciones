@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
  * 3) Seleccion.
  * 4) Cruzamiento.
  * 5) Mutacion.
+ * 6)Funcion aptitud.
+ * 7) Seleccion.
  * 
  * Queda comprobado que este algoritmo evolutivo si funciona.
  * 
@@ -41,7 +43,7 @@ class Hilo extends HiloProductorConsumidor{
 
         @Override
         public void eveFitness(String genes_del_habitante_actual) {
-            frm1.addPoblacionActual(genes_del_habitante_actual);
+//            frm1.addPoblacionActual(genes_del_habitante_actual);
         }
 
         private int []m=new int[Habitante.cantidadDeHabitantes];
@@ -154,9 +156,9 @@ class Hilo extends HiloProductorConsumidor{
             
             poblacion.evolucionar();
 //        }catch(Exception e){}
-        this.esperar(1000);
+        this.esperar(100);
         this.setRecipienteLleno(true);
-        if(contador==Habitante.cantidadDegeneraciones){
+        if(contador==(Habitante.cantidadDegeneraciones*Habitante.cantidadDeHabitantes)){
             this.desactivar();
         }
     }
@@ -164,7 +166,7 @@ class Hilo extends HiloProductorConsumidor{
     
     @Override
     public void gastado(boolean llenar_recipiente) {
-        esperar(1100);
+        esperar(200);
 //        frm1.LimpiarPoblacionActual();
         setRecipienteLleno(false);
     }

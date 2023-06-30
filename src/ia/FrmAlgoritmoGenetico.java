@@ -331,6 +331,11 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
         jLabel9.setBounds(20, 20, 150, 16);
 
         jTxtCantidadDeGeneraciones.setText("100");
+        jTxtCantidadDeGeneraciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtCantidadDeGeneracionesActionPerformed(evt);
+            }
+        });
         jPanel5.add(jTxtCantidadDeGeneraciones);
         jTxtCantidadDeGeneraciones.setBounds(20, 100, 60, 22);
 
@@ -516,7 +521,13 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     public abstract void eveIniciarEvolucion(int numero_de_habitantes, int numero_de_generaciones, int numero_de_genes);
     
     private void jBtnIniciarEvolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIniciarEvolucionActionPerformed
-//        this.setVisible(false);
+
+        int generaciones=Integer.parseInt(this.jTxtCantidadDeGeneraciones.getText());
+        int poblacionValor=Integer.parseInt(this.jTxtCantidadDeHabitantes.getText());
+        jProgressBarTodasLasPoblaciones.setMaximum(poblacionValor*generaciones);
+        System.out.println("poblacionValor*generaciones="+(poblacionValor*generaciones));
+        Habitante.cantidadDegeneraciones=generaciones;
+        Habitante.cantidadDeHabitantes=poblacionValor;
         LimpiarPoblacionActual();
         LimpiarTodasLasPoblaciones();
 //        f.setVisible(true);
@@ -562,6 +573,10 @@ public abstract class FrmAlgoritmoGenetico extends javax.swing.JFrame {
     private void jCmbGenesElegiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCmbGenesElegiblesMouseClicked
 
     }//GEN-LAST:event_jCmbGenesElegiblesMouseClicked
+
+    private void jTxtCantidadDeGeneracionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCantidadDeGeneracionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTxtCantidadDeGeneracionesActionPerformed
 
     public void setMejorHabitante(String nuevo_genoma, int valor_del_fitness){
         this.jTxtGenoma.setText(nuevo_genoma);

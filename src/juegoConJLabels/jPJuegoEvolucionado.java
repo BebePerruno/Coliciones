@@ -84,6 +84,16 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
         public void eveValidarColision(JLabel nuevo_jLabel) {
             add(nuevo_jLabel);
         }
+
+        @Override
+        public boolean getMoverseConMemoria() {
+            return false;
+        }
+
+        @Override
+        public DecisionesDeMovimientos getDesicionGuardada() {
+            return DecisionesDeMovimientos.derecha;
+        }
         
     }
     

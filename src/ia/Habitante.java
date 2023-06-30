@@ -64,19 +64,35 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         
     }
     
+    /**
+     * Si el habitante ya existe entonces solo se actualizan sus datos.
+     * @param nuevo_habitante Un objeto del class Habitante.
+     * @return Un texto indicando que se ha agregado un habitante.
+     */
     public static String add(Habitante nuevo_habitante){
+        rsPoblacion.add(nuevo_habitante);
+        System.out.println("Numero de instancia "+instancias);
+        return "Nuevo habitante agregado id="+instancias;
+    }
+    
+    public void clonar(Habitante nuevo_habitante_a_clonar){
+        this.fitnessValor=nuevo_habitante_a_clonar.fitnessValor;
+        this.mGenes=nuevo_habitante_a_clonar.mGenes;
+        this.numero_de_instancia=nuevo_habitante_a_clonar.numero_de_instancia;
+    }
+    
+    public static String modificar(Habitante nuevo_habitante){
         try{
             for(int i=0; i< rsPoblacion.size(); i++){
                 if(rsPoblacion.get(i).getNumeroDeInstancia()==nuevo_habitante.getNumeroDeInstancia()){
-                    rsPoblacion.remove(i);
-                    rsPoblacion.add(nuevo_habitante);
-                    return "Habitante modificado ";
+                    rsPoblacion.get(i).clonar(nuevo_habitante);
+                    return "Habitante modificado en modificar";
                 }
             }
-        }catch(Exception e){}
-        rsPoblacion.add(nuevo_habitante);
-        System.out.println("Numero de instancia "+instancias);
-        return "Agregando nuevo habitante.";
+        }catch(Exception e){
+        
+        }
+        return "Modificado ";
     }
     
     public String []mGenes={};
@@ -98,6 +114,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
     
     @Override
     public void cruzarmiento(Habitante un_habitante){
+        this.fitnessEnCero();
         String []mgenes_local={};
         String nuevo_genoma="";
         for(int i=0; i<mGenes.length/2;++i){
@@ -108,7 +125,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         }
         mgenes_local=nuevo_genoma.split("_");
         mGenes=mgenes_local;
-        Habitante.add(this);
+        Habitante.modificar(this); //No porque ya se usa en Fitness.
     }
     
     /**
@@ -118,17 +135,23 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
      */
     @Override
     public void cruzamiento(Habitante un_habitante, Habitante otro_habitante){
-        String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
-        String nuevo_genoma="";
-        for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
-            nuevo_genoma+=mGenes_local[i]+"_";
+        try{
+            String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
+            String nuevo_genoma="";
+            for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
+                nuevo_genoma+=mGenes_local[i]+"_";
+            }
+            mGenes_local=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
+            for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
+                nuevo_genoma+=mGenes_local[i]+"_";
+            }
+            mGenes_local=nuevo_genoma.split("_");
+            mGenes=mGenes_local;
+//            fitnessEnCero();
+            Habitante.modificar(this);
+        }catch(Exception e){
+            System.err.println("error en cruzamiento");
         }
-        mGenes_local=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
-        for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
-            nuevo_genoma+=mGenes_local[i]+"_";
-        }
-        mGenes_local=nuevo_genoma.split("_");
-        mGenes=mGenes_local;
     }
     
     /**
@@ -148,7 +171,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         }
         mgenes_local=nuevo_genoma.split("_");
         mGenes=mgenes_local;
-        Habitante.add(this);
+        Habitante.modificar(this);
     }
     
     private int fitnessValor=0;
@@ -166,10 +189,10 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
                 fitnessValor++;
             }
         }
-        Habitante.add(this);
+        Habitante.modificar(this);
     }
     
-    private void fitnessEnCero(){
+    public void fitnessEnCero(){
         fitnessValor=0;
     }
     
@@ -191,8 +214,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
                 if(mGenes[i].equalsIgnoreCase(mGenes_deseados[i])==true){
                     fitnessValor++;
                 }
-
-            Habitante.add(this);
+            Habitante.modificar(this);
         }
         
         //fitnessValor/=mGenes_deseados.length;
@@ -232,7 +254,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         for(int i=0; i<mGenes.length/2;++i){
             mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenes_para_mutar[numeroAleatorio(0,mGenes.length-1)];
         }
-        Habitante.add(this);
+        Habitante.modificar(this);
     }
     
     /**
@@ -243,6 +265,6 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         for(int i=0; i<mGenes.length/2;++i){
             mGenes[numeroAleatorio(0,mGenes.length-1)]=mGenesDeseados[numeroAleatorio(0,mGenes.length-1)];
         }
-        Habitante.add(this);
+        Habitante.modificar(this);
     }
 }

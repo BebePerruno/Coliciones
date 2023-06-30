@@ -1,2 +1,0 @@
-juegoConJLabels.Gene
-juegoConJLabels.Cerrebro
