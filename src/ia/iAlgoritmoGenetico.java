@@ -11,6 +11,13 @@ package ia;
 public interface iAlgoritmoGenetico<plantilla, plantilla2> {
 
     /**
+     * Se usa en el cruzamiento.
+     * @param mGenes Un texto con los genes.
+     * @return Retorna la mitad de la cadena genetica.
+     */
+    String []ObtenerFitnessMitadDeGenes(String []mGenes);
+    
+    /**
      * Se elimina el genoma anterior indicando que es un nuevo individuo.
      * @param un_habitante
      * @param otro_habitante
@@ -18,11 +25,15 @@ public interface iAlgoritmoGenetico<plantilla, plantilla2> {
     void cruzamiento(plantilla un_habitante, plantilla otro_habitante);
 
     /**
-     * Cruza un habitante con este habitante.
-     * @param un_habitante
+     * Cruza un habitante.
+     * @param un_habitante Cruza al al habitante con el que se pase por este parametro.
      */
     void cruzamiento(plantilla un_habitante);
 
+    /**
+     * 
+     * @param un_habitante  Cruza al al habitante con el que se pase por este parametro.
+     */
     void cruzarmiento(plantilla un_habitante);
 
     int getFitness();

@@ -11,7 +11,42 @@ import javax.swing.JLabel;
  *Se vuelve a abstraer para permitir una serie de eventos.
  * @author Jugador
  */
-public abstract class PersonajeEvolucionado extends Personaje implements Acciones<PersonajeEvolucionado> {
+public abstract class PersonajeEvolucionado extends Personaje implements Acciones<PersonajeEvolucionado>, iVer<PersonajeEvolucionado> {
+    
+    public abstract void eveViedoObjetos(PersonajeEvolucionado nuevoPersonajeEvolucionado);
+    
+    @Override
+     public boolean VerObjetos(PersonajeEvolucionado []mObjetos_cercanos){
+         try{
+             final int rangoDeVision=100;
+             JLabel ojos=new JLabel();
+             ojos.setBounds(this.getX()-(rangoDeVision/2), this.getY()-(rangoDeVision/2), this.getLabel().getWidth()+rangoDeVision, this.getLabel().getHeight()+rangoDeVision);
+             for(int i=0; i<mObjetos_cercanos.length; i++){
+                 if(ojos.getBounds().intersects(mObjetos_cercanos[i].getLabel().getBounds())==true){
+//                     System.out.println("Viendo el objeto " + mObjetos_cercanos[i].getToolTipText());
+                     eveViedoObjetos(mObjetos_cercanos[i]);
+                     return true;
+                 }
+             }
+         }catch(Exception e){
+             
+         }
+         return false;
+     }
+     
+     @Override
+    public boolean VerObjeto(PersonajeEvolucionado objeto_cercano) {
+        JLabel ojos=new JLabel();
+        final int rangoDeVision=100;
+        ojos.setBounds(this.getX()-(rangoDeVision/2), this.getY()-(rangoDeVision/2), this.getLabel().getWidth()+rangoDeVision, this.getLabel().getHeight()+rangoDeVision);
+             
+//        System.out.println(ojos.getBounds().intersects(objeto_cercano.getLabel().getBounds()));
+         if(ojos.getBounds().intersects(objeto_cercano.getLabel().getBounds())==true){
+            eveViedoObjetos(objeto_cercano);
+             return true;
+         }
+        return false;
+    }
     
     private int numeroAnterior=0;
     /**
@@ -33,6 +68,8 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
      */
     public PersonajeEvolucionado(int nuevo_x, int nuevo_y, TipoDeImagen imagen_para_el_personaje) {
         super(nuevo_x, nuevo_y, imagen_para_el_personaje);
+        this.setNombre( imagen_para_el_personaje.toString()+nuevo_x+ nuevo_y );
+        System.out.println("New "+this.getNombre());
     }
     
     /**
@@ -88,16 +125,27 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
         
         @Override
         public void crearUnidad() {
-            if(ObjetosEstaticos.soldadosEnemigos.size()<=10){
+            if(ObjetosEstaticos.soldadosEnemigos.size()<=maxDeSaldodados){
                 eveCrearUnidad();
             }
         }
 
-        private static int maxDeBases=0;
-        private static int maxFabricas=0;
-        private static int maxDeGeneradores=0;
-        private static int maxDeBodegas=0;
-        private static int maxDeTorres=0;
+        public static int maxDeBases=0;
+        private static int contadorDeBases=0;
+        
+        public static int maxFabricas=0;
+        private static int contadorDeFabricas=0;
+        
+        public static int maxDeGeneradores=0;
+        private static int contadorDeGeneradores=0;
+        
+        public static int maxDeBodegas=0;
+        private static int contadorDeBodegas=0;
+        
+        public static int maxDeTorres=0;
+        private static int contadorDeTorres=0;
+        
+        public static int maxDeSaldodados=0;
         
         @Override
         public void crearEdificio() {
@@ -107,34 +155,40 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
             int a=numeroAleatorio(1,5);
             switch(a){
                 case 1:
-                    if(maxDeBases<=1){
-                        maxDeBases++;
+                    if(maxDeBases>0 && contadorDeBases<=maxDeBases+1){contadorDeBases++;}
+                    if(contadorDeBases<=maxDeBases && maxDeBases>0){
                         eveCrearBase(unSoldado.getX(), unSoldado.getY());
+                        System.out.println("Cantidad de bases " + contadorDeBases);
                     }
                     
                     break;
                 case 2:
-                    if(this.maxFabricas<=2){
-                        maxFabricas++;
+                    if(maxFabricas>0 && contadorDeFabricas<=maxFabricas+1){contadorDeFabricas++;}
+                    if(contadorDeFabricas<=maxFabricas && maxFabricas>0 ){
                         eveCrearFabrica(unSoldado.getX(), unSoldado.getY());
+                        System.out.println("Cantidad de fabricas " + contadorDeFabricas);
                     }
                     break;
                 case 3:
-                    if(this.maxDeGeneradores<=2){
-                        maxDeGeneradores++;
+                    if(maxDeGeneradores>0 && contadorDeGeneradores<=maxDeGeneradores+1){contadorDeGeneradores++;}
+                    if(contadorDeGeneradores<=maxDeGeneradores && maxDeGeneradores>0){
                         eveCrearGenerador(unSoldado.getX(), unSoldado.getY());
+                        System.out.println("Cantidad de generadores " + contadorDeGeneradores);
                     }
                     break;
                 case 4:
-                    if(this.maxDeBodegas<=2){
-                        maxDeBodegas++;
+                    if(maxDeBodegas>0 && contadorDeBodegas<=maxDeBodegas+1){contadorDeBodegas++;}
+                    if(contadorDeBodegas<=maxDeBodegas && maxDeBodegas>0){
                         eveCrearBodega(unSoldado.getX(), unSoldado.getY());
+                        System.out.println("Cantidad de bodegas " + contadorDeBodegas);
+                        
                     }
                     break;
                 case 5:
-                    if(this.maxDeTorres<=3){
-                         maxDeTorres++;
+                    if(maxDeTorres>0 && contadorDeTorres<=maxDeTorres+1){contadorDeTorres++;}
+                    if(contadorDeTorres<=maxDeTorres && maxDeTorres>0){
                         eveCrearTorre(unSoldado.getX(), unSoldado.getY());
+                        System.out.println("Cantidad de torres " + contadorDeTorres);
                     }
                     break;
                 default:
@@ -389,28 +443,41 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
         public boolean validarColision(PersonajeEvolucionado nuevo) {
             JLabel []mLabels=getVectorDeJLabels();
             for (JLabel Lb: mLabels){
+                eveValidarColision(Lb);
     //            Edificios
                 if( nuevo.getLabel().colision(Lb)==true){
-                    System.out.println("Colision con objeto en: " + nuevo.memoriaDelCamino.toString());
+//                    System.out.println("Colision con objeto en: " + nuevo.memoriaDelCamino.toString());
                     if(nuevo.memoriaDelCamino.XY_final.x_es_mayor_a_cero()==true){
-                        nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()-nuevo.getVelocidad());
+                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()-nuevo.getVelocidad());
                     }else{
-    //                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()+2);
+                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()+5);
                     }
                     if(nuevo.memoriaDelCamino.XY_final.y_es_mayor_a_cero()==true){
-                        nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getY()-nuevo.getVelocidad());
+                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()+nuevo.getVelocidad());
                     }else{
-    //                    nuevo.memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getY()+2);
+                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()-5);
                     }
-    //                nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+                    
                     return true;
+                }else{
+//                    if(nuevo.memoriaDelCamino.XY_final.x_es_mayor_a_cero()==true){
+//                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()-nuevo.getVelocidad());
+//                    }else{
+//                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()+2);
+//                    }
+//                    if(nuevo.memoriaDelCamino.XY_final.y_es_mayor_a_cero()==true){
+//                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()-nuevo.getVelocidad());
+//                    }else{
+//                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()+2);
+//                    }
+//                    this.memoriaRuta.agregarAlFinal(memoriaDelCamino);
                 }                
             }
 
             
             for(int i=0; i<ObjetosEstaticos.soldadosAliados.size(); i++){
                 if(nuevo.getLabel().colision(ObjetosEstaticos.soldadosAliados.get(i).getLabel())==true){
-                    System.out.println("Colision con borde.");
+//                    System.out.println("Colision con borde.");
                     nuevo.quitarLabel();
                     nuevo.ponerLabel(nuevo.getX_UltimaPosicion(), nuevo.getY_UltimaPosicion(), TipoDeImagen.Explosion);
 //                    add(nuevo.getLabel());

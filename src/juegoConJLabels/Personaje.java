@@ -13,6 +13,16 @@ import Experimentos.Juego.Movimientos;
  */
 public class Personaje  implements Movimientos {
     
+    
+    private String nombre="";
+    public void setNombre(String nuevo_nombre){
+        nombre=nuevo_nombre;
+    }
+    
+    public String getNombre(){
+        return nombre;
+    }
+    
     private int puntosDeVida=1;
     
     
@@ -29,8 +39,15 @@ public class Personaje  implements Movimientos {
     public MemoriaRuta memoriaRuta=new MemoriaRuta();
     public MemoriaDelCamino memoriaDelCamino=new MemoriaDelCamino();
     
+    private boolean ejecutando_rutas_guardadas=false;
+    public boolean getEjecutandoRutasGuardadas(){
+        return ejecutando_rutas_guardadas;
+    }
+    
     public boolean recorridoFinalizado=false;
+    
     public void ejecutarRutasGuardadas(){
+        ejecutando_rutas_guardadas=true;
         recorridoFinalizado=false;
         for(int i=0; i<memoriaRuta.size(); i++){
             int xInterna=0;
@@ -38,18 +55,22 @@ public class Personaje  implements Movimientos {
             yInterna=memoriaRuta.getMemoria(i).XY_final.getY();
             xInterna=memoriaRuta.getMemoria(i).XY_final.getX();
             DibujoDelPersonaje.setBounds(xInterna, yInterna, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+            System.out.println("Ejecutando rutas guardadas");
             //Se necesita saber la posicion inicial o se debe realizar en forma exterior.
             //Mejor realizo esto en el exterior de este class.
         }
         recorridoFinalizado=true;
+        ejecutando_rutas_guardadas=false;
     }
     
     /**
      * Permite ir monitoreando los movimientos.
      */
-    private void documentarMovimientos(){
+    public void documentarMovimientos(){
         memoriaDelCamino.XY_final.setX(x);
         memoriaDelCamino.XY_final.setX(y);
+        
+        
     }
     
     
@@ -106,7 +127,7 @@ public class Personaje  implements Movimientos {
     }
     
     /**
-     * Se usa en unbucle o en un hilo.
+     * Se usa en un bucle o en un hilo.
      * @return Si retorna true indica que ya recorrieron todas las coordenadas.
      */
     public boolean recorrerUnaCoordenada(){

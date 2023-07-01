@@ -32,16 +32,27 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
             }
     }
     
-    
+    private int contadorebasesEne=0;
     public class SoldadoEnemigo extends PersonajeEvolucionado{
 
         public SoldadoEnemigo(int nuevo_x, int nuevo_y, TipoDeImagen imagen_para_el_personaje) {
             super(nuevo_x, nuevo_y, imagen_para_el_personaje);
+//            PersonajeEvolucionado.maxDeSaldodados=5;
+            PersonajeEvolucionado.maxDeBases=1;
+            PersonajeEvolucionado.maxDeBodegas=1;
+            PersonajeEvolucionado.maxDeGeneradores=1;
+            PersonajeEvolucionado.maxFabricas=1;
+            PersonajeEvolucionado.maxDeTorres=1;
         }
 
         @Override
         public void eveCrearBase(int coordenada_x, int coordenada_y) {
-            add(edificiosEnemigos.getBase(coordenada_x, coordenada_y).getLabel());
+//            contadorebasesEne++;
+//            if(contadorebasesEne<=PersonajeEvolucionado.maxDeBases){
+                
+                add(edificiosEnemigos.getBase(coordenada_x, coordenada_y).getLabel());
+//            }
+            
         }
 
         @Override
@@ -66,33 +77,71 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
 
         @Override
         public void eveCrearUnidad() {
-            if(ObjetosEstaticos.soldadosEnemigos.size()<=4){
-                SoldadoEnemigo unSoldado=new SoldadoEnemigo(edificiosEnemigos.getPosicionDeLaBase().getX()+100, edificiosEnemigos.getPosicionDeLaBase().getY()+100, TipoDeImagen.Robot);
-                ObjetosEstaticos.soldadosEnemigos.add(unSoldado);
-                add(ObjetosEstaticos.soldadosEnemigos.get(ObjetosEstaticos.soldadosEnemigos.size()-1).getLabel());
-            }
+            SoldadoEnemigo unSoldado=new SoldadoEnemigo(edificiosEnemigos.getPosicionDeLaBase().getX()+100, edificiosEnemigos.getPosicionDeLaBase().getY()+100, TipoDeImagen.Robot);
+            ObjetosEstaticos.soldadosEnemigos.add(unSoldado);
+            add(ObjetosEstaticos.soldadosEnemigos.get(ObjetosEstaticos.soldadosEnemigos.size()-1).getLabel());
         }
 
         @Override
         public JLabel[] getVectorDeJLabels() {
-//            jLbCualquierEdificiao9.setBounds(-100, -100, 50, 50);
-            JLabel []m={};//{jLbBordeIzquierdo, jLbBordeSuperior, jLbBordeInferior, jLbBordeDerecho};//{jLbCualquierEdificiao9, jLbBordeIzquierdo, jLbCualquierEdificiao13, jLbCualquierEdificiao5, jLbCualquierEdificiao4, jLbCualquierEdificiao8, jLbBordeSuperior, jLbBordeInferior, jLbCualquierEdificiao12, jLbBordeDerecho, jLbCualquierEdificiao7};
+            JLabel []m=new JLabel[EdificiosEnemigos.edificios.size()];// + ObjetosEstaticos.soldadosEnemigos.size() ];//{jLbRecursos1, jLbRecursos2, jLbRecursos3};
+            for(int i=0; i<EdificiosEnemigos.edificios.size(); i++){
+                m[i]=EdificiosEnemigos.edificios.get(i).getLabel();
+            }
+            //No porque hace que todas las unidades creadas se fucionen entre si y dejan de moverse al cavo de un rato.
+//            for(int i=EdificiosEnemigos.edificios.size(); i<ObjetosEstaticos.soldadosEnemigos.size(); i++){
+//                    m[id]=ObjetosEstaticos.soldadosEnemigos.get(i).getLabel();
+//                    id++;
+//            }
+            if(EdificiosEnemigos.edificios.size()>0){
+//                m[EdificiosEnemigos.edificios.size()+ObjetosEstaticos.soldadosEnemigos.size()]=jLbRecursos1;
+//                m[EdificiosEnemigos.edificios.size()+ObjetosEstaticos.soldadosEnemigos.size()+1]=jLbRecursos2;
+//                m[EdificiosEnemigos.edificios.size()+ObjetosEstaticos.soldadosEnemigos.size()+2]=jLbRecursos3;
+            }
             return m;
         }
 
         @Override
         public void eveValidarColision(JLabel nuevo_jLabel) {
             add(nuevo_jLabel);
+//            System.out.println("Validando");
+            for(int i=0; i<EdificiosEnemigos.edificios.size(); i++){
+                this.VerObjeto(EdificiosEnemigos.edificios.get(i));
+            }
+            
         }
 
+        private boolean moverse_con_memoria=false;
         @Override
         public boolean getMoverseConMemoria() {
-            return false;
+            return moverse_con_memoria;
         }
 
         @Override
         public DecisionesDeMovimientos getDesicionGuardada() {
             return DecisionesDeMovimientos.derecha;
+        }
+
+//        private int uno=0, dos=0;
+        @Override
+        public void eveViedoObjetos(PersonajeEvolucionado nuevoPersonajeEvolucionado) {
+//            uno++;
+//            for(int i=0; i<EdificiosEnemigos.edificios.size(); i++){
+//                if( uno>=300 && dos==0){
+//                    /**
+//                     * Realizar acciones.
+//                     */
+//                    moverse_con_memoria=true;
+////                    this.ejecutarRutasGuardadas();
+//System.out.println("Ejecutando rutas guardadas");
+//                    dos=1;
+////                    moverse_con_memoria=false;
+//
+//
+//                }
+//            }
+               
+            
         }
         
     }
@@ -206,7 +255,7 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
          * Guarda todos los edificios creados.
          * Esto es para validar si un nuevo edificio se superpone o coliciona con otro ya existente.
          */
-        public static ArrayList<Personaje> edificios=new ArrayList();
+        public static ArrayList<PersonajeEvolucionado> edificios=new ArrayList();
         
         /**
          * Permite detectar si es valido colocar un nuevo edificio en la posicion en el mapa.
@@ -347,6 +396,7 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
 //                            p.moverse();
 //                        }
                         soldadoEnemigo.moverse();
+                        
                     }else{
                         contador=0;
                         int id=GeneradorAleatorio.numeroAleatorio(1,ObjetosEstaticos.soldadosEnemigos.size());
@@ -414,16 +464,12 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
     private void initComponents() {
 
         jLbBordeIzquierdo = new javax.swing.JLabel();
-        jLbCualquierEdificiao5 = new javax.swing.JLabel();
-        jLbCualquierEdificiao4 = new javax.swing.JLabel();
         jLbBordeSuperior = new javax.swing.JLabel();
-        jLbCualquierEdificiao7 = new javax.swing.JLabel();
-        jLbCualquierEdificiao8 = new javax.swing.JLabel();
+        jLbRecursos1 = new javax.swing.JLabel();
         jLbBordeDerecho = new javax.swing.JLabel();
-        jLbCualquierEdificiao9 = new javax.swing.JLabel();
         jLbBordeInferior = new javax.swing.JLabel();
-        jLbCualquierEdificiao12 = new javax.swing.JLabel();
-        jLbCualquierEdificiao13 = new javax.swing.JLabel();
+        jLbRecursos3 = new javax.swing.JLabel();
+        jLbRecursos2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 255, 204));
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 255, 51), 2, true));
@@ -435,55 +481,36 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
         add(jLbBordeIzquierdo);
         jLbBordeIzquierdo.setBounds(-30, 0, 50, 480);
 
-        jLbCualquierEdificiao5.setText("Cualquier edificio");
-        jLbCualquierEdificiao5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao5);
-        jLbCualquierEdificiao5.setBounds(150, 330, 40, 40);
-
-        jLbCualquierEdificiao4.setText("Cualquier edificio");
-        jLbCualquierEdificiao4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao4);
-        jLbCualquierEdificiao4.setBounds(480, 340, 40, 30);
-
         jLbBordeSuperior.setBackground(new java.awt.Color(255, 51, 0));
         jLbBordeSuperior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbBordeSuperior);
         jLbBordeSuperior.setBounds(20, -10, 1000, 30);
 
-        jLbCualquierEdificiao7.setText("Cualquier edificio");
-        jLbCualquierEdificiao7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao7);
-        jLbCualquierEdificiao7.setBounds(170, 90, 40, 40);
-
-        jLbCualquierEdificiao8.setText("Cualquier edificio");
-        jLbCualquierEdificiao8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao8);
-        jLbCualquierEdificiao8.setBounds(750, 310, 40, 30);
+        jLbRecursos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recursos minerales.png"))); // NOI18N
+        jLbRecursos1.setToolTipText("");
+        jLbRecursos1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(jLbRecursos1);
+        jLbRecursos1.setBounds(160, 160, 30, 30);
 
         jLbBordeDerecho.setBackground(new java.awt.Color(255, 51, 0));
         jLbBordeDerecho.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbBordeDerecho);
         jLbBordeDerecho.setBounds(970, 0, 40, 480);
 
-        jLbCualquierEdificiao9.setText("Cualquier edificio");
-        jLbCualquierEdificiao9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao9);
-        jLbCualquierEdificiao9.setBounds(340, 160, 40, 40);
-
         jLbBordeInferior.setBackground(new java.awt.Color(255, 51, 0));
         jLbBordeInferior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbBordeInferior);
         jLbBordeInferior.setBounds(0, 480, 1020, 30);
 
-        jLbCualquierEdificiao12.setText("Cualquier edificio");
-        jLbCualquierEdificiao12.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao12);
-        jLbCualquierEdificiao12.setBounds(800, 160, 40, 30);
+        jLbRecursos3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recursos minerales.png"))); // NOI18N
+        jLbRecursos3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(jLbRecursos3);
+        jLbRecursos3.setBounds(800, 160, 30, 30);
 
-        jLbCualquierEdificiao13.setText("Cualquier edificio");
-        jLbCualquierEdificiao13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        add(jLbCualquierEdificiao13);
-        jLbCualquierEdificiao13.setBounds(610, 90, 40, 40);
+        jLbRecursos2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/recursos minerales.png"))); // NOI18N
+        jLbRecursos2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        add(jLbRecursos2);
+        jLbRecursos2.setBounds(500, 300, 30, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -492,12 +519,8 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
     private javax.swing.JLabel jLbBordeInferior;
     private javax.swing.JLabel jLbBordeIzquierdo;
     private javax.swing.JLabel jLbBordeSuperior;
-    private javax.swing.JLabel jLbCualquierEdificiao12;
-    private javax.swing.JLabel jLbCualquierEdificiao13;
-    private javax.swing.JLabel jLbCualquierEdificiao4;
-    private javax.swing.JLabel jLbCualquierEdificiao5;
-    private javax.swing.JLabel jLbCualquierEdificiao7;
-    private javax.swing.JLabel jLbCualquierEdificiao8;
-    private javax.swing.JLabel jLbCualquierEdificiao9;
+    private javax.swing.JLabel jLbRecursos1;
+    private javax.swing.JLabel jLbRecursos2;
+    private javax.swing.JLabel jLbRecursos3;
     // End of variables declaration//GEN-END:variables
 }

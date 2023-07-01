@@ -13,7 +13,7 @@ import javax.swing.JLabel;
  * @author Rafael Angel Montero Fernández.
  * 
  */
-public class PersonajeLabel extends JLabel{
+public class PersonajeLabel extends JLabel implements iVer<JLabel>{
     private final ImagenesParaJuegos imagenes=new ImagenesParaJuegos();
     
     /**
@@ -138,11 +138,15 @@ public class PersonajeLabel extends JLabel{
       * @param mObjetos_cercanos Un matriz de controles JLabels.
       * @return Retorna true si detecta un objeto.
       */
+    @Override
      public boolean VerObjetos(JLabel []mObjetos_cercanos){
          try{
              final int rangoDeVision=50;
              JLabel ojos=new JLabel();
-             ojos.setBounds(this.getX(), this.getY(), this.getWidth()+rangoDeVision, this.getHeight()+rangoDeVision);
+             /**
+              * Esta formula "this.getX()-(rangoDeVision/2), this.getY()-(rangoDeVision/2)" permite centrar el JLabel que sirve para ver.
+              */
+             ojos.setBounds(this.getX()-(rangoDeVision/2), this.getY()-(rangoDeVision/2), this.getWidth()+rangoDeVision, this.getHeight()+rangoDeVision);
              for(int i=0; i<mObjetos_cercanos.length; i++){
                  if(ojos.getBounds().intersects(mObjetos_cercanos[i].getBounds())==true){
                      return true;
@@ -153,5 +157,15 @@ public class PersonajeLabel extends JLabel{
          }
          return false;
      }
+
+    @Override
+    public boolean VerObjeto(JLabel objeto_cercano) {
+        final int rangoDeVision=50;
+        JLabel ojos=new JLabel();
+        if(ojos.getBounds().intersects(objeto_cercano.getBounds())==true){
+             return true;
+         }
+        return false;
+    }
     
 }

@@ -198,7 +198,8 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
     
     public static String []mGenesDeseados={};
     
-    private String  []ObtenerFitnessMitadDeGenes(String []mGenes){
+    @Override
+    public String  []ObtenerFitnessMitadDeGenes(String []mGenes){
         String []m1=new String[mGenes.length];
         
         for(int i=0; i<mGenes.length; i++){
