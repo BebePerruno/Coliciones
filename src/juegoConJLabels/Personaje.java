@@ -6,6 +6,9 @@ package juegoConJLabels;
 
 import Experimentos.Juego.Coordenadas;
 import Experimentos.Juego.Movimientos;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Investigar como detectar instancias de un class en Java.
@@ -46,10 +49,24 @@ public class Personaje  implements Movimientos {
     
     public boolean recorridoFinalizado=false;
     
+    public void ejecutarRutaGuardada(int id_contador){
+        int xInterna=0;
+            int yInterna=0;
+            yInterna=memoriaRuta.getMemoria(id_contador).XY_final.getY();
+            xInterna=memoriaRuta.getMemoria(id_contador).XY_final.getX();
+            DibujoDelPersonaje.setBounds(xInterna, yInterna, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+            System.out.println("Ejecutando rutas guardadas");
+    }
+    
     public void ejecutarRutasGuardadas(){
         ejecutando_rutas_guardadas=true;
         recorridoFinalizado=false;
         for(int i=0; i<memoriaRuta.size(); i++){
+            try {
+                sleep(300);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Personaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
             int xInterna=0;
             int yInterna=0;
             yInterna=memoriaRuta.getMemoria(i).XY_final.getY();
@@ -67,6 +84,8 @@ public class Personaje  implements Movimientos {
      * Permite ir monitoreando los movimientos.
      */
     public void documentarMovimientos(){
+        memoriaDelCamino.XY_inicial.setX(memoriaDelCamino.XY_final.getX());
+        memoriaDelCamino.XY_inicial.setY(memoriaDelCamino.XY_final.getY());
         memoriaDelCamino.XY_final.setX(x);
         memoriaDelCamino.XY_final.setX(y);
         
@@ -254,12 +273,25 @@ public class Personaje  implements Movimientos {
     
     @Override
     public void moverIzquierda() {
-            x -= velocidad;
-            if (x <= LimiteIzquierdo) {
-                x = LimiteIzquierdo;
-            }
-            DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
-//        }
+        x -= velocidad;
+        if (x <= LimiteIzquierdo) {
+            x = LimiteIzquierdo;
+        }
+        DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
+    }
+    
+    /**
+     * Mueve el personaje sobre un mapa y ademas guarda los movimientos.
+     * Este procedimiento solo se usa si se quiere preprogramar los movimientos.
+     * @param x_nuevo Un numero
+     * @param y_nuevo Un numero
+     */
+    public void moverse(int x_nuevo, int y_nuevo){
+        x=x_nuevo;
+        y=y_nuevo;
+        documentarMovimientos();
+        this.memoriaRuta.agregarAlFinal(memoriaDelCamino);
+        DibujoDelPersonaje.setBounds(x, y, DibujoDelPersonaje.getWidth(), DibujoDelPersonaje.getHeight());
     }
 
     private int velocidad=5;

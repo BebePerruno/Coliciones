@@ -29,9 +29,9 @@ public class MemoriaRuta implements Serializable{
     
     
     public void agregarAlFinal(MemoriaDelCamino nueva_memoria_del_camino){
-        System.out.println("Se ha agregado: "+ nueva_memoria_del_camino.toString());
+//        System.out.println("Se ha agregado: "+ nueva_memoria_del_camino.toString());
         rsMemoriaDelCamino.add(nueva_memoria_del_camino);
-        System.out.println("Tamaño del registro " + this.size() );
+//        System.out.println("Tamaño del registro " + this.size() );
 //        this.VerResultados();
     }
     

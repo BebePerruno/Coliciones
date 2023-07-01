@@ -112,7 +112,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
 //            crearUnidad();
 //        }
         
-        public boolean puedoCrearNuevoSoldado(Personaje personaje_a_validar){
+        public boolean puedoCrearNuevoSoldado(PersonajeEvolucionado personaje_a_validar){
             for(PersonajeEvolucionado unSoldado: ObjetosEstaticos.soldadosEnemigos){
                 if(unSoldado.getLabel().colision(personaje_a_validar.getLabel())==true){
                     return false; //No se puede colocar el edificio.
@@ -240,11 +240,18 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
             return todos_los_numeros_menos_este.desicionTomada(desicionAleatoria);
         }
         
+        private boolean moverseConMemoria=false;
         /**
          * Permite decidir si la unidad se mueve en forma aleatoria o con una memoria ya guardada.
          * @return Retorna verdadero si las decisiones de movimiento estan guardadas.
          */
-        public abstract boolean getMoverseConMemoria();
+        public boolean getMoverseConMemoria(){
+            return moverseConMemoria;
+        }
+        
+        public void setMoverseConMemoria(boolean si_moverse_con_memoria){
+            moverseConMemoria=si_moverse_con_memoria;
+        }
         
         /**
          * Evalua la decision actual, verifica si no se ha llegado a alguno de los bordes.
@@ -260,7 +267,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                     desicion=DecisionesDeMovimientos.izquierda;
                     nuevo.memoriaDelCamino.setDecision(desicion);
                 }else if(nuevo.getX()==Personaje.LimiteIzquierdo  && valorDeDesicion==DecisionesDeMovimientos.izquierda){
-//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino);
+//                    nuevo.memoriaRuta.agregarAlFinal(nuevo.memoriaDelCamino); No se puede agregar porque haria un fitback con los datos.
                     valorDeDesicion=desiciones(DecisionesDeMovimientos.izquierda); //Cualquier ruta menos el izquierdo.
                 }
             }
@@ -303,6 +310,7 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
          * @return Retorna una decision de direccion guardada.
          */
         public abstract DecisionesDeMovimientos getDesicionGuardada();
+        public  ArrayList<DecisionesDeMovimientos> rsDecisiones=new ArrayList();
         
         /**
          * Permite gistionar la decision tomada, ya sea una decision guardada o una decision aleatoria.
@@ -370,6 +378,8 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
          */
 //        private int postcolision=0;
         private DecisionesDeMovimientos desicion=DecisionesDeMovimientos.derecha, valorDeDesicion=DecisionesDeMovimientos.derecha;
+        private int contador_de_memoria=0;
+        private boolean cambiar=false;
         
         @Override
         public void moverse() {
@@ -392,7 +402,18 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
              * Se realizan movimientos guardados.
              */
             if(getMoverseConMemoria()==true){
-                gestionarDesicion(nuevo,this.getDesicionGuardada());
+                if(cambiar==false){
+                    if(contador_de_memoria>this.memoriaRuta.size()-1){
+                        contador_de_memoria--;
+                        this.ejecutarRutaGuardada(contador_de_memoria);
+                    }
+                }
+                if(cambiar==true){
+                    if(contador_de_memoria<=this.memoriaRuta.size()){
+                        contador_de_memoria++;
+                        this.setMoverseConMemoria(false);
+                    }
+                }
             }
         }
 
@@ -460,16 +481,17 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
                     
                     return true;
                 }else{
-//                    if(nuevo.memoriaDelCamino.XY_final.x_es_mayor_a_cero()==true){
-//                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()-nuevo.getVelocidad());
-//                    }else{
-//                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX()+2);
-//                    }
-//                    if(nuevo.memoriaDelCamino.XY_final.y_es_mayor_a_cero()==true){
-//                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()-nuevo.getVelocidad());
-//                    }else{
-//                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY()+2);
-//                    }
+                    if(nuevo.memoriaDelCamino.XY_final.x_es_mayor_a_cero()==true){
+                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX());
+                    }else{
+                        memoriaDelCamino.XY_final.setX(nuevo.memoriaDelCamino.XY_final.getX());
+                    }
+                    if(nuevo.memoriaDelCamino.XY_final.y_es_mayor_a_cero()==true){
+                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY());
+                    }else{
+                        memoriaDelCamino.XY_final.setY(nuevo.memoriaDelCamino.XY_final.getY());
+                    }
+                    this.rsDecisiones.add(desicion);
 //                    this.memoriaRuta.agregarAlFinal(memoriaDelCamino);
                 }                
             }

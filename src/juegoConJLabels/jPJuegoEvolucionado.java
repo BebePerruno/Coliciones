@@ -37,7 +37,7 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
 
         public SoldadoEnemigo(int nuevo_x, int nuevo_y, TipoDeImagen imagen_para_el_personaje) {
             super(nuevo_x, nuevo_y, imagen_para_el_personaje);
-//            PersonajeEvolucionado.maxDeSaldodados=5;
+            PersonajeEvolucionado.maxDeSaldodados=5;
             PersonajeEvolucionado.maxDeBases=1;
             PersonajeEvolucionado.maxDeBodegas=1;
             PersonajeEvolucionado.maxDeGeneradores=1;
@@ -110,35 +110,52 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
             }
             
         }
-
-        private boolean moverse_con_memoria=false;
-        @Override
-        public boolean getMoverseConMemoria() {
-            return moverse_con_memoria;
-        }
-
+        
+        private int idCont=this.rsDecisiones.size();
+        private boolean cambiarRuta=false;
+        
         @Override
         public DecisionesDeMovimientos getDesicionGuardada() {
-            return DecisionesDeMovimientos.derecha;
+            /**
+             * No funciona, lo mejor es preprogramar el comportamiento.
+             */
+////            if(cambiarRuta==false){
+//                System.out.println("Retrocediendo");
+//                if(this.idCont>=this.rsDecisiones.size()-1 && idCont>=0){
+//                    idCont--;
+////                    return this.rsDecisiones.get(idCont);
+//                }else{
+//                    this.setMoverseConMemoria(false);
+//                    cambiarRuta=true;
+//                }
+//            }else{
+//                System.out.println("Avanzando");
+//                if(this.idCont<=this.rsDecisiones.size()-1 && idCont<0){
+//                    idCont++;
+////                    return this.rsDecisiones.get(idCont-1);
+//                }else{
+//                    
+//                    cambiarRuta=false;
+//                }
+//            }
+            return rsDecisiones.get(idCont);
         }
 
-//        private int uno=0, dos=0;
+        private int uno=0;
         @Override
         public void eveViedoObjetos(PersonajeEvolucionado nuevoPersonajeEvolucionado) {
 //            uno++;
-//            for(int i=0; i<EdificiosEnemigos.edificios.size(); i++){
-//                if( uno>=300 && dos==0){
-//                    /**
-//                     * Realizar acciones.
-//                     */
-//                    moverse_con_memoria=true;
-////                    this.ejecutarRutasGuardadas();
-//System.out.println("Ejecutando rutas guardadas");
-//                    dos=1;
+//            if( uno>=400 ){
+////                    h.stop();
+//                System.out.println("Ejecutando rutas guardadas");
+//                /**
+//                 * Realizar acciones.
+//                 */
+//                this.setMoverseConMemoria(true);
+////                uno=0;
+////                dos=1;
+//
 ////                    moverse_con_memoria=false;
-//
-//
-//                }
 //            }
                
             
@@ -392,9 +409,6 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
                 try {
                     sleep(10);
                     if(contador>0){
-//                        for(PersonajeEvolucionado p:ObjetosEstaticos.soldadosEnemigos){
-//                            p.moverse();
-//                        }
                         soldadoEnemigo.moverse();
                         
                     }else{
@@ -438,6 +452,8 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
     private void agregar(JLabel nuevo){
         this.add(nuevo);
     }
+    
+    private Hilo1 h;
     /**
      * Creates new form jPJuego
      */
@@ -449,7 +465,7 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
         Personaje.LimiteSuperior=20;
         soldadoEnemigoInicial();
         this.setBounds(new Rectangle(1000,500));
-        Hilo1 h=new Hilo1();
+        h=new Hilo1();
         h.start();
           
     }
