@@ -100,6 +100,15 @@ public class MemoriaRuta implements Serializable{
         return rsMemoriaDelCamino.size();
     }
     
+    public MemoriaDelCamino extraerMemoria(int id_de_la_memoria){
+        MemoriaDelCamino una=null;
+        if(id_de_la_memoria>=0 && id_de_la_memoria<rsMemoriaDelCamino.size()){
+            una= rsMemoriaDelCamino.get(id_de_la_memoria);
+            rsMemoriaDelCamino.remove(id_de_la_memoria);
+        }
+        return una;
+    }
+    
     public MemoriaDelCamino getMemoria(int id_de_la_memoria){
         if(id_de_la_memoria>=0 && id_de_la_memoria<rsMemoriaDelCamino.size()){
             return rsMemoriaDelCamino.get(id_de_la_memoria);

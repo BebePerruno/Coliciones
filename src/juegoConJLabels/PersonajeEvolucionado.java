@@ -403,15 +403,19 @@ public abstract class PersonajeEvolucionado extends Personaje implements Accione
              */
             if(getMoverseConMemoria()==true){
                 if(cambiar==false){
-                    if(contador_de_memoria>this.memoriaRuta.size()-1){
-                        contador_de_memoria--;
+                    if(contador_de_memoria>=this.memoriaRuta.size()-1){
                         this.ejecutarRutaGuardada(contador_de_memoria);
+                    }else{
+                        cambiar=true;
                     }
+                    contador_de_memoria--;
                 }
                 if(cambiar==true){
-                    if(contador_de_memoria<=this.memoriaRuta.size()){
-                        contador_de_memoria++;
+                    contador_de_memoria++;
+                    if(contador_de_memoria<this.memoriaRuta.size()){
                         this.setMoverseConMemoria(false);
+                    }else{
+                        cambiar=false;
                     }
                 }
             }
