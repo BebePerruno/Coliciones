@@ -108,13 +108,23 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     
     @Override
     public void cruzamiento(){
-        for(int i=0; i<Habitante.rsPoblacion.size(); i++){
+        /**
+         * Se puede hacer que el 100% se cruce o que solo un porcentaje.
+         * Me ha dado mejores resultados cuando solo un porcentaje se cruza.
+         */
+        for(int i=0; i<Habitante.rsPoblacion.size()/3; i++){
             if(mPoblacionSeleccionada_y_ordenada[0].getFitness()==0){
                 Habitante.rsPoblacion.get(i).cruzamiento(Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)),Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)));
-                
             }else{
-                Habitante.rsPoblacion.get(i).cruzamiento(mPoblacionSeleccionada_y_ordenada[0],mPoblacionSeleccionada_y_ordenada[1]);
-                
+                /**
+                 * Se permite que el mejor o los mejores sobrevivan a la proxima ronda.
+                 * El cruzamiento tambien puede llevarse a cavo con un porcentaje de la poblacion.
+                 * 
+                 */
+                int a=Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1);
+                if(Habitante.rsPoblacion.get(a).getFitness()<mPoblacionSeleccionada_y_ordenada[0].getFitness()){
+                    Habitante.rsPoblacion.get(a).cruzamiento(mPoblacionSeleccionada_y_ordenada[0],mPoblacionSeleccionada_y_ordenada[1]);
+                }
             }
             
         }
@@ -124,6 +134,11 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     public void mutacion(){
         for(int i=0; i<Habitante.rsPoblacion.size()/4; i++){
             try{
+                /**
+                 * Si esta correcto, un 25% experimenta mutacion (Probabilidad).
+                 * Aleatoriamente cualquier habitante experimenta la mutacion.
+                 * 
+                 */
                 Habitante.rsPoblacion.get(Habitante.numeroAleatorio(0, Habitante.rsPoblacion.size()-1)).mutar(Habitante.mGenomaAleatorio());
             }catch(Exception e){
                 System.err.println("Erro en mutacion");
@@ -154,6 +169,11 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     }
     
     /**
+     * No lo uso pero por si acaso.
+     */
+    private int mejorFitnees=0;
+    
+    /**
      * Ordena un vector de mayor a menor.
      * @param dame_una_matriz
      * @return
@@ -172,6 +192,7 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
             }
         }
         Habitante[] mDosElegidos = new Habitante[2];
+        mejorFitnees=m[0].getFitness();
         mDosElegidos[0] = m[0];
         mDosElegidos[1] = m[1];
         return mDosElegidos;

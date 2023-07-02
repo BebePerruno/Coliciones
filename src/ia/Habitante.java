@@ -71,7 +71,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
      */
     public static String add(Habitante nuevo_habitante){
         rsPoblacion.add(nuevo_habitante);
-        System.out.println("Numero de instancia "+instancias);
+//        System.out.println("Numero de instancia "+instancias);
         return "Nuevo habitante agregado id="+instancias;
     }
     
@@ -137,14 +137,16 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
     public void cruzamiento(Habitante un_habitante, Habitante otro_habitante){
         try{
             String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
+            String []mGenes_local2=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
             String nuevo_genoma="";
             for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
                 nuevo_genoma+=mGenes_local[i]+"_";
+                nuevo_genoma+=mGenes_local2[i]+"_";
             }
-            mGenes_local=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
-            for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
-                nuevo_genoma+=mGenes_local[i]+"_";
-            }
+//            mGenes_local=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
+//            for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
+//                nuevo_genoma+=mGenes_local[i]+"_";
+//            }
             mGenes_local=nuevo_genoma.split("_");
             mGenes=mGenes_local;
 //            fitnessEnCero();
@@ -222,7 +224,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         //Esta formula permite que si alguno tiene la solucion se de un uno.
         //pero no permite que se generen soluciones parciales.
         //Pero no sirve.
-        System.out.println("Evaluando fitness "+fitnessValor); 
+//        System.out.println("Evaluando fitness "+fitnessValor); 
     }
     
     /**
