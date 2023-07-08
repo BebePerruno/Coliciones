@@ -35,8 +35,6 @@ public class Evolutivo3 {
 class Hilo extends HiloProductorConsumidor{
     
     public class PoblacionEvolutiva extends Poblacion{
-
-        
         public PoblacionEvolutiva(int numero_de_genes, int numero_de_habitantes) {
             super(numero_de_genes,  numero_de_habitantes);
         }
@@ -181,9 +179,6 @@ class Hilo extends HiloProductorConsumidor{
     public void eventoConsumidor() {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-   
-    
 }
 
 

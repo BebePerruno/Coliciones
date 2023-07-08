@@ -36,12 +36,28 @@ public interface iAlgoritmoGenetico<plantilla, plantilla2> {
      */
     void cruzarmiento(plantilla un_habitante);
 
+    /**
+     * 
+     * @return Retorna el valor fitness, que tan cerca esta del objetivo.
+     */
     int getFitness();
 
+    /**
+     * 
+     * @return Retorna el valor fitness, que tan cerca esta del objetivo.
+     */
     plantilla2 getGenes();
 
+    /**
+     * 
+     * @return Retorna el numero de esta instancia.
+     */
     int getNumeroDeInstancia();
 
+    /**
+     * 
+     * @return Retorna el genoma o vector de genes de la instancia actual.
+     */
     plantilla2[] getmGenes();
 
     /**

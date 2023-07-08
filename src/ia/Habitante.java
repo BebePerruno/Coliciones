@@ -5,6 +5,7 @@
 package ia;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Los genes puede ser un vector cargado con diferentes rutas.
@@ -61,7 +62,6 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
         numero_de_instancia=instancias;
         this.mGenes=mNuevosGenes;
         Habitante.add(this);
-        
     }
     
     /**
@@ -139,6 +139,7 @@ public class Habitante implements iAlgoritmoGenetico<Habitante, String>{
             String []mGenes_local=ObtenerFitnessMitadDeGenes(un_habitante.getmGenes());
             String []mGenes_local2=ObtenerFitnessMitadDeGenes(otro_habitante.getmGenes());
             String nuevo_genoma="";
+//            this.fitnessEnCero(); //Verificar despues
             for(int i=0; i<Habitante.cantidadDeGenes/2;++i){
                 nuevo_genoma+=mGenes_local[i]+"_";
                 nuevo_genoma+=mGenes_local2[i]+"_";

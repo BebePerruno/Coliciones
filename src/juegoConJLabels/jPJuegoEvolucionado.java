@@ -506,7 +506,7 @@ public class jPJuegoEvolucionado extends javax.swing.JPanel {
         jLbRecursos1.setToolTipText("");
         jLbRecursos1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         add(jLbRecursos1);
-        jLbRecursos1.setBounds(160, 160, 30, 30);
+        jLbRecursos1.setBounds(160, 150, 30, 30);
 
         jLbBordeDerecho.setBackground(new java.awt.Color(255, 51, 0));
         jLbBordeDerecho.setBorder(javax.swing.BorderFactory.createEtchedBorder());

@@ -98,6 +98,7 @@ public abstract class Poblacion extends OrdenamientoDeLaPoblacion<Habitante> imp
     public abstract void eveSeleccion(String genes_del_mejor_habitante, int fitness_del_mejor_habitante);
     
     private int contador=0;
+    
     @Override
     public void seleccion(){
         mPoblacionSeleccionada_y_ordenada=ordenarPoblacion();
