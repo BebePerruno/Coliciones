@@ -1,2 +1,0 @@
-Algoritmos_ia.Entrada
-Algoritmos_ia.VecinioMasCercano3

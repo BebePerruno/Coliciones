@@ -1,3 +1,0 @@
-investigacionSprites.Baloon
-investigacionSprites.EliminandoParpadeo
-investigacionSprites.Formulario

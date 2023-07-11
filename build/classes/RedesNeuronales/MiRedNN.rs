@@ -1,5 +1,0 @@
-RedesNeuronales.red
-RedesNeuronales.Red
-RedesNeuronales.MiRedNN
-RedesNeuronales.Capa
-RedesNeuronales.Neurona

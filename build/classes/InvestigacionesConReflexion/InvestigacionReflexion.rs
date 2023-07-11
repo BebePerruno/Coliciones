@@ -1,3 +1,0 @@
-InvestigacionesConReflexion.InvestigacionReflexion
-InvestigacionesConReflexion.campo
-InvestigacionesConReflexion.Angel

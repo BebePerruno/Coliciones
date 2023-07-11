@@ -1,4 +1,0 @@
-investigacionSprites.UnidadBasica2
-investigacionSprites.UnidadBasica
-investigacionSprites.UnidadAbstract
-investigacionSprites.Sprite4Dibujador
